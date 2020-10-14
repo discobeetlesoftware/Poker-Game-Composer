@@ -1,4 +1,8 @@
-%label{ :for => "#{key}_value", :class => 'title' } Discard
+Discard
+%select{ :name => 'section[][elements][][valueConfig]', :id => "#{key}_value_config" }
+  %option{ :selected => element.options['valueConfig'] == 'up to' } up to
+  %option{ :selected => element.options['valueConfig'] == 'exactly' } exactly
+
 %select{ :name => 'section[][elements][][value]', :id => "#{key}_value" }
   - (1..10).each do |i|
     %option{ :selected => element.value.to_i == i }= i
