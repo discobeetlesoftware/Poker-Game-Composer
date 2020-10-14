@@ -26,7 +26,7 @@ post '/test' do
 end
 
 get '/' do
-	@games = Dir.glob(File.join(settings.games_dir, "*.json")).map do |path|
+	@games = Dir.glob(File.join(settings.games_dir, "*.json")).sort.map do |path|
 		File.basename(path, ".json")
 	end
 	haml :list
