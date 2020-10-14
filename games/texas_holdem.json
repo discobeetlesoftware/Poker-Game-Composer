@@ -1,1 +1,80 @@
-{"name":"Texas Hold'em","abbreviation":"HE","alternative_names":"Hold'em","structures":["fixed_limit","pot_limit","no_limit"],"sections":[{"name":"Pre-flop","elements":[{"type":"deal_player_down","value":"2","options":{}},{"type":"betting_round","value":null,"options":{}}]},{"name":"Flop","elements":[{"type":"deal_board","value":"3","options":{}},{"type":"betting_round","value":null,"options":{}}]},{"name":"Turn","elements":[{"type":"deal_board","value":"1","options":{}},{"type":"betting_round","value":null,"options":{}}]},{"name":"River","elements":[{"type":"deal_board","value":"1","options":{}},{"type":"betting_round","value":null,"options":{}}]}]}
+{
+  "name": "Texas Hold'em",
+  "abbreviation": "HE",
+  "alternative_names": "Hold'em",
+  "structures": [
+    "fixed_limit",
+    "pot_limit",
+    "no_limit"
+  ],
+  "sections": [
+    {
+      "name": "Pre-flop",
+      "elements": [
+        {
+          "type": "deal_player_down",
+          "value": "2",
+          "options": {
+          }
+        },
+        {
+          "type": "betting_round",
+          "value": null,
+          "options": {
+          }
+        }
+      ]
+    },
+    {
+      "name": "Flop",
+      "elements": [
+        {
+          "type": "deal_board",
+          "value": "3",
+          "options": {
+          }
+        },
+        {
+          "type": "betting_round",
+          "value": null,
+          "options": {
+          }
+        }
+      ]
+    },
+    {
+      "name": "Turn",
+      "elements": [
+        {
+          "type": "deal_board",
+          "value": "1",
+          "options": {
+          }
+        },
+        {
+          "type": "betting_round",
+          "value": null,
+          "options": {
+          }
+        }
+      ]
+    },
+    {
+      "name": "River",
+      "elements": [
+        {
+          "type": "deal_board",
+          "value": "1",
+          "options": {
+          }
+        },
+        {
+          "type": "betting_round",
+          "value": null,
+          "options": {
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -59,7 +59,7 @@ class Game
 	end
 
 	def to_json
-		to_hash.to_json
+    JSON.pretty_generate(to_hash)
 	end
 
 	def to_hash
