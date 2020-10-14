@@ -4,7 +4,13 @@ class Element
       element = Element.new
       element.type = data.delete('type')
       element.value = data.delete('value')
-      element.options = data
+      element.options = data.transform_values do |v|
+        if v == "on"
+          true
+        else
+          v
+        end
+      end
       element
     end
   end
