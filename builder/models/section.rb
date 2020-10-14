@@ -17,7 +17,7 @@ class Section
 
   def initialize(json = {})
    self.name = json['name']
-   self.elements = (json['elements'] || []).map { |element_json| Element.new(element_json) }
+   self.elements = (json['elements'] || []).map { |element_json| Element.create(element_json) }
   end
 
 	def to_hash

@@ -3,11 +3,11 @@
     %option{ :value => 'deal_player_down', :selected => element.type == "deal_player_down" } Deal player down
     %option{ :value => 'deal_player_up', :selected => element.type == "deal_player_up" } Deal player up
     %option{ :value => 'deal_board', :selected => element.type == "deal_board" } Deal board
-    %option{:value => 'betting_round', :selected => element.type == "betting_round" } Betting round
-    %option{:value => 'split_hand', :selected => element.type == "split_hand" } Split hand
-    %option{:value => 'discard_hand', :selected => element.type == "discard_hand" } Discard hand
-    %option{:value => 'discard_card', :selected => element.type == "discard_card" } Discard card
-    %option{:value => 'draw_card', :selected => element.type == "draw_card" } Draw card
+    %option{ :value => 'betting_round', :selected => element.type == "betting_round" } Betting round
+    %option{ :value => 'split_hand', :selected => element.type == "split_hand" } Split hand
+    %option{ :value => 'discard_hand', :selected => element.type == "discard_hand" } Discard hand
+    %option{ :value => 'discard_card', :selected => element.type == "discard_card" } Discard card
+    %option{ :value => 'draw_card', :selected => element.type == "draw_card" } Draw card
   %span.delete
     %a{ :href => '#', :onclick => "$('##{key}').remove();"} ❌
   .options

@@ -56,7 +56,7 @@ end
 get '/create/section/:section_id/element/:element_id/type/:type' do |section_id, element_id, type|
   time = Time.now.to_i
 	haml "elementUpdate/#{params['type']}".to_sym, :layout => false, :locals => { 
-    :element => Element.new, 
+    :element => Element.create(params), 
     :section_id => "section_#{section_id}",
     :key => "element_#{time}"
   }

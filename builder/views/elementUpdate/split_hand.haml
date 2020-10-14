@@ -1,13 +1,13 @@
 %label{ :for => "#{key}_value", :class => 'title' } Split into
 %select{ :name => 'section[][elements][][value]', :id => "#{key}_value" }
   - (2..10).each do |i|
-    %option{ :selected => element.value.to_i == i }= i
+    %option{ :selected => element.split_sizes.count == i }= i
 hands
 %div{ :id => "#{key}_value_option_container" }
   %span With a distribution of
   %ul
-    - unless element.type.nil?
-      - element.options['handSize'].each do |size|
+    - unless element.split_sizes.empty?
+      - element.split_sizes.each do |size|
         %li
           %select{ :name => 'section[][elements][][handSize][]' }
             - (1..10).each do |i|
@@ -27,5 +27,5 @@ hands
   $('##{key}_value').change(function() {
     update_#{key}();
   });
-- if element.type.nil?
+- if element.split_sizes.empty?
   = "<script>update_#{key}();</script>"

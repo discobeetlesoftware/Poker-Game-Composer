@@ -1,42 +1,53 @@
+Dir[File.join(__dir__, "elements", "*.rb")].each {|file| require_relative file }
+
 class Element
-  def self.from_params(params)
+  def self.from_params(params = {})
     (params || []).map do |data|
-      element = Element.new
-      element.type = data.delete('type')
-      element.value = data.delete('value')
-      element.options = data.transform_values do |v|
-        if v == "on"
-          true
-        else
-          v
-        end
+      case data['type']
+      when 'betting_round'
+        BettingRoundElement.from_params(data)
+      when 'deal_player_down'
+        DealPlayerElement.from_params(data)
+      when 'deal_player_up'
+        DealPlayerElement.from_params(data)
+      when 'deal_board'
+        DealBoardElement.from_params(data)
+      when 'split_hand'
+        SplitHandElement.from_params(data)
+      when 'discard_hand'
+        DiscardHandElement.from_params(data)
+      when 'discard_card'
+        DiscardCardElement.from_params(data)
+      when 'draw_card'
+        DrawCardElement.from_params(data)
       end
-      element
     end
   end
 
+  def self.create(json = {})
+    case json['type']
+      when 'betting_round'
+        BettingRoundElement.new(json)
+      when 'deal_player_down'
+        DealPlayerElement.new(json)
+      when 'deal_player_up'
+        DealPlayerElement.new(json)
+      when 'deal_board'
+        DealBoardElement.new(json)
+      when 'split_hand'
+        SplitHandElement.new(json)
+      when 'discard_hand'
+        DiscardHandElement.new(json)
+      when 'discard_card'
+        DiscardCardElement.new(json)
+      when 'draw_card'
+        DrawCardElement.new(json)
+      end
+  end
+
   attr_accessor :type
-  attr_accessor :value
-  attr_accessor :options
 
   def initialize(json = {})
    self.type = json['type']
-   self.value = json['value']
-   self.options = (json['options'] || {})
-  end
-
-  def to_hash
-    {
-      :type => self.type,
-      :value => self.value,
-      :options => self.options
-    }
-  end
-
-  def to_s
-    return self.type if self.value.nil?
-    result = "#{self.type} => #{self.value}"
-    result += " " + options.map { |k,v| "#{k}=>#{v}"}.join(", ") unless options.empty?
-    result
   end
 end

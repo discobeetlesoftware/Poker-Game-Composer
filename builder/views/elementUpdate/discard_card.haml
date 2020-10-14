@@ -1,11 +1,11 @@
 Discard
 %select{ :name => 'section[][elements][][valueConfig]', :id => "#{key}_value_config" }
-  %option{ :selected => element.options['valueConfig'] == 'up to' } up to
-  %option{ :selected => element.options['valueConfig'] == 'exactly' } exactly
+  %option{ :selected => element.config == 'up to' } up to
+  %option{ :selected => element.config == 'exactly' } exactly
 
 %select{ :name => 'section[][elements][][value]', :id => "#{key}_value" }
   - (1..10).each do |i|
-    %option{ :selected => element.value.to_i == i }= i
+    %option{ :selected => element.card_count_range.max == i }= i
 cards;
 %label{ :for => "#{key}_option_thenDraw" } then draw
-%input{ :type => 'checkbox', :name => "section[][elements][][thenDraw]", :id => "#{key}_option_thenDraw", :checked => element.options['thenDraw'] == true }
+%input{ :type => 'checkbox', :name => "section[][elements][][thenDraw]", :id => "#{key}_option_thenDraw", :checked => element.then_draw }

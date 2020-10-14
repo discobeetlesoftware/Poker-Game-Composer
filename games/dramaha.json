@@ -13,15 +13,10 @@
       "elements": [
         {
           "type": "deal_player_down",
-          "value": "5",
-          "options": {
-          }
+          "card_count": 5
         },
         {
-          "type": "betting_round",
-          "value": null,
-          "options": {
-          }
+          "type": "betting_round"
         }
       ]
     },
@@ -30,15 +25,10 @@
       "elements": [
         {
           "type": "deal_board",
-          "value": "3",
-          "options": {
-          }
+          "card_count": 3
         },
         {
-          "type": "betting_round",
-          "value": null,
-          "options": {
-          }
+          "type": "betting_round"
         }
       ]
     },
@@ -47,23 +37,18 @@
       "elements": [
         {
           "type": "discard_card",
-          "value": "5",
-          "options": {
-            "valueConfig": "up to",
-            "thenDraw": true
-          }
+          "then_draw": true,
+          "range": [
+            0,
+            5
+          ]
         },
         {
           "type": "deal_board",
-          "value": "1",
-          "options": {
-          }
+          "card_count": 1
         },
         {
-          "type": "betting_round",
-          "value": null,
-          "options": {
-          }
+          "type": "betting_round"
         }
       ]
     },
@@ -72,15 +57,10 @@
       "elements": [
         {
           "type": "deal_board",
-          "value": "1",
-          "options": {
-          }
+          "card_count": 1
         },
         {
-          "type": "betting_round",
-          "value": null,
-          "options": {
-          }
+          "type": "betting_round"
         }
       ]
     }
