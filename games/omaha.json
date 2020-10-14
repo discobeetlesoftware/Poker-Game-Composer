@@ -16,6 +16,12 @@
           "value": "4",
           "options": {
           }
+        },
+        {
+          "type": "betting_round",
+          "value": null,
+          "options": {
+          }
         }
       ]
     },
