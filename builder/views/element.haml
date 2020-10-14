@@ -7,6 +7,7 @@
     %option{ :value => 'split_hand', :selected => element.type == "split_hand" } Split hand
     %option{ :value => 'discard_hand', :selected => element.type == "discard_hand" } Discard hand
     %option{ :value => 'discard_card', :selected => element.type == "discard_card" } Discard card
+    %option{ :value => 'expose_card', :selected => element.type == "expose_card" } Expose card
     %option{ :value => 'draw_card', :selected => element.type == "draw_card" } Draw card
   %span.delete
     %a{ :href => '#', :class => 'delete', :onclick => "$('##{key}').remove();"} ⊗

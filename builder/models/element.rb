@@ -20,6 +20,8 @@ class Element
         DiscardCardElement.from_params(data)
       when 'draw_card'
         DrawCardElement.from_params(data)
+      when 'expose_card'
+        ExposeCardElement.from_params(data)
       end
     end
   end
@@ -42,6 +44,8 @@ class Element
         DiscardCardElement.new(json)
       when 'draw_card'
         DrawCardElement.new(json)
+      when 'expose_card'
+        ExposeCardElement.new(json)
       end
   end
 
