@@ -1,3 +1,69 @@
-.delete a {
-	text-decoration: none;
+.button {
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: bold;
+  border: 2px ridge #888888;
+  font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  margin: 1px;
+}
+
+a.delete {
+  background-color: rgba(255, 255, 255, 0);
+  color: #ef0000;
+  font-size: 26px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.delete:hover {
+  background-color: rgb(223, 0, 0);
+  color: #fcfcfc;
+}
+
+a.add {
+  background-color: #daf2de;
+  color: #222222;
+  font-variant: small-caps;
+}
+
+a.add:hover {
+  background-color: #85d592;
+  color: #222222;
+}
+
+.section {
+	padding: 2px;
+}
+
+.section>.title {
+	padding: 2px;
+	background-color: #e8e8e8;
+	border-top: 1px solid #989898;
+	border-bottom: 1px solid #989898;
+}
+
+.elements>div {
+	padding: 5px;
+}
+.element:nth-of-type(odd) {
+	background-color: #f7f2fd;
+}
+.element:nth-of-type(even) {
+	background-color: #fcfdea;
+}
+
+.save {
+  background-color: #d9ddf2;
+  color: #222222;
+  font-variant: small-caps;
+  font-size: 24px;
+}
+
+.save:hover {
+  background-color: #7685d0;
+  color: #222222;
+  cursor: pointer;
 }

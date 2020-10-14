@@ -1,4 +1,4 @@
-%div{ :id => key }
+%div{ :id => key, :class => 'element' }
   %select{ :name => "section[][elements][][type]", :id => "#{key}_type" }
     %option{ :value => 'deal_player_down', :selected => element.type == "deal_player_down" } Deal player down
     %option{ :value => 'deal_player_up', :selected => element.type == "deal_player_up" } Deal player up
@@ -9,7 +9,7 @@
     %option{ :value => 'discard_card', :selected => element.type == "discard_card" } Discard card
     %option{ :value => 'draw_card', :selected => element.type == "draw_card" } Draw card
   %span.delete
-    %a{ :href => '#', :onclick => "$('##{key}').remove();"} ❌
+    %a{ :href => '#', :class => 'delete', :onclick => "$('##{key}').remove();"} ⊗
   .options
     - unless element.type.nil?
       = haml "elementUpdate/#{element.type}".to_sym, :locals => { :key => "element_#{Time.now.to_i}", :element => element }

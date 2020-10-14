@@ -23,9 +23,9 @@
 
   #sections_container
     %h3 Sections
-    %a{ :href => '#', :onclick => "appendSection();" } Add section
     %ol
       - game.sections.each.with_index do |section, i|
         = haml :section, :locals => { :id => "#{i}", :key => "section_#{i}", :section => section }
+    %a{ :href => '#', :class => 'add button', :onclick => "appendSection();" } Add section
 
-  %input{ :type => 'submit', :value => 'Create' }
+  %input{ :type => 'submit', :class => 'save button', :value => 'Save' }

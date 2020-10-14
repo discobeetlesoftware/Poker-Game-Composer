@@ -1,11 +1,11 @@
-%li{ :id => key }
-  %label{ :for => "#{key}_name" } Name
-  %input{ :type => 'text', :name => "section[][name]", :id => "#{key}_name", :value => section.name }
-  %span.delete
-    %a{ :href => '#', :onclick => "$('##{key}').remove();"} ❌
-
-  %div
-    %a{ :href => '#', :onclick => "appendSectionElement('#{id}');" } Add element
+%li{ :id => key, :class => 'section' }
+  .title
+    %label{ :for => "#{key}_name" } Name
+    %input{ :type => 'text', :name => "section[][name]", :id => "#{key}_name", :value => section.name }
+    %span
+      %a{ :href => '#', :class => 'delete', :onclick => "$('##{key}').remove();"} ⊗
   .elements
     - section.elements.each_with_index do |e, i|
       = haml :element, :locals => { :section_id => id, :element_id => i, :key => "element_#{id}_#{i}", :element => e }
+  %div
+    %a{ :href => '#', :class => 'button add', :onclick => "appendSectionElement('#{id}');" } Add element
