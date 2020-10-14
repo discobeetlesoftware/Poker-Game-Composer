@@ -36,7 +36,7 @@ class Element
   def to_s
     return self.type if self.value.nil?
     result = "#{self.type} => #{self.value}"
-    result += options.map { |k,v| "#{k}=>#{v}"}.join(", ") unless options.empty?
+    result += " " + options.map { |k,v| "#{k}=>#{v}"}.join(", ") unless options.empty?
     result
   end
 end
