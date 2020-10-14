@@ -63,7 +63,7 @@ get '/create/section/:section_id/element/:element_id/type/:type' do |section_id,
 end
 
 get '/create' do
-	haml :create, :locals => { :game => Game.new, :action => "/create", :method => "post" }
+	haml :update, :locals => { :game => Game.new, :action => "/create", :method => "post" }
 end
 
 post '/create' do
@@ -76,7 +76,7 @@ post '/create' do
 end
 
 get '/edit/:game' do |n|
-  haml :create, :locals => { :game => Game.load(n), :action => "/edit/#{n}", :method => 'post' }
+  haml :update, :locals => { :game => Game.load(n), :action => "/edit/#{n}", :method => 'post' }
 end
 
 post '/edit/:game' do |n|
