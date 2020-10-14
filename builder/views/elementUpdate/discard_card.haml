@@ -2,6 +2,6 @@
 %select{ :name => 'section[][elements][][value]', :id => "#{key}_value" }
   - (1..10).each do |i|
     %option{ :selected => element.value.to_i == i }= i
-card;
+cards;
 %label{ :for => "#{key}_option_thenDraw" } then draw
-%input{ :type => 'checkbox', :name => "section[][elements][][thenDraw]", :id => "#{key}_option_thenDraw", :selected => element.options['thenDraw'] }
+%input{ :type => 'checkbox', :name => "section[][elements][][thenDraw]", :id => "#{key}_option_thenDraw", :checked => element.options['thenDraw'] == true }

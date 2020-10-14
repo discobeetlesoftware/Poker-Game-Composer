@@ -12,7 +12,7 @@
     %a{ :href => '#', :onclick => "$('##{key}').remove();"} ❌
   .options
     - unless element.type.nil?
-      = haml "elements/#{element.type}".to_sym, :locals => { :key => "element_#{Time.now.to_i}", :element => element }
+      = haml "elementUpdate/#{element.type}".to_sym, :locals => { :key => "element_#{Time.now.to_i}", :element => element }
 :javascript
   function #{key}_updateOptions() {
     $('##{key} .options').load('/create/section/#{section_id}/element/#{element_id}/type/' + $('##{key}_type option:selected').val());
