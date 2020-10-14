@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title Poker Game Builder
+    %link{ :href => '/main.css', :rel => 'stylesheet', :type => 'text/css' }/
+    %script{ :src => 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js' }
+    %script{ :src => '/create.js' }
+  %body
+    .container
+      .header
+        .logo
+          %h1 Poker Game Database
+        %p
+          %a{ :href => '/' } View all
+      .content
+        = yield
+        .footer
+          %p.legal 
+            &mdash; &copy; 
+            = Time.now.strftime("%Y")
+            &mdash;

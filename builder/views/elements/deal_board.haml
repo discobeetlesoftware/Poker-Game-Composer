@@ -1,0 +1,4 @@
+%label{ :for => "#{key}_value", :class => 'title' } Board cards
+%select{ :name => 'section[][elements][][value]', :id => "#{key}_value" }
+  - (1..10).each do |i|
+    %option{ :selected => element.value.to_i == i }= i

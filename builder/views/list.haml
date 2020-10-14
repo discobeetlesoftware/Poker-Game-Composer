@@ -1,0 +1,8 @@
+%a{ :href => '/create' } New game
+- if @games.empty?
+  %h1 No game data!
+- else
+  %ol
+    - @games.each do |game|
+      %li
+        %a{ :href => "/show/#{game}" } #{game}

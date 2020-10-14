@@ -1,0 +1,31 @@
+%form{ :action => "#{action}", :method => "#{method}" }
+  %div
+    %h3 Details
+    %label{ :for => 'name', :id => 'name' } Name
+    %input{ :type => 'text', :name => 'name', :id => 'name', :value => "#{game.name}" }
+
+  %div
+    %label{ :for => 'abbreviation' } Abbreviation
+    %input{ :type => 'text', :name => 'abbreviation', :id => 'abbreviation', :value => "#{game.abbreviation}" }
+
+  %div
+    %label{ :for => 'alternative_names' } Alternative Names
+    %input{ :type => 'text', :name => 'alternative_names', :id => 'alternative_names', :value => "#{game.alternative_names}" }
+    
+  %div
+    %h3 Structure
+    %label{ :for => 'fixed_limit' } Fixed-limit
+    %input{ :type => 'checkbox', :name => 'structures[fixed_limit]', :id => 'fixed_limit', :checked => game.structures.include?("fixed_limit") }
+    %label{ :for => 'pot_limit' } Pot-limit
+    %input{ :type => 'checkbox', :name => 'structures[pot_limit]', :id => 'pot_limit', :checked => game.structures.include?("pot_limit") }
+    %label{ :for => 'no_limit' } No-limit
+    %input{ :type => 'checkbox', :name => 'structures[no_limit]', :id => 'no_limit', :checked => game.structures.include?("no_limit") }
+
+  #sections_container
+    %h3 Sections
+    %a{ :href => '#', :onclick => "appendSection();" } Add section
+    %ol
+      - game.sections.each.with_index do |section, i|
+        = haml :section, :locals => { :id => "#{i}", :key => "section_#{i}", :section => section }
+
+  %input{ :type => 'submit', :value => 'Create' }
