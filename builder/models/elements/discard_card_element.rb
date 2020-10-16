@@ -26,8 +26,12 @@ class DiscardCardElement
     'discard_card'
   end
 
+  def is_exact_range
+    self.card_count_range.min == self.card_count_range.max
+  end
+
   def config
-    self.card_count_range.min == self.card_count_range.max ? 'exactly' : 'up to' 
+    is_exact_range ? 'exactly' : 'up to' 
   end
 
   def to_hash
@@ -36,5 +40,12 @@ class DiscardCardElement
 
   def to_s
     "DiscardCard #{self.card_count_range} #{self.then_draw ? 'thenDraw' : 'NoDraw' }"
+  end
+
+  def render_canvas(i,j)
+    %{var elementSize = { width: 60, height: 60 };
+drawContainedText(xLocation, yLocation, "Draw\\n#{self.card_count_range.min}-#{self.card_count_range.max} cards", elementSize);
+xLocation += elementSize.width + 6;
+    }
   end
 end

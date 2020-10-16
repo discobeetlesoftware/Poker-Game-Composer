@@ -20,4 +20,7 @@ class DiscardHandElement
   def to_s
     "DiscardHand #{self.hand_count}"
   end
+
+  def render_canvas(i,j)
+  end
 end

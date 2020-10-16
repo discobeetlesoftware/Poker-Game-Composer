@@ -22,4 +22,7 @@ class DrawCardElement
   def to_s
     "DrawCard #{self.card_count}"
   end
+  
+  def render_canvas(i,j)
+  end
 end

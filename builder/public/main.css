@@ -1,3 +1,23 @@
+.quickReference {
+	
+}
+
+.quickReference .name {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.quickReference .detail {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.quickReference {
+	background-color: #f0f0f0;
+}
+
 .button {
   padding: 3px;
   text-align: center;

@@ -22,4 +22,11 @@ class ExposeCardElement
   def to_s
     "ExposeCard #{self.card_count}"
   end
+
+  def render_canvas(i,j)
+    %{var elementSize = { width: 60, height: 60 };
+drawContainedText(xLocation + element_widths[#{i}], yLocation, "Expose #{self.card_count} card#{self.card_count == 1 ? "" : "s"}", elementSize);
+xLocation += elementSize.width + 6;
+    }
+  end
 end

@@ -37,7 +37,7 @@ get '/show/:name' do |n|
 	@game = Game.load(n)
 	@file = Game.path(n)
 	useTemplate = (params['useTemplate'] ||= "true") == "true"
-	haml :show, :layout => useTemplate
+	haml :showCanvas, :layout => useTemplate
 end
 
 get '/create/section/:id' do |id|

@@ -22,4 +22,13 @@ class DealBoardElement
   def to_s
     "DealBoard #{self.card_count}"
   end
+
+  def render_canvas(i,j)
+    output = []
+    self.card_count.times do |x|
+      output << "element_widths[#{i}] += drawCard(xLocation + #{x * 33}, yLocation, 'C', false).width;"
+    end
+    output << "element_widths[#{i}] += #{(self.card_count - 1) * 3};"
+    output.join("\n")
+  end
 end

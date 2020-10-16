@@ -1,0 +1,20 @@
+%span
+  %a{ :href => "/edit/#{@name}" } Edit
+.quickReference
+  .name= @game.name
+  .detail Blinds * Split Pot * 7 Players Max * <em>aka “Draw2maha”</em>
+  .structure
+    %canvas{ :width => '500', :height => '300' }
+
+%script{:type => "text/javascript"}
+  var card = $('canvas');
+  card.detectPixelRatio(function(ratio) {
+  var text_sizes = {};
+  var element_widths = {};
+  var section_margin = 6;
+  var xLocation = 1.0;
+  var yLocation = 1.0;
+  - @game.sections.each.with_index do |section, i|
+    #{section.render_canvas(i)}
+  });
+  

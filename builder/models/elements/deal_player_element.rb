@@ -25,4 +25,19 @@ class DealPlayerElement
   def to_s
     "DealPlayer #{self.card_count} #{self.is_face_up ? 'faceUp' : 'faceDown' }"
   end
+
+  def render_canvas(i,j)
+    results = []
+    xOffset = 6
+    yOffset = 3
+    strokeWidth = 1;
+    results << "xLocation += #{strokeWidth};"
+    self.card_count.times do |x|
+      results << %{element_widths['#{type}'] = drawCard(xLocation + #{x * xOffset}, yLocation + #{x * yOffset}, 'I', #{self.is_face_up ? 'false' : 'true'});}
+    end
+    results << "yLocation += element_widths['#{type}'].height + #{yOffset * (self.card_count - 1)} + 2;"
+    results << %{drawText(xLocation, yLocation, "#{self.card_count} card#{self.card_count > 1 ? "s" : ""}");}
+    results << "element_widths[#{i}] += element_widths['#{type}'].width + #{xOffset * (self.card_count - 1)};"
+    results.join("\n")
+  end
 end

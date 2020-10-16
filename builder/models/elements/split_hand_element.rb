@@ -23,4 +23,7 @@ class SplitHandElement
   def to_s
     "SplitHand #{self.split_sizes}"
   end
+  
+  def render_canvas(i,j)
+  end
 end

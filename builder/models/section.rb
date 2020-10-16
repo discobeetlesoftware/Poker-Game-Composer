@@ -30,4 +30,28 @@ class Section
   def to_s
     "Section:#{self.name} {\n" + self.elements.map { |e| "\t#{e}" }.join("\n") + "\n}"
   end
+
+  def render_elements_canvas(j)
+    results = elements.map.with_index do |e,i|
+      [
+        "",
+        "//////////// [#{j}.#{i}] #{e} ////////////",
+        "",
+        e.render_canvas(j,i) 
+      ]
+   end
+   results.flatten.join("\n")
+  end
+
+  def render_canvas(i)
+    %{//////////// [#{i}] Section:#{name} ////////////
+
+element_widths[#{i}] = 0;
+text_sizes[#{i}] = drawText(xLocation, yLocation, "#{name}");
+yLocation += text_sizes[#{i}].height + 2;
+#{render_elements_canvas(i)}
+xLocation += Math.max(text_sizes[#{i}].width, element_widths[#{i}]) + section_margin;
+yLocation = 0;
+    }
+  end
 end
