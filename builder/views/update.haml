@@ -14,6 +14,8 @@
     
   %div
     %h3 Structure
+    %label{ :for => 'ante' } Ante
+    %input{ :type => 'checkbox', :name => 'structures[ante]', :id => 'ante', :checked => game.structures.include?("ante") }
     %label{ :for => 'fixed_limit' } Fixed-limit
     %input{ :type => 'checkbox', :name => 'structures[fixed_limit]', :id => 'fixed_limit', :checked => game.structures.include?("fixed_limit") }
     %label{ :for => 'pot_limit' } Pot-limit
