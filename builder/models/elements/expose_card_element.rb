@@ -2,7 +2,7 @@ class ExposeCardElement
   attr_accessor :card_count
 
   def self.from_params(params)
-    DrawCardElement.new({
+    ExposeCardElement.new({
       'card_count' => params['value'].to_i
     })
   end
