@@ -36,8 +36,8 @@ class Section
       [
         "",
         "//////////// [#{j}.#{i}] #{e} ////////////",
-        "",
-        e.render_canvas(j,i) 
+        "yLocation = text_sizes[#{j}].height + 10;",
+        e.render_canvas(j,i)
       ]
    end
    results.flatten.join("\n")
@@ -47,8 +47,11 @@ class Section
     %{//////////// [#{i}] Section:#{name} ////////////
 
 element_widths[#{i}] = 0;
-text_sizes[#{i}] = drawText(xLocation, yLocation, "#{name}");
-yLocation += text_sizes[#{i}].height + 2;
+text_sizes[#{i}] = drawText(xLocation, yLocation, "#{name}", {
+fillStyle: window.config.section.title.color,
+fontSize: window.config.section.title.size,
+fontFamily: window.config.section.title.family
+});
 #{render_elements_canvas(i)}
 xLocation += Math.max(text_sizes[#{i}].width, element_widths[#{i}]) + section_margin;
 yLocation = 0;

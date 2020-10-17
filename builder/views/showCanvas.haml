@@ -4,8 +4,9 @@
   .name= @game.name
   .detail Blinds * Split Pot * 7 Players Max * <em>aka “Draw2maha”</em>
   .structure
-    %canvas{ :width => '500', :height => '300' }
-
+    %canvas{ :width => '600', :height => '300' }
+    
+%script{ :src => '/configs.js' }
 %script{:type => "text/javascript"}
   var card = $('canvas');
   card.detectPixelRatio(function(ratio) {

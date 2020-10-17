@@ -32,12 +32,15 @@ class DealPlayerElement
     yOffset = 3
     strokeWidth = 1;
     results << "xLocation += #{strokeWidth};"
-    self.card_count.times do |x|
-      results << %{element_widths['#{type}'] = drawCard(xLocation + #{x * xOffset}, yLocation + #{x * yOffset}, 'I', #{self.is_face_up ? 'false' : 'true'});}
-    end
-    results << "yLocation += element_widths['#{type}'].height + #{yOffset * (self.card_count - 1)} + 2;"
-    results << %{drawText(xLocation, yLocation, "#{self.card_count} card#{self.card_count > 1 ? "s" : ""}");}
-    results << "element_widths[#{i}] += element_widths['#{type}'].width + #{xOffset * (self.card_count - 1)};"
+    results << %{var pileSize = drawCardPile(xLocation, yLocation, 'I', #{self.is_face_up ? 'false' : 'true'}, #{self.card_count}, "#{self.card_count} card#{self.card_count > 1 ? "s" : ""}");}
+    results << %{yLocation += pileSize.height;}
+    results << %{xLocation += pileSize.width;}
+#    self.card_count.times do |x|
+ #     results << %{element_widths['#{type}'] = drawCard(xLocation + #{x * xOffset}, yLocation + #{x * yOffset}, 'I', #{self.is_face_up ? 'false' : 'true'});}
+  #  end
+   # results << "yLocation += element_widths['#{type}'].height + #{yOffset * (self.card_count - 1)} + 2;"
+    #results << %{drawText(xLocation, yLocation, "#{self.card_count} card#{self.card_count > 1 ? "s" : ""}");}
+  #  results << "element_widths[#{i}] += element_widths['#{type}'].width + #{xOffset * (self.card_count - 1)};"
     results.join("\n")
   end
 end
