@@ -1,0 +1,33 @@
+{% macro option(element, type, name) %}<option value='{{type}}' {% if type == element.type %}selected{% endif %}>{{name}}</option>{% endmacro %}
+
+<div id='{{key}}' class='element'>
+    <select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][type]' id='{{key}}_type'>
+        {{ option(element, 'deal_player', 'Deal player') }}
+        {{ option(element, 'deal_board', 'Deal board') }}
+        {{ option(element, 'betting_round', 'Betting round') }}
+        {{ option(element, 'split_hand', 'Split hand') }}
+        {{ option(element, 'discard_hand', 'Discard hand') }}
+        {{ option(element, 'discard_card', 'Discard card') }}
+        {{ option(element, 'expose_card', 'Expose card') }}
+        {{ option(element, 'draw_card', 'Draw card') }}
+    </select>
+    <span class='delete'>
+        <a href='#' class='delete' onclick="$('#{{key}}').remove();">⊗</a>
+    </span>
+    <div class='options'>
+    {% include element.edit_option_partial_name %}
+    </div>
+
+    <script>
+        function {{key}}_update_options() {
+            var type = $('#{{key}}_type option:selected').val();
+            $('#{{key}} .options').load('/component/edit/section/{{sectionIndex}}/element/{{elementIndex}}/type/' + type);
+        }
+        $('#{{key}}_type').change(function() {
+            {{key}}_update_options();
+        });
+        {% if element.is_proto %}
+        {{key}}_update_options();
+        {% endif %}
+    </script>
+</div>

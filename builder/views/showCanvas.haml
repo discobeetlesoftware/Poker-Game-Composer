@@ -8,14 +8,5 @@
     
 %script{ :src => '/configs.js' }
 %script{:type => "text/javascript"}
-  var card = $('canvas');
-  card.detectPixelRatio(function(ratio) {
-  var text_sizes = {};
-  var element_widths = {};
-  var section_margin = 6;
-  var xLocation = 1.0;
-  var yLocation = 1.0;
-  - @game.sections.each.with_index do |section, i|
-    #{section.render_canvas(i)}
-  });
+  #{@game.render_canvas}
   

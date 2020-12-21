@@ -1,11 +1,26 @@
-function measureText(text, extraOptions = {}) {
+function combineEstimate(list) {
+  return list.reduce(function(t, v) {
+    return {
+      width: t.width + v.width, 
+      height: Math.max(t.height, v.height)
+    }
+  });
+}
+
+function combineEstimates(list) {
+  return combineEstimate(list.map(function(innerList) {
+    return combineEstimate(innerList);
+  }));
+}
+
+function estimate_text(text, extraOptions = {}) {
   var options = Object.assign({
     fillStyle: '#000',
     x: 0, 
     y: 0,
     fromCenter: false,
-    width: 50,
-    height: 50,
+    width: 500,
+    height: 500,
     fontSize: 10,
     fontFamily: 'Verdana, sans-serif',
     text: text
@@ -33,12 +48,26 @@ function drawText(x, y, text, extraOptions = {}) {
   return size;
 }
 
+function makeRect(x, y, width, height) {
+  return {
+    x: x,
+    y: y,
+    width: width,
+    height: height
+  };
+}
+
+function estimate_bet(x, y) {
+  var config = window.config.element.betting_round;
+  return makeRect(x, y, config.size.width, config.size.height);
+}
+
 function drawBet(x, y) {
   var config = window.config.element.betting_round;
   var size = config.size;
   var options = {
       fillStyle: config.backgroundColor,
-      fromCenter: false,
+      fromCenter: true,
       x: x,  
       y: y,
       width: size.width,
@@ -46,6 +75,20 @@ function drawBet(x, y) {
   };
   $('canvas').drawEllipse(options);
   return size;
+}
+
+function estimate_containedText(x, y, text, elementSize) {
+  var config = window.config.element.text;
+  var textOptions = { 
+    fromCenter: true,
+    maxWidth: elementSize.width,
+    fontSize: config.fontSize,
+    fontFamily: config.fontFamily
+  };
+  var textSize = estimate_text(text, textOptions);
+  return makeRect(x, y, 
+    textSize.width + (config.margins.left + config.margins.right + (2 * config.border.width)),
+     textSize.height + (config.margins.top + config.margins.bottom + (2 * config.border.width)));
 }
 
 function drawContainedText(x, y, text, elementSize) {
@@ -57,14 +100,12 @@ function drawContainedText(x, y, text, elementSize) {
     fontFamily: config.fontFamily,
     fillStyle: config.color
   };
-  var arbitraryVerticalOffsetThatSeemsToWorkForUnknownReasons = 12;
-  var textSize = measureText(text, textOptions);
-  var offset = { x: (elementSize.width / 2), y: (textSize.height / 2) + arbitraryVerticalOffsetThatSeemsToWorkForUnknownReasons };
-
+  var textSize = estimate_text(text, textOptions);
+  //var offset = { x: (elementSize.width / 2), y: (textSize.height / 2) + arbitraryVerticalOffsetThatSeemsToWorkForUnknownReasons };
   var options = {
     fromCenter: true,
-    x: x + offset.x, 
-    y: y + offset.y,
+    x: x + (elementSize.width / 2), 
+    y: y + config.border.width,
     fillStyle: config.backgroundColor,
     strokeStyle: config.border.color,
     strokeWidth: config.border.width,
@@ -73,26 +114,48 @@ function drawContainedText(x, y, text, elementSize) {
     cornerRadius: config.border.corner
   };
   $('canvas').drawRect(options);
-  drawText(x + offset.x, y + offset.y, text, textOptions);
+  drawText(x + (elementSize.width / 2), y + config.border.width, text, textOptions);
   return textSize;
 }
 
-function drawCardPile(x, y, type, isFaceDown, count, text) {
-  var options = {
-    xOffset: 6,
-    yOffset: 3,
-    strokeWidth: 1
-  };
+function estimate_cardPile(x, y, count, text) {
+  var cardEstimate = estimate_card(x, y);
+  var pileConfig = window.config.element.card.pile.offset;
+  var offset = {
+    x: (count - 1) * pileConfig.x,
+    y: (count - 1) * pileConfig.y
+  }
+  return makeRect(x - offset.x, y - offset.y, cardEstimate.width + offset.x, cardEstimate.height + offset.y);
+}
 
+function originForCenterInRegion(widths) {
+  var largest = Math.max(...widths);
+  return widths.map(function(width) {
+    return ((largest - width) / 2);
+  });
+}
+
+function drawCardPile(x, y, type, isFaceDown, count, text) {
+  if (count == 0) { return; }
+  var textConfig = {
+    fontSize: window.config.element.detail.size,
+    fillStyle: window.config.element.detail.color,
+    fontFamily: window.config.element.detail.family
+  };
+  var pileConfig = window.config.element.card.pile.offset;
   var textOrigin = { x: x, y: y };
-  x += (count - 1) * options.xOffset;
+
+  var textSize = estimate_text(text, textConfig);
+  var pileSize = estimate_cardPile(x, y, count, type);
+  var adjustedOffsets = originForCenterInRegion([textSize.width, pileSize.width]);
+  x += (count - 1) * pileConfig.x;
   var cardSize;
   for (var j = 0; j < count; j++) {
     var offset = {
-      x: ((count - 1 - j) * options.xOffset),
-      y: ((count - 1 - j) * options.yOffset)
+      x: ((count - 1 - j) * pileConfig.x),
+      y: ((count - 1 - j) * pileConfig.y)
     };
-    var s = drawCard(x - offset.x, y - offset.y, type, isFaceDown);
+    var s = drawCard(x - offset.x + adjustedOffsets[1], y - offset.y, type, isFaceDown);
     if (j == 0) {
       textOrigin.y += s.height;
       cardSize = s;
@@ -101,16 +164,19 @@ function drawCardPile(x, y, type, isFaceDown, count, text) {
     }
   }
 
-  var textSize = measureText(text);
-  var textVerticalOffset = 5;
-  var textConfig = window.config.element.detail;
-  drawText(textOrigin.x + ((cardSize.width - textSize.width) / 2), textOrigin.y + textVerticalOffset, text, {
-    fontSize: textConfig.size,
-    fillStyle: textConfig.color,
-    fontFamily: textConfig.family
-  });
+  var textVerticalOffset = window.config.element.detail.margins.top;
+  drawText(textOrigin.x + adjustedOffsets[0], textOrigin.y + textVerticalOffset, text, textConfig);
   cardSize.height += textVerticalOffset + cardSize.height;
-  return cardSize;
+  return {
+    height: cardSize.height,
+    width: Math.max(textSize.width, pileSize.width)
+  }
+  // return cardSize;
+}
+
+function estimate_card(x, y) {
+  var config = window.config.element.card;
+  return makeRect(x, y, config.size.width, config.size.height);
 }
 
 function drawCard(x, y, type, isFaceDown) {
@@ -129,10 +195,23 @@ function drawCard(x, y, type, isFaceDown) {
   options.fillStyle = faceConfig.backgroundColor;
 
   $('canvas').drawRect(options);
-  drawText(x + (options.width / 2), y + (options.height / 2), type, { fontSize: faceConfig.fontSize, fromCenter: true, fontFamily: faceConfig.fontFamily });
+  drawText(x + (options.width / 2), y + (options.height / 2), type, { 
+    fillStyle: faceConfig.fontColor, 
+    fontSize: faceConfig.fontSize, 
+    fromCenter: true, 
+    fontFamily: faceConfig.fontFamily 
+  });
   if (!isFaceDown) {
-    drawText(x + options.strokeWidth + faceConfig.pip.offset, y + options.strokeWidth + faceConfig.pip.offset, '⋆', { fontSize: faceConfig.pip.size, fromCenter: true });
-    drawText(x + options.width - options.strokeWidth - faceConfig.pip.offset, y + options.height - options.strokeWidth - faceConfig.pip.offset, '⋆', { fontSize: faceConfig.pip.size, fromCenter: true });
+    var pipConfig = {
+      fromCenter: true,
+      fontSize: faceConfig.pip.size,
+      fillStyle: faceConfig.pip.color
+    };
+    var drawPip = function(pipX, pipY) {
+      drawText(pipX, pipY, '⋆', pipConfig);
+    }
+    drawPip(x + options.strokeWidth + faceConfig.pip.offset.x, y + options.strokeWidth + faceConfig.pip.offset.y);
+    drawPip(x + options.width - options.strokeWidth - faceConfig.pip.offset.x, y + options.height - options.strokeWidth - faceConfig.pip.offset.y);
   }
   return { width: options.width, height: options.height };
 }

@@ -1,0 +1,12 @@
+%span
+  %a{ :href => "/edit/#{@name}" } Edit
+.quickReference
+  .name= @game.name
+  .detail Blinds * Split Pot * 7 Players Max * <em>aka “Draw2maha”</em>
+  .structure
+    %canvas{ :width => '600', :height => '300' }
+    
+%script{ :src => '/configs.js' }
+%script
+  #{@game.draw_canvas}
+  

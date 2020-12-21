@@ -1,0 +1,11 @@
+() => {
+  var container = new Container();
+  var c;
+  var xpos = 0;
+  {% for elementIndex in range(0, element.card_count) %}
+    c = card(true, 'C').addTo(container).pos(xpos, 0);
+    xpos += c.width + window.config.element.card.groupMargin;
+  {% endfor %}
+  container.pos(lastElementMaxX, 0, LEFT, TOP, elementContainer);
+  return container;
+},

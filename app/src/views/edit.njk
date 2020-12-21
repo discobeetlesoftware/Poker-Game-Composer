@@ -1,0 +1,86 @@
+{% extends 'layouts/main.njk' %}
+{% block head %}
+<script>
+    function appendSection() {
+        var path = '/component/edit/section/' + $('#sections_container ol li').length;
+        $.get(path, function(result) { 
+            $('#sections_container ol').append(result); 
+        });
+    }
+    function appendSectionElement(id) {
+        var elementsKey = '#section_' + id + ' .elements';
+        var path = '/component/edit/section/' + id + '/element/' + $(elementsKey + ' div').length;
+        $.get(path, function(result) {
+            $(elementsKey).append(result);
+        });
+    }
+
+    function appendEvaluation() {
+        var path = '/create/evaluation/' + $('#evaluation ul li').length;
+        $.get(path, function(result) { 
+            $('#evaluation ul').append(result); 
+        });
+    }
+</script>
+{% endblock %}
+{% block body %}
+<form action='{{action}}' method='post'>
+    <div>
+        <h3>Details</h3>
+        <div>
+            <label for='name'>Name</label>
+            <input type='text' name='name', value='{{game.name}}' />
+        </div>
+
+        <div>
+            <label for='abbreviation'>Abbreviation</label>
+            <input type='text' name='abbreviation' id='abbreviation' value='{{game.abbreviation}}' />    
+        </div>
+
+        <div>
+            <label for='alternative_names'>Alternative Names</label>
+            <input type='text' name='alternative_names' id='alternative_names' value='{{game.alternative_names}}' />
+        </div>
+    </div>
+
+    <div>
+        <h3>Structure</h3>
+        <div>
+            <label for='ante'>Ante</label>
+            <input id='ante' name='structures[ante]' type='checkbox' {% if game.structure.ante %}checked{% endif %} />
+        </div>
+        
+        <div>
+            <label for='fixed_limit'>Fixed-limit</label>
+            <input id='fixed_limit' name='structures[fixed_limit]' type='checkbox' {% if game.structure.fixed_limit %}checked{% endif %} />
+        </div>
+        
+        <div>
+            <label for='pot_limit'>Pot-limit</label>
+            <input id='pot_limit' name='structures[pot_limit]' type='checkbox' {% if game.structure.pot_limit %}checked{% endif %} />
+        </div>
+        
+        <div>
+            <label for='no_limit'>No-limit</label>
+            <input id='no_limit' name='structures[no_limit]' type='checkbox' {% if game.structure.no_limit %}checked{% endif %} />
+        </div>
+    </div>
+
+    <div id='evaluation_container'>
+        <h3>Evaluation</h3>
+    </div>
+
+    <div id='sections_container'>
+        <h3>Sections</h3>
+        <ol>
+            {% asyncEach section in game.sections %}
+                {% set sectionIndex = loop.index0 %}
+                {% set key = 'section_' + loop.index0 %}
+                {% include 'partials/edit/section.njk' %}
+            {% endeach %}
+        </ol>
+        <a href='#' class='add button' onclick='appendSection();'>Add section</a>
+    </div>
+    <input type='submit' class='save button' value='Save' />
+</form>
+{% endblock %}

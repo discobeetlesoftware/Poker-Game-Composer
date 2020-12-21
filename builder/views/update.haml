@@ -23,6 +23,12 @@
     %label{ :for => 'no_limit' } No-limit
     %input{ :type => 'checkbox', :name => 'structures[no_limit]', :id => 'no_limit', :checked => game.structures.include?("no_limit") }
 
+  #evaluation
+    %h3 Evaluation
+    %ul
+    %a{ :href => '#', :class => 'add button', :onclick => "appendEvaluation();" } Add
+
+
   #sections_container
     %h3 Sections
     %ol

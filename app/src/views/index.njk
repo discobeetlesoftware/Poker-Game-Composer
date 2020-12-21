@@ -1,0 +1,9 @@
+{% extends 'layouts/main.njk' %}
+{% block body %}
+<a href='/create'>New Game</a>
+<ol>
+{% for link in links %}
+    <li><a href='/game/{{link}}'>{{link}}</a></li>
+{% endfor %}
+</ol>
+{% endblock %}

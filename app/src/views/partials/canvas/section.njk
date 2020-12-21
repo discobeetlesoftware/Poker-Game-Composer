@@ -1,0 +1,19 @@
+//////////// {{section.name}} [Section {{loop.index}}] ////////////
+() => {
+    sectionTitles.push('{{section.name}}');
+    var sectionContainer = new Container().addTo(sectionsContainer);
+    var elementContainer = new Container().addTo(sectionContainer);
+    var lastElementMaxX = 0;
+    var elements = [
+      {% asyncEach element in section.elements %}
+      {% include element.partial_name %}
+      {% endeach %}
+    ];
+
+    elements.forEach(function(generator, index) {
+      var element = generator();
+      lastElementMaxX += element.width + config.element.horizontalSpacing;
+    });
+    elementContainer.pos(0, sectionTitlesContainer.height + window.config.section.title.margins.bottom);
+    return sectionContainer;
+},

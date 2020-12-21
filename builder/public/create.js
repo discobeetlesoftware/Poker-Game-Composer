@@ -23,3 +23,10 @@ function appendSectionElement(id) {
 		$(elementsKey).append(result);
 	});
 }
+
+function appendEvaluation() {
+  var path = '/create/evaluation/' + $('#evaluation ul li').length;
+  $.get(path, function(result) { 
+    $('#evaluation ul').append(result); 
+  });
+}

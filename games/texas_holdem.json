@@ -56,5 +56,9 @@
         }
       ]
     }
-  ]
+  ],
+  "evaluation": {
+    "type": null,
+    "hand": null
+  }
 }

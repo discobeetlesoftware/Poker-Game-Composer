@@ -1,0 +1,6 @@
+<label for='{{key}}_value' class='title'>Board cards</label>
+<select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][card_count]' id='{{key}}_value'>
+    {% for index in range(1, 9) %}
+    <option{% if element.card_count == index %} selected{% endif %}>{{index}}</option>
+    {% endfor %}
+</select>

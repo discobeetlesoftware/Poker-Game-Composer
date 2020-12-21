@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Poker Game Composer</title>
+        <meta name="viewport" content="width=device-width" />
+        <link href="/css/main.css", rel="stylesheet", type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/js/configs.js"></script>
+        <script src="/js/jcanvas.min.js"></script>
+        <script src="/js/createjs.js"></script>
+        <script src="/js/zim.js"></script>
+        <script src="/js/render.js"></script>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo">
+                    <h1>Poker Game Composer</h1>
+                </div>
+                <p>
+                    <a href="/">View all</a>
+                </p>
+            </div>
+            <div class="content">
+                {% block body %}
+                {% endblock %}
+                <div class="footer">
+                    &mdash; &copy; 2021 &mdash;
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

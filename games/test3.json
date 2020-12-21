@@ -1,0 +1,26 @@
+{
+  "name": "test3",
+  "abbreviation": "",
+  "alternative_names": "",
+  "structures": [
+
+  ],
+  "sections": [
+    {
+      "name": "SectionTest1",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        },
+        {
+          "type": "deal_player_down",
+          "card_count": 1
+        }
+      ]
+    }
+  ]
+}

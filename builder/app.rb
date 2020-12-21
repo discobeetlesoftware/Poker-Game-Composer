@@ -1,5 +1,6 @@
 require 'sinatra'
 require_relative 'models/game'
+require_relative 'models/database'
 
 configure do
 	set :views, File.join(__dir__, "views")
@@ -29,6 +30,8 @@ get '/' do
 	@games = Dir.glob(File.join(settings.games_dir, "*.json")).sort.map do |path|
 		File.basename(path, ".json")
 	end
+  @database = Database.new
+ # puts @database.g.diff
 	haml :list
 end
 
@@ -37,7 +40,11 @@ get '/show/:name' do |n|
 	@game = Game.load(n)
 	@file = Game.path(n)
 	useTemplate = (params['useTemplate'] ||= "true") == "true"
-	haml :showCanvas, :layout => useTemplate
+	haml :show, :layout => useTemplate
+end
+
+get '/create/evaluation/:id' do |id|
+  haml :evaluation, :layout => false, :locals => { :id => id, :key => "evaluation_#{id}", :evaluation => Evaluation.new }
 end
 
 get '/create/section/:id' do |id|
@@ -55,6 +62,7 @@ end
 
 get '/create/section/:section_id/element/:element_id/type/:type' do |section_id, element_id, type|
   time = Time.now.to_i
+  puts params
 	haml "elementUpdate/#{params['type']}".to_sym, :layout => false, :locals => { 
     :element => Element.create(params), 
     :section_id => "section_#{section_id}",
@@ -67,7 +75,7 @@ get '/create' do
 end
 
 post '/create' do
-	puts params
+  puts params
 	game = Game.from_params(params)
   puts game
 	game.save(settings.games_dir)
@@ -80,7 +88,9 @@ get '/edit/:game' do |n|
 end
 
 post '/edit/:game' do |n|
+  puts params
   game = Game.from_params(params)
+  puts game
   game.save(settings.games_dir)
   redirect to("/show/#{n}")
 end

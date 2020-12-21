@@ -1,0 +1,67 @@
+{
+  "name": "SOHE",
+  "abbreviation": "SOHE",
+  "alternative_names": "",
+  "structures": [
+    "fixed_limit",
+    "pot_limit",
+    "no_limit"
+  ],
+  "sections": [
+    {
+      "name": "Pre-flop",
+      "elements": [
+        {
+          "type": "deal_player_down",
+          "card_count": 6
+        },
+        {
+          "type": "split_hand",
+          "split_sizes": [
+            2,
+            4
+          ]
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Flop",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 3
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Turn",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "River",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
+}

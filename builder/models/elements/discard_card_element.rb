@@ -1,4 +1,7 @@
+require_relative '../template'
+
 class DiscardCardElement
+  include TemplateMixin
   attr_accessor :card_count_range
   attr_accessor :then_draw
 
@@ -41,11 +44,23 @@ class DiscardCardElement
   def to_s
     "DiscardCard #{self.card_count_range} #{self.then_draw ? 'thenDraw' : 'NoDraw' }"
   end
+  
+  def draw(section_index, element_index)
+    load_template('elements/discard_card', 'js').render(binding)
+  end
+
+  def canvas_title
+    "\"Draw\\n#{self.card_count_range.min}-#{self.card_count_range.max} cards\""
+  end
+
+  def canvas_size
+    %{estimate_containedText(0, 0, #{canvas_title}, { width: 60, height: 60 })}
+  end
 
   def render_canvas(i,j)
     %{var elementSize = { width: 60, height: 60 };
-drawContainedText(xLocation, yLocation, "Draw\\n#{self.card_count_range.min}-#{self.card_count_range.max} cards", elementSize);
-xLocation += elementSize.width + 6;
+drawContainedText(window.elementLocations.center().x, window.elementLocations.center().y, #{canvas_title}, elementSize);
+xLocation += elementSize.width;
     }
   end
 end

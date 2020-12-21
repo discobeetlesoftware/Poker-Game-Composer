@@ -1,17 +1,8 @@
-%h2= @game.name
 %span
   %a{ :href => "/edit/#{@name}" } Edit
-%div
-  %h3 Details
-  %ul
-    %li Abbreviation: #{output_content(@game.abbreviation)}
-    %li Alternative names: #{output_content(@game.alternative_names)}
-    %li Structures: #{output_content(@game.structures.join(", "))}
-  %h3 Sections
-  %ol
-    - @game.sections.each do |section|
-      %li= section.name
-      %ul
-        - section.elements.each do |element|
-          %li= element.to_s
+
+%script{ :src => '/configs.js' }
+
 %span Loaded from file: #{@file}
+%script{:type => "text/javascript"}
+  #{@game.draw}

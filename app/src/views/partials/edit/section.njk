@@ -1,0 +1,21 @@
+<li id='{{key}}' class='section'>
+    <div class='title'>
+        <label for='{{key}}_name'>Name</label>
+        <input id='{{key}}_name' name='[section][{{sectionIndex}}][name]' type='text' value='{{section.name}}'>
+
+        <span>
+            <a href='#' class='delete' onclick="$('#{{key}}').remove();">⊗</a>
+        </span>
+    </div>
+
+    <div class='elements'>
+        {% asyncEach element in section.elements %}
+            {% set elementIndex = loop.index0 %}
+            {% set key = 'element_' + sectionIndex + '_' + loop.index0 %}
+            {% include 'partials/edit/element.njk' %}
+        {% endeach %}
+    </div>
+    <div>
+        <a href='#' class='add button' onclick="appendSectionElement('{{sectionIndex}}');">Add element</a>
+    </div>
+</li>

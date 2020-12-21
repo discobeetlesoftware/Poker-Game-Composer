@@ -1,0 +1,101 @@
+var globals = {
+    size: {
+        height: 768,
+        width: 1024
+    },
+    heights: {
+        title: 0.2,
+        detail: 0.1,
+        sections: 0.5,
+        description: 0.2,
+        sectionTitles: 0.1
+    }
+};
+
+function defaultHeight(ratio) {
+    return globals.size.height * ratio;
+}
+
+// scaling, width, height, color, outerColor, assets, path, progress, rollover, touch, 
+//scrollTop, align, valign, canvasID, rollPerSecond, delay, canvasCheck, gpu, gpuObj, 
+//nextFrame, nextStage, allowDefault, loadFailObj, sensors, retina, mouseMoveOutside, captureMouse, shim, maxConnections
+var frame = new Frame({
+    scaling: 'fit',
+    width: globals.size.width,
+    height: globals.size.height,
+    color: light,
+    outerColor: dark
+});
+
+frame.on('ready', () => {
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    var sectionsSize = {width: 0, height:0};
+    var lastSection; var nextSection; var lastSectionBounds; var sectionXLocation = 0;
+
+    var titleContainer = new Container(globals.size.width, defaultHeight(globals.heights.title)).addTo();
+    var title = gameTitle('{{game.name}}', window.config.game.title).center(titleContainer);
+
+    var detailContainer = new Container(globals.size.width, defaultHeight(globals.heights.detail)).addTo();
+    var detailsLabel = new Label({
+        text: '{{game.details}}',
+        size: window.config.game.detail.size,
+        font: window.config.game.detail.family,
+        color: window.config.game.detail.color,
+        labelWidth: stageW * 0.75
+    }).center(detailContainer);
+
+    var sectionsContainer = new Container(globals.size.width, defaultHeight(globals.heights.sections));
+    var sectionTitlesContainer = new Container(globals.size.width, defaultHeight(globals.heights.sectionTitles)).addTo(sectionsContainer);
+    var sectionTitles = [];
+    var sectionBuilders = [
+        {% asyncEach section in game.sections %}
+            {% set section_index = loop.index0 %}
+            {% include 'partials/canvas/section.njk' %}
+        {% endeach %}
+    ];
+
+    for (var section_index = 0; section_index < sectionBuilders.length; section_index++) {
+        var builder = sectionBuilders[section_index];
+        nextSection = builder();
+        if (lastSection == undefined) {
+            lastSectionBounds = { x: 0, y: 0, width: 0, height: 0};
+            sectionXLocation = 0;
+        } else {
+            lastSectionBounds = lastSection.getBounds(); 
+            sectionXLocation += lastSectionBounds.width + config.section.horizontalSpacing;
+        }
+        sectionsSize.width = sectionXLocation - config.section.horizontalSpacing;
+        sectionsSize.height = Math.max(sectionsSize.height, lastSectionBounds.height);
+        var title = gameTitle(sectionTitles[section_index], window.config.section.title.font).addTo(sectionTitlesContainer).pos(sectionXLocation, 0, LEFT, BOTTOM);
+        nextSection.pos(sectionXLocation, 0, LEFT, CENTER);
+        lastSection = nextSection;
+    }
+
+    sectionsContainer.width = sectionXLocation;
+    var sectionsWrapper = new Container(globals.size.width, sectionsContainer.height).addTo();
+    sectionsWrapper.backgroundColor = yellow;
+    sectionsContainer.addTo(sectionsWrapper).pos(
+    ((sectionsWrapper.width - sectionXLocation) / 2), 0, LEFT, TOP);
+    sectionTitlesContainer.pos(0, 0);
+
+    var descriptionContainer = new Container(globals.size.width, defaultHeight(globals.heights.description)).addTo();
+
+    var layout = new Layout(
+        stage, [
+            { object: titleContainer, maxHeight: defaultHeight(globals.heights.title) * 100, valign: CENTER },
+            { object: detailContainer, maxHeight: defaultHeight(globals.heights.detail) * 100, valign: CENTER },
+            { object: sectionsWrapper, maxHeight: defaultHeight(globals.heights.sections) * 100, valign: CENTER },
+            { object: descriptionContainer, maxHeight: defaultHeight(globals.heights.description) * 100, valign: CENTER },
+        ],
+        0, null, true, new Shape()
+    );
+
+    stage.update();
+});
+
+frame.on('resize', () => {
+
+});

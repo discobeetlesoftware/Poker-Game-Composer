@@ -1,4 +1,7 @@
+require_relative '../template'
+
 class DealPlayerElement
+  include TemplateMixin
   attr_accessor :card_count
   attr_accessor :is_face_up
 
@@ -18,29 +21,40 @@ class DealPlayerElement
     self.is_face_up ? 'deal_player_up' : 'deal_player_down'
   end
 
+  def canvas_type
+    self.is_face_up ? 'false' : 'true'
+  end
+
   def to_hash
     { :type => type, :card_count => self.card_count }
+  end
+
+  def draw_canvas(section_index, element_index)
+    load_template('elements/deal_player', 'js').render(binding)
   end
 
   def to_s
     "DealPlayer #{self.card_count} #{self.is_face_up ? 'faceUp' : 'faceDown' }"
   end
 
+  def canvas_title
+    "\"#{self.card_count} card#{self.card_count > 1 ? "s" : ""}\""
+  end
+
+  def canvas_size
+    %{estimate_cardPile(0, 0, #{self.card_count}, #{canvas_title})}
+  end
+
+  def draw(section_index, element_index)
+    load_template('elements/deal_player', 'js').render(binding)
+  end
+
   def render_canvas(i,j)
-    results = []
-    xOffset = 6
-    yOffset = 3
-    strokeWidth = 1;
-    results << "xLocation += #{strokeWidth};"
-    results << %{var pileSize = drawCardPile(xLocation, yLocation, 'I', #{self.is_face_up ? 'false' : 'true'}, #{self.card_count}, "#{self.card_count} card#{self.card_count > 1 ? "s" : ""}");}
-    results << %{yLocation += pileSize.height;}
-    results << %{xLocation += pileSize.width;}
-#    self.card_count.times do |x|
- #     results << %{element_widths['#{type}'] = drawCard(xLocation + #{x * xOffset}, yLocation + #{x * yOffset}, 'I', #{self.is_face_up ? 'false' : 'true'});}
-  #  end
-   # results << "yLocation += element_widths['#{type}'].height + #{yOffset * (self.card_count - 1)} + 2;"
-    #results << %{drawText(xLocation, yLocation, "#{self.card_count} card#{self.card_count > 1 ? "s" : ""}");}
-  #  results << "element_widths[#{i}] += element_widths['#{type}'].width + #{xOffset * (self.card_count - 1)};"
-    results.join("\n")
+    %{
+      xLocation += window.config.element.card.border.width
+      var pileSize = drawCardPile(elementLocations.topLeft().x, elementLocations.topLeft().y, 'I', #{canvas_type}, #{self.card_count}, #{canvas_title});
+      yLocation += pileSize.height;
+      xLocation += pileSize.width;
+    }
   end
 end

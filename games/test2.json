@@ -1,0 +1,22 @@
+{
+  "name": "Test2",
+  "abbreviation": "",
+  "alternative_names": "",
+  "structures": [
+    "fixed_limit"
+  ],
+  "sections": [
+    {
+      "name": "SectionTest1",
+      "elements": [
+        {
+          "type": "betting_round"
+        },
+        {
+          "type": "deal_board",
+          "card_count": 1
+        }
+      ]
+    }
+  ]
+}
