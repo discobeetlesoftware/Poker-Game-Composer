@@ -88,7 +88,6 @@ export class Game {
             structure: this.structure.to_serializable(),
             forced_bet: this.forced_bet,
             evaluation: this.evaluation.to_serializable(),
-            details: this.details,
             abbreviation: this.abbreviation,
             alternative_names: this.alternative_names,
             clarification: this.clarification,
