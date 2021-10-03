@@ -101,16 +101,18 @@ function textElement(section, x, y, type) {
     return rect;
 }
 
-function cardPile(isFaceUp, count, text) {
+function cardPile(isFaceUp, count, text, caption) {
     if (count <= 0) { return; }
     var pileConfig = window.config.element.card.pile.offset;
     var container = new Container();
+    var pileCard;
     for (var j = 0; j < count; j++) {
-        var pileCard = card(isFaceUp, text);
+        pileCard = card(isFaceUp, text);
         var xLoc = ((j) * pileConfig.x);
         var yLoc = ((j) * pileConfig.y);
         pileCard.addTo(container).pos(xLoc, yLoc);
     }
+    var caption = gameTitle(caption, window.config.element.card.font).pos(0, 3, CENTER, BOTTOM, pileCard);
 
     return container;
 }
