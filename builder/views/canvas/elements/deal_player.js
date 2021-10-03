@@ -1,0 +1,1 @@
+cardPile(<%= canvas_type %>, <%= card_count %>, 'I').pos(lastElementMaxX, 0, LEFT, TOP, section);
