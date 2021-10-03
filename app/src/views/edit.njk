@@ -31,7 +31,11 @@
         var type = $(`#evaluation_type_${key} option:selected`).val();
         var evaluationScoreContainerToken = `#evaluation_exclusivity_${key}_scoring`;
         var evaluationSplitContainerToken = `#evaluation_exclusivity_${key}_split`;
+        var selectToken = evaluationScoreContainerToken + ' select';
+        var inputToken = evaluationScoreContainerToken + ' input';
 
+        $(selectToken).attr('disabled', type == 'split');
+        $(inputToken).attr('disabled', type == 'split');
         if (type == 'split') {
             $(evaluationScoreContainerToken).hide();
             $(evaluationSplitContainerToken).show();
