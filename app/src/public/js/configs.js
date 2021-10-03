@@ -82,6 +82,11 @@ debugConfig = {
                 offset: { x: 8, y: 3 },
                 margins: { top: 0, bottom: 0, left: 0, right: 0 }
             },
+            font: {
+                size: 12,
+                family: 'Verdana, sans-serif',
+                color: 'white'
+            },
             faceDown: {
                 backgroundColor: '#282828',
                 font: {
