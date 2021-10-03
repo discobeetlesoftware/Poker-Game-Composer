@@ -1,19 +1,42 @@
 {
   "name": "Dramaha",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "split",
+    "splits": [
+      {
+        "type": "high",
+        "splits": [],
+        "qualifier": {},
+        "exclusivity": "two",
+        "ace_position": "both"
+      },
+      {
+        "type": "high",
+        "splits": [],
+        "qualifier": {},
+        "exclusivity": "all",
+        "ace_position": "both"
+      }
+    ],
+    "qualifier": {}
+  },
   "abbreviation": "",
   "alternative_names": "Drawmaha",
-  "structures": [
-    "fixed_limit",
-    "pot_limit",
-    "no_limit"
-  ],
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
-          "type": "deal_player_down",
-          "card_count": 5
+          "type": "deal_player",
+          "card_count": 5,
+          "is_face_up": false
         },
         {
           "type": "betting_round"
@@ -37,11 +60,11 @@
       "elements": [
         {
           "type": "discard_card",
-          "then_draw": true,
-          "range": [
+          "card_count_range": [
             0,
             5
-          ]
+          ],
+          "then_draw": true
         },
         {
           "type": "deal_board",

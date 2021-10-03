@@ -1,19 +1,16 @@
 {
-  "name": "Texas Hold'em",
+  "name": "Texas Hold em",
+  "structure": {},
   "abbreviation": "HE",
   "alternative_names": "Hold'em",
-  "structures": [
-    "fixed_limit",
-    "pot_limit",
-    "no_limit"
-  ],
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
-          "type": "deal_player_down",
-          "card_count": 2
+          "type": "deal_player",
+          "card_count": 2,
+          "is_face_up": false
         },
         {
           "type": "betting_round"
@@ -56,9 +53,5 @@
         }
       ]
     }
-  ],
-  "evaluation": {
-    "type": null,
-    "hand": null
-  }
+  ]
 }

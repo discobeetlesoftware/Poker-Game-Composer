@@ -1,19 +1,43 @@
 {
   "name": "SOHE",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "split",
+    "splits": [
+      {
+        "type": "high",
+        "splits": [],
+        "qualifier": {},
+        "exclusivity": "two",
+        "ace_position": "both"
+      },
+      {
+        "type": "high",
+        "splits": [],
+        "qualifier": {},
+        "exclusivity": "any",
+        "ace_position": "both"
+      }
+    ],
+    "qualifier": {}
+  },
+  "details": "Blinds",
   "abbreviation": "SOHE",
   "alternative_names": "",
-  "structures": [
-    "fixed_limit",
-    "pot_limit",
-    "no_limit"
-  ],
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
-          "type": "deal_player_down",
-          "card_count": 6
+          "type": "deal_player",
+          "card_count": 6,
+          "is_face_up": false
         },
         {
           "type": "split_hand",

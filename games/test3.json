@@ -17,7 +17,7 @@
           "type": "betting_round"
         },
         {
-          "type": "deal_player_down",
+          "type": "deal_player",
           "card_count": 1
         }
       ]

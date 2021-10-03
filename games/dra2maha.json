@@ -12,7 +12,7 @@
       "name": "Pre-flop",
       "elements": [
         {
-          "type": "deal_player_down",
+          "type": "deal_player",
           "card_count": 5
         },
         {

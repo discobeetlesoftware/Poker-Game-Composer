@@ -1,19 +1,29 @@
 {
   "name": "Omaha",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "high",
+    "splits": [],
+    "qualifier": {},
+    "exclusivity": "two",
+    "ace_position": "both"
+  },
   "abbreviation": "",
   "alternative_names": "",
-  "structures": [
-    "fixed_limit",
-    "pot_limit",
-    "no_limit"
-  ],
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
-          "type": "deal_player_down",
-          "card_count": 4
+          "type": "deal_player",
+          "card_count": 4,
+          "is_face_up": false
         },
         {
           "type": "betting_round"

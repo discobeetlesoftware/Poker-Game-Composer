@@ -1,19 +1,17 @@
 {
   "name": "Showmaha",
+  "structure": {},
   "abbreviation": "",
+  "forced_bet": "ante",
   "alternative_names": "",
-  "structures": [
-    "fixed_limit",
-    "pot_limit",
-    "no_limit"
-  ],
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
-          "type": "deal_player_down",
-          "card_count": 4
+          "type": "deal_player",
+          "card_count": 4,
+          "is_face_up": false
         },
         {
           "type": "betting_round"
@@ -29,7 +27,10 @@
         },
         {
           "type": "expose_card",
-          "card_count": 2
+          "card_count_range": [
+            2,
+            2
+          ]
         },
         {
           "type": "betting_round"
