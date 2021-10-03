@@ -18,7 +18,7 @@ export class DiscardCardElement extends GameElement {
     }
 
     public static load(data: any): DiscardCardElement {
-        return new DiscardCardElement(new NumberRange(data['range']), data['then_draw']);
+        return new DiscardCardElement(new NumberRange(data['card_count_range']), data['then_draw']);
     }
 
     to_serializable=(): any => {
