@@ -37,9 +37,10 @@ var SplitHandElement = /** @class */ (function (_super) {
         _this.to_serializable = function () {
             return {
                 type: _this.type,
-                card_count_range: _this.split_sizes
+                split_sizes: _this.split_sizes
             };
         };
+        console.log(split_sizes);
         _this.split_sizes = split_sizes;
         if (_this.is_equal_split()) {
             _this.canvas_title = "Split";

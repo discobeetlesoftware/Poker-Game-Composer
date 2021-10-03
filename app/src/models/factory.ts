@@ -7,12 +7,14 @@ import { DiscardHandElement } from "./elements/discard_hand_element";
 import { DrawCardElement } from "./elements/draw_card_element";
 import { ExposeCardElement } from "./elements/expose_card_element";
 import { SplitHandElement } from "./elements/split_hand_element";
+import { Evaluation } from "./evalulation";
 import { Game } from "./game";
 import { GameElement } from "./game_element";
 import { GameElementType } from "./game_element_type";
 import { GameSection } from "./game_section";
 import { GameStructure } from "./game_structure";
 import { NumberRange } from "./number_range";
+import { Qualifier } from "./qualifier";
 
 export class Factory {
     public static create_element(type: GameElementType): GameElement {
@@ -33,11 +35,36 @@ export class Factory {
         game.name = params.name;
         game.abbreviation = params.abbreviation;
         game.structure = Factory.hydrate_structure(params.structures);
+        game.evaluation = Factory.hydrate_evaluation(params.evaluation.shift());
+        game.forced_bet = params.forced_bet;
         game.alternative_names = params.alternative_names;
         game.sections = params.section.map((data: any): GameSection => {
             return Factory.hydrate_section(data);
         });
         return game;
+    }
+
+    public static hydrate_qualifier=(params: any) : Qualifier => {
+        let qualifier = new Qualifier();
+        if (params != undefined) {
+            qualifier.type = params.type;
+        }
+        return qualifier;
+    }
+
+    public static hydrate_evaluation=(params: any): Evaluation => {
+        let evaluation = new Evaluation();
+        if (params != undefined) {
+            evaluation.type = params.type;
+            evaluation.ace_position = params.ace;
+            evaluation.exclusivity = params.exclusivity;
+            evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);
+            let splits = params.splits ?? [];
+            evaluation.splits = splits.map((splitData: any) => {
+                return Factory.hydrate_evaluation(splitData);
+            });
+        }
+        return evaluation;
     }
 
     public static hydrate_structure=(params: any): GameStructure => {
@@ -79,7 +106,7 @@ export class Factory {
             case GameElementType.ExposeCard:
                 return new ExposeCardElement(new NumberRange([parseInt(params.card_count), parseInt(params.card_count)]));
             case GameElementType.SplitHand:
-                return new SplitHandElement(params.hand_size.map(parseInt));
+                return new SplitHandElement(params.hand_size.map((size: any): number => { return parseInt(size); }));
         }
     }
 }

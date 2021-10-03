@@ -11,6 +11,9 @@ var NumberRange = /** @class */ (function () {
         this.max = values[values.length - 1];
         this.magnitude = this.max - this.min;
     }
+    NumberRange.IsNumberRange = function (input) {
+        return input.min !== undefined;
+    };
     NumberRange.From = function (input) {
         if (typeof input == 'number') {
             return new NumberRange([input, input]);

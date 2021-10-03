@@ -22,7 +22,7 @@ var viewsDirectory = path.join(__dirname, '..', 'src', 'views');
 app.set('views', viewsDirectory);
 app.set('view engine', 'njk');
 nunjucks.configure(viewsDirectory, {
-    autoescape: true,
+    autoescape: false,
     express: app
 });
 // register routes
@@ -48,6 +48,7 @@ app.get('/schema/:game.json', function (req, res, next) {
 app.get('/game/:game', function (req, res, next) {
     var gameName = req.params.game;
     database.loadGame(gameName).then(function (game) {
+        console.log(game.description);
         res.render('game', { game: game });
     }).catch(function (reason) {
         next(reason);
@@ -78,6 +79,20 @@ app.get("/component/edit/section/:section_index/element/:element_index/type/:ele
         element: factory_1.Factory.create_element(type)
     });
 });
+app.get("/component/edit/game/evaluation/:evaluation_index", function (req, res, next) {
+    var keys = req.params.evaluation_index.split('_');
+    console.log(keys);
+    var id = keys.shift();
+    var key = "[" + id + "]";
+    keys.forEach(function (element) {
+        key += "[split][" + element + "]";
+        id += "_" + element;
+    });
+    res.render('partials/edit/evaluation', {
+        evaluationKey: id,
+        evaluationContext: key
+    });
+});
 app.get("/edit/:game", function (req, res, next) {
     var gameName = req.params.game;
     database.loadGame(gameName).then(function (game) {
@@ -85,6 +100,7 @@ app.get("/edit/:game", function (req, res, next) {
     });
 });
 app.post("/edit/:game", function (req, res, next) {
+    console.dir(JSON.stringify(req.body, null, 4));
     var game = factory_1.Factory.hydrate_game(req.body);
     if (game == null) {
         return next('Could not save game');

@@ -3,12 +3,14 @@ import { NumberRange } from "../number_range";
 
 export class ExposeCardElement extends GameElement {
     card_count_range: NumberRange;
-    canvas_title: string;
 
     constructor(card_count_range: NumberRange = new NumberRange([])) {
         super('expose_card');
         this.card_count_range = NumberRange.From(card_count_range);
-        this.canvas_title = ExposeCardElement.GenerateCanvasTitle(this.card_count_range);
+    }
+
+    get canvas_title() {
+        return ExposeCardElement.GenerateCanvasTitle(this.card_count_range);
     }
 
     private static GenerateCanvasTitle(range: NumberRange): string {
@@ -24,7 +26,7 @@ export class ExposeCardElement extends GameElement {
     }
 
     public static load(data: any): ExposeCardElement {
-        return new ExposeCardElement(data['card_count']);
+        return new ExposeCardElement(data['card_count_range']);
     }
 
     to_serializable=(): any => {

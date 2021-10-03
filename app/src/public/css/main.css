@@ -29,6 +29,11 @@
 	list-style: none;
 }
 
+div.header {
+	font-weight: bold;
+	font-size: 16px;
+}
+
 .button {
   padding: 3px;
   text-align: center;
@@ -38,6 +43,28 @@
   border: 2px ridge #888888;
   font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
   margin: 1px;
+}
+
+.gameDetails label {
+	min-width: 130px;
+	display: inline-block;
+	text-align: right;
+}
+
+.evaluation>div {
+	background-color: #e8e8e8;
+	margin-left: 10px;
+}
+
+.evaluation_container {
+	background-color: rgba(31, 187, 223, 0.14);
+	margin-left: 8px;
+	border: 1px solid rgba(22, 90, 105, 0.25);
+	padding: 5px;
+}
+
+.evaluation>div>div {
+	margin-left: 20px;
 }
 
 a.delete {

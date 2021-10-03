@@ -14,6 +14,8 @@ var draw_card_element_1 = require("./elements/draw_card_element");
 var expose_card_element_1 = require("./elements/expose_card_element");
 var split_hand_element_1 = require("./elements/split_hand_element");
 var game_structure_1 = require("./game_structure");
+var evalulation_1 = require("./evalulation");
+var qualifier_1 = require("./qualifier");
 var Database = /** @class */ (function () {
     function Database(rootDir, routePath) {
         var _this = this;
@@ -70,13 +72,39 @@ var Database = /** @class */ (function () {
             structure.no_limit = data.no_limit;
             return structure;
         };
+        this.hydrateQualifier = function (data) {
+            var qualifier = new qualifier_1.Qualifier();
+            console.log(data);
+            return qualifier;
+        };
+        /*
+        type: EvaluationType;
+        invalidation_hands: Hand[];
+        bug_completion_hands: Hand[];
+        */
+        this.hydrateEvaluation = function (data) {
+            var evaluation = new evalulation_1.Evaluation();
+            if (data == undefined) {
+                return evaluation;
+            }
+            evaluation.type = data.type;
+            evaluation.ace_position = data.ace_position;
+            evaluation.exclusivity = data.exclusivity;
+            evaluation.qualifier = _this.hydrateQualifier(data.qualifier);
+            evaluation.splits = data.splits.map(function (splitData) {
+                return _this.hydrateEvaluation(splitData);
+            });
+            return evaluation;
+        };
         this.hydrateGame = function (data, file) {
             var game = new game_1.Game();
             game.file = file;
             game.structure = _this.hydrateStructure(data.structure);
+            game.evaluation = _this.hydrateEvaluation(data.evaluation);
+            console.log(game.evaluation);
             game.name = data['name'];
-            game.details = 'Blinds • Split Pot • Etc';
             game.abbreviation = data['abbreviation'];
+            game.forced_bet = data['forced_bet'];
             game.alternative_names = data['alternative_names'];
             game.sections = data['sections'].map(_this.hydrateSection);
             return game;

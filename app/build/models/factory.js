@@ -9,11 +9,13 @@ var discard_hand_element_1 = require("./elements/discard_hand_element");
 var draw_card_element_1 = require("./elements/draw_card_element");
 var expose_card_element_1 = require("./elements/expose_card_element");
 var split_hand_element_1 = require("./elements/split_hand_element");
+var evalulation_1 = require("./evalulation");
 var game_1 = require("./game");
 var game_element_type_1 = require("./game_element_type");
 var game_section_1 = require("./game_section");
 var game_structure_1 = require("./game_structure");
 var number_range_1 = require("./number_range");
+var qualifier_1 = require("./qualifier");
 var Factory = /** @class */ (function () {
     function Factory() {
     }
@@ -34,11 +36,35 @@ var Factory = /** @class */ (function () {
         game.name = params.name;
         game.abbreviation = params.abbreviation;
         game.structure = Factory.hydrate_structure(params.structures);
+        game.evaluation = Factory.hydrate_evaluation(params.evaluation.shift());
+        game.forced_bet = params.forced_bet;
         game.alternative_names = params.alternative_names;
         game.sections = params.section.map(function (data) {
             return Factory.hydrate_section(data);
         });
         return game;
+    };
+    Factory.hydrate_qualifier = function (params) {
+        var qualifier = new qualifier_1.Qualifier();
+        if (params != undefined) {
+            qualifier.type = params.type;
+        }
+        return qualifier;
+    };
+    Factory.hydrate_evaluation = function (params) {
+        var _a;
+        var evaluation = new evalulation_1.Evaluation();
+        if (params != undefined) {
+            evaluation.type = params.type;
+            evaluation.ace_position = params.ace;
+            evaluation.exclusivity = params.exclusivity;
+            evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);
+            var splits = (_a = params.splits) !== null && _a !== void 0 ? _a : [];
+            evaluation.splits = splits.map(function (splitData) {
+                return Factory.hydrate_evaluation(splitData);
+            });
+        }
+        return evaluation;
     };
     Factory.hydrate_structure = function (params) {
         var structure = new game_structure_1.GameStructure();
@@ -77,7 +103,7 @@ var Factory = /** @class */ (function () {
             case game_element_type_1.GameElementType.ExposeCard:
                 return new expose_card_element_1.ExposeCardElement(new number_range_1.NumberRange([parseInt(params.card_count), parseInt(params.card_count)]));
             case game_element_type_1.GameElementType.SplitHand:
-                return new split_hand_element_1.SplitHandElement(params.hand_size.map(parseInt));
+                return new split_hand_element_1.SplitHandElement(params.hand_size.map(function (size) { return parseInt(size); }));
         }
     };
     return Factory;

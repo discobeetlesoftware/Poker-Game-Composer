@@ -25,7 +25,7 @@ const viewsDirectory = path.join(__dirname, '..', 'src', 'views');
 app.set('views', viewsDirectory);
 app.set('view engine', 'njk');
 nunjucks.configure(viewsDirectory, {
-  autoescape: true,
+  autoescape: false,
   express: app
 });
 
@@ -55,6 +55,7 @@ app.get('/schema/:game.json', function(req: Request, res: Response, next) {
 app.get('/game/:game', function(req: Request, res: Response, next) {
   var gameName = req.params.game;
   database.loadGame(gameName).then(function(game: Game) {
+    console.log(game.description);
     res.render('game', { game: game });
   }).catch(function(reason: any) {
     next(reason);
@@ -89,6 +90,22 @@ app.get("/component/edit/section/:section_index/element/:element_index/type/:ele
   });
 });
 
+app.get("/component/edit/game/evaluation/:evaluation_index", function(req: Request, res: Response, next) {
+  var keys = req.params.evaluation_index.split('_');
+  console.log(keys);
+  var id = keys.shift();
+  var key = `[${id}]`;
+  keys.forEach((element: string) => {
+    key += `[split][${element}]`;
+    id += `_${element}`;
+  });
+
+  res.render('partials/edit/evaluation', {
+    evaluationKey: id,
+    evaluationContext: key
+  });
+});
+
 app.get("/edit/:game", function(req: Request, res: Response, next) {
   var gameName = req.params.game;
   database.loadGame(gameName).then(function(game: Game) {
@@ -97,6 +114,7 @@ app.get("/edit/:game", function(req: Request, res: Response, next) {
 });
 
 app.post("/edit/:game", function(req: Request, res: Response, next) {
+  //console.dir(JSON.stringify(req.body, null, 4));
   let game = Factory.hydrate_game(req.body);
   if (game == null) {
     return next('Could not save game');

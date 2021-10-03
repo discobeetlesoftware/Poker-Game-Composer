@@ -1,0 +1,129 @@
+<div class='evaluation_container' id='evaluation_container_{{evaluationContext}}'>
+    <div>
+        <label for='evaluation_type_{{evaluationKey}}'>Type</label>
+        <select name='evaluation{{evaluationContext}}[type]' id='evaluation_type_{{evaluationKey}}'>
+            <option value='high'>High</option>
+            <option value='low'>Low</option>
+            <option value='point_low'>Point Low</option>
+            <option value='point-high'>Point High</option>
+            <option value='badugi'>Badugi</option>
+            <option value='split'>Split</option>
+        </select>
+    </div>
+    <div id='evaluation_exclusivity_{{evaluationKey}}_split'>
+        <ul>
+        </ul>
+    </div>
+
+    <div id='evaluation_exclusivity_{{evaluationKey}}_scoring'>
+        <div>
+            <label for='evaluation_exclusivity_{{evaluationKey}}'>Exclusivity</label>
+            <select name='evaluation{{evaluationContext}}[exclusivity]' id='evaluation_exclusivity_{{evaluationKey}}'>
+                <option value='any'>Any player cards</option>
+                <option value='all'>All player cards</option>
+                <option value='one'>Exactly one player card</option>
+                <option value='two'>Exactly two player cards</option>
+                <option value='three'>Exactly three player cards</option>
+                <option value='four'>Exactly four player cards</option>
+                <option value='five'>Exactly five player cards</option>
+                <option value='six'>Exactly six player cards</option>
+                <option value='seven'>Exactly seven player cards</option>
+            </select>
+        </div>
+
+        <div class='header'>Qualifier <input type='checkbox' id='evaluation_qualifier_enabled_{{evaluationKey}}' /></div>
+        <div id='evaluation_qualifier_container_{{evaluationKey}}'>
+            <label for='evaluation_qualifier_{{evaluationKey}}'>Type</label>
+            <select name='evaluation{{evaluationContext}}[qualifier][type]' id='evaluation_qualifier_{{evaluationKey}}'>
+                <option value='none'>None</option>
+                <option value='lower_rank'>Lower or equal rank (≤)</option>
+                <option value='higher_rank'>Higher or equal rank (≥)</option>
+                <option value='lower_hand'>Lower or equal hand (≤)</option>
+                <option value='higher_hand'>Higher or equal hand (≥)</option>
+            </select>
+
+            <div id='evaluation_qualifier_{{evaluationKey}}_ranklist_container'>
+                <label for='evaluation_qualifier_{{evaluationKey}}_rank'>Qualifying rank</label>
+                <select name='evaluation{{evaluationContext}}[qualifier][rank]' id='evaluation_qualifier_{{evaluationKey}}_rank'>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>T</option>
+                    <option>J</option>
+                    <option>Q</option>
+                    <option>K</option>
+                </select>
+            </div>
+
+            <div id='evaluation_qualifier_{{evaluationKey}}_hand_container'>
+                <div>
+                    <label for='evaluation_qualifier_{{evaluationKey}}_hand'>Qualifying hand</label>
+                    <select name='evaluation{{evaluationContext}}[hand]' id='evaluation_qualifier_{{evaluationKey}}_hand'>
+                        <option value='high'>High</option>
+                        <option value='pair'>Pair</option>
+                        <option value='two_pair'>Two pair</option>
+                        <option value='three_of_a_kind'>Three of a kind</option>
+                        <option value='straight'>Straight</option>
+                        <option value='flush'>Flush</option>
+                        <option value='full_house'>Full house</option>
+                        <option value='four_of_a_kind'>Four of a kind</option>
+                        <option value='straight_flush'>Straight flush</option>
+                        <option value='royal_flush'>Royal flush</option>
+                    </select>
+                </div>
+                <div>
+                    <label for=''>Specific value</label>
+                    <input type='text' placeholder='99' pattern='[1-9|A|T|J|Q|K]{1,5}' />
+                    <span>(optional; Accepted characters: A23456789TJQK)</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class='header'>Ace Orientation</div>
+        <div id='evaluation_qualifier_{{evaluationKey}}_ace_container'>
+            <select name='evaluation{{evaluationContext}}[ace]' id='evaluation_qualifier_{{evaluationKey}}_ace'>
+                <option value='both'>Both</option>
+                <option value='low'>Low only</option>
+                <option value='high'>High only</option>
+            </select>
+        </div>
+
+        <div class='header'>Invalidation Hands <input type='checkbox' id='evaluation_invalidationhands_enabled_{{evaluationKey}}' /></div>
+        <div id='evaluation_invalidationhands_container_{{evaluationKey}}'>
+            <ol id='evaluation{{evaluationKey}}_invalidation_list'></ol>
+            <select id='evaluation_qualifier_{{evaluationKey}}_invalidation'>
+                <option value='high'>High</option>
+                <option value='pair'>Pair</option>
+                <option value='two_pair'>Two pair</option>
+                <option value='three_of_a_kind'>Three of a kind</option>
+                <option value='straight'>Straight</option>
+                <option value='flush'>Flush</option>
+                <option value='full_house'>Full house</option>
+                <option value='four_of_a_kind'>Four of a kind</option>
+                <option value='straight_flush'>Straight flush</option>
+                <option value='royal_flush'>Royal flush</option>
+            </select>
+            <a href='#' class='add button' onclick='appendInvalidationHand({{evaluationKey}});'>Append hand</a>
+        </div>
+
+        <h4>Bug Completion Hands</h4>
+        <div>
+            <ol></ol>
+        </div>
+    </div>
+</div>
+<script>
+    $('#evaluation_type_{{evaluationKey}}').change(function () { didChangeEvaluationType('{{evaluationKey}}'); });
+    $('#evaluation_qualifier_enabled_{{evaluationKey}}').change(function () { didChangeQualifierEnabled('{{evaluationKey}}'); });
+    $('#evaluation_invalidationhands_enabled_{{evaluationKey}}').change(function () { didChangeValidationHandsEnabled('{{evaluationKey}}'); });
+
+    didChangeEvaluationTypeStateHandler('{{evaluationKey}}');
+    didChangeQualifierEnabled('{{evaluationKey}}');
+    didChangeValidationHandsEnabled('{{evaluationKey}}');
+</script>

@@ -8,6 +8,10 @@ export class NumberRange {
         this.magnitude = this.max - this.min;
     }
 
+    static IsNumberRange(input: object): input is NumberRange {
+        return (input as NumberRange).min !== undefined;
+    }
+
     static From(input: any): NumberRange {
         if (typeof input == 'number') {
             return new NumberRange([input, input]);

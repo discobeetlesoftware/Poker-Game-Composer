@@ -30,9 +30,15 @@ var ExposeCardElement = /** @class */ (function (_super) {
             };
         };
         _this.card_count_range = number_range_1.NumberRange.From(card_count_range);
-        _this.canvas_title = ExposeCardElement.GenerateCanvasTitle(_this.card_count_range);
         return _this;
     }
+    Object.defineProperty(ExposeCardElement.prototype, "canvas_title", {
+        get: function () {
+            return ExposeCardElement.GenerateCanvasTitle(this.card_count_range);
+        },
+        enumerable: false,
+        configurable: true
+    });
     ExposeCardElement.GenerateCanvasTitle = function (range) {
         if (range == undefined) {
             return "Error";
@@ -45,7 +51,7 @@ var ExposeCardElement = /** @class */ (function (_super) {
         }
     };
     ExposeCardElement.load = function (data) {
-        return new ExposeCardElement(data['card_count']);
+        return new ExposeCardElement(data['card_count_range']);
     };
     return ExposeCardElement;
 }(game_element_1.GameElement));

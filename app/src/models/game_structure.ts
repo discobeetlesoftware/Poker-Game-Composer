@@ -3,7 +3,7 @@ export class GameStructure {
     fixed_limit: boolean;
     pot_limit: boolean;
     no_limit: boolean;
-
+    
     to_serializable=(): any => {
         return {
             ante: this.ante,

@@ -13,6 +13,8 @@ import { DrawCardElement } from "./elements/draw_card_element";
 import { ExposeCardElement } from "./elements/expose_card_element";
 import { SplitHandElement } from "./elements/split_hand_element";
 import { GameStructure } from "./game_structure";
+import { Evaluation } from "./evalulation";
+import { Qualifier } from "./qualifier";
 
 export class Database {
     gamesDir: string;
@@ -84,13 +86,41 @@ export class Database {
         return structure;
     }
 
+    hydrateQualifier=(data: any): Qualifier => {
+        let qualifier = new Qualifier();
+        console.log(data);
+        return qualifier;
+    }
+
+    /*
+    type: EvaluationType;
+    invalidation_hands: Hand[];
+    bug_completion_hands: Hand[];
+    */
+    hydrateEvaluation=(data: any): Evaluation => {
+        let evaluation = new Evaluation();
+        if (data == undefined) {
+            return evaluation;
+        }
+        evaluation.type = data.type;
+        evaluation.ace_position = data.ace_position;
+        evaluation.exclusivity = data.exclusivity;
+        evaluation.qualifier = this.hydrateQualifier(data.qualifier);
+        evaluation.splits = data.splits.map((splitData: any) => {
+            return this.hydrateEvaluation(splitData);
+        });
+        return evaluation;
+    }
+
     hydrateGame=(data: any, file: string): Game => {
         var game = new Game();
         game.file = file;
         game.structure = this.hydrateStructure(data.structure);
+        game.evaluation = this.hydrateEvaluation(data.evaluation);
+        console.log(game.evaluation);
         game.name = data['name'];
-        game.details = 'Blinds • Split Pot • Etc';
         game.abbreviation = data['abbreviation'];
+        game.forced_bet = data['forced_bet'];
         game.alternative_names = data['alternative_names'];
         game.sections = data['sections'].map(this.hydrateSection);
         return game;

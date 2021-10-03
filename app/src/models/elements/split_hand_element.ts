@@ -16,7 +16,7 @@ export class SplitHandElement extends GameElement {
         }
     }
 
-    is_equal_split=():boolean => {
+    is_equal_split=(): boolean => {
         if (this.split_sizes.length == 0) {
             return false;
         }
@@ -36,7 +36,7 @@ export class SplitHandElement extends GameElement {
     to_serializable=(): any => {
         return {
             type: this.type,
-            card_count_range: this.split_sizes
+            split_sizes: this.split_sizes
         };
     }
 }

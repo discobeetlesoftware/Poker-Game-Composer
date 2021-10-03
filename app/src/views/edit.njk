@@ -15,17 +15,87 @@
         });
     }
 
-    function appendEvaluation() {
-        var path = '/create/evaluation/' + $('#evaluation ul li').length;
-        $.get(path, function(result) { 
-            $('#evaluation ul').append(result); 
-        });
+    function appendEvaluationSplits(key) {
+        var splitListToken = `#evaluation_exclusivity_${key}_split>ul`;
+        var splitListElementCount = $(splitListToken + ' li').length;
+        for (var j = splitListElementCount; j < 2; j++) {
+            var splitKey = `${key}_${j}`;
+            var path = `/component/edit/game/evaluation/${splitKey}`;
+            $.get(path, function(result) {
+                $(splitListToken).append(`<li>${result}</li>`);
+            });
+        }
+    }
+
+    function didChangeEvaluationTypeStateHandler(key) {
+        var type = $(`#evaluation_type_${key} option:selected`).val();
+        var evaluationScoreContainerToken = `#evaluation_exclusivity_${key}_scoring`;
+        var evaluationSplitContainerToken = `#evaluation_exclusivity_${key}_split`;
+
+        if (type == 'split') {
+            $(evaluationScoreContainerToken).hide();
+            $(evaluationSplitContainerToken).show();
+        } else {
+            $(evaluationScoreContainerToken).show();
+            $(evaluationSplitContainerToken).hide();
+        }
+    }
+
+
+    function didChangeEvaluationType(key) {
+        didChangeEvaluationTypeStateHandler(key);
+        var type = $(`#evaluation_type_${key} option:selected`).val();
+        if (type == 'split') {
+            appendEvaluationSplits(key);
+        }
+    }
+
+    function didChangeQualifierEnabled(key) {
+        var checked = $(`#evaluation_qualifier_enabled_${key}`).prop('checked');
+        var containerToken = `#evaluation_qualifier_container_${key}`;
+        var selectToken = containerToken + ' select';
+        var inputToken = containerToken + ' input';
+        $(selectToken).attr('disabled', !checked);
+        $(inputToken).attr('disabled', !checked);
+        if (checked) {
+            $(containerToken).show();
+        } else {
+            $(containerToken).hide();
+        }
+    }
+
+    function didChangeValidationHandsEnabled(key) {
+        var checked = $(`#evaluation_invalidationhands_enabled_${key}`).prop('checked');
+        var containerToken = `#evaluation_invalidationhands_container_${key}`;
+        var selectToken = containerToken + ' select';
+        var inputToken = containerToken + ' input';
+        $(selectToken).attr('disabled', !checked);
+        $(inputToken).attr('disabled', !checked);
+        if (checked) {
+            $(containerToken).show();
+        } else {
+            $(containerToken).hide();
+        }
+    }
+
+    function didChangeHandSize(key, sectionIndex, elementIndex) {
+        var target = $(`#${key}_value option:selected`).val();
+        for (var j = $(`#${key}_value_option_container li`).length; j >= target; j--) {
+            $(`#${key}_value_option_container li`).last().remove();
+        }
+        for (var i = $(`#${key}_value_option_container li`).length; i < target; i++) {
+            $(`#${key}_value_option_container ul`).append(`<li><select name='section[${sectionIndex}][elements][${elementIndex}][hand_size][${i}]'><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select> cards</li>`);
+        }
+    }
+
+    function appendInvalidationHand(context) {
+
     }
 </script>
 {% endblock %}
 {% block body %}
 <form action='{{action}}' method='post'>
-    <div>
+    <div class='gameDetails'>
         <h3>Details</h3>
         <div>
             <label for='name'>Name</label>
@@ -43,7 +113,7 @@
         </div>
     </div>
 
-    <div>
+    <div class='gameDetails'>
         <h3>Structure</h3>
         <div>
             <label for='ante'>Ante</label>
@@ -65,9 +135,24 @@
             <input id='no_limit' name='structures[no_limit]' type='checkbox' {% if game.structure.no_limit %}checked{% endif %} />
         </div>
     </div>
+    <div class='gameDetails'>
+        <h3>Forced Bet</h3>
+        <div>
+            <label for='forced_bet_input'>Type</label>
+            <select name='forced_bet' id='forced_bet_input'>
+                <option value='ante'{% if game.forced_bet == 'ante' %}selected {% endif %}>Ante</option>
+                <option value='blinds'{% if game.forced_bet == 'blinds' %}selected {% endif %}>Blinds</option>
+                <option value='low_bring_in'{% if game.forced_bet == 'low_bring_in' %}selected {% endif %}>Low Bring-in</options>
+                <option value='high_bring_in'{% if game.forced_bet == 'high_bring_in' %}selected {% endif %}>High Bring-in</option>
+            </select>
+        </div>
+    </div>
 
-    <div id='evaluation_container'>
+    <div class='gameDetails'>
         <h3>Evaluation</h3>
+        {% set evaluationKey = '0' %}
+        {% set evaluationContext = '[0]' %}
+        {% include 'partials/edit/evaluation.njk' %}
     </div>
 
     <div id='sections_container'>

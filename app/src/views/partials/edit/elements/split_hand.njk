@@ -10,7 +10,7 @@ hands
     <ul>
         {% for size in element.split_sizes %}
         <li>
-            <select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][hand_size]'>
+            <select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][hand_size][{{loop.index0}}]'>
                 {% for index in range(1, 9) %}
                 <option{% if size == index %} selected{% endif %}>{{index}}</option>
                 {% endfor %}
@@ -19,3 +19,11 @@ hands
         {% endfor %}
     </ul>
 </div>
+<script>
+$('#{{key}}_value').change(function () {
+    didChangeHandSize('{{key}}', {{sectionIndex}}, {{elementIndex}});
+});
+{% if element.split_sizes.length == 0 %}
+didChangeHandSize('{{key}}', {{sectionIndex}}, {{elementIndex}});
+{% endif %}
+</script>
