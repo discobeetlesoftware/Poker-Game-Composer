@@ -59,7 +59,7 @@ export class Factory {
             evaluation.ace_position = params.ace;
             evaluation.exclusivity = params.exclusivity;
             evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);
-            let splits = params.splits ?? [];
+            let splits = params.split ?? [];
             evaluation.splits = splits.map((splitData: any) => {
                 return Factory.hydrate_evaluation(splitData);
             });
@@ -98,7 +98,7 @@ export class Factory {
             case GameElementType.DiscardCard:
                 let min = params.scope == 'exactly' ? parseInt(params.card_count) : 0;
                 let range = new NumberRange([min, parseInt(params.card_count)]);
-                return new DiscardCardElement(range, params.then_draw);
+                return new DiscardCardElement(range, params.then_draw == 'on');
             case GameElementType.DiscardHand:
                 return new DiscardHandElement(new NumberRange([parseInt(params.hand_count), parseInt(params.hand_count)]));
             case GameElementType.DrawCard:
