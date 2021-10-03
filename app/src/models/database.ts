@@ -99,6 +99,7 @@ export class Database {
     */
     hydrateEvaluation=(data: any): Evaluation => {
         let evaluation = new Evaluation();
+        evaluation.splits = [];
         if (data == undefined) {
             return evaluation;
         }
