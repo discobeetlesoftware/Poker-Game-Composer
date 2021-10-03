@@ -9,6 +9,8 @@ export class DrawCardElement extends GameElement {
         this.card_count_range = card_count_range;
     }
 
+    get player_card_count(): number { return this.card_count_range.max; }
+
     public static load(data: any): DrawCardElement {
         return new DrawCardElement(data['range']);
     }

@@ -17,6 +17,8 @@ export class DiscardCardElement extends GameElement {
         }
     }
 
+    get player_card_count(): number { return this.then_draw ? this.card_count_range.max : 0 }
+
     public static load(data: any): DiscardCardElement {
         return new DiscardCardElement(new NumberRange(data['card_count_range']), data['then_draw']);
     }

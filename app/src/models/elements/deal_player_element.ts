@@ -14,6 +14,8 @@ export class DealPlayerElement extends GameElement {
         return new DealPlayerElement(data['card_count'], data['is_face_up']);
     }
 
+    get player_card_count(): number { return this.card_count; }
+
     to_serializable=(): any => {
         return {
             type: this.type,

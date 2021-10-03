@@ -13,6 +13,9 @@ export class GameElement {
         this.edit_option_partial_name = `partials/edit/elements/${type}.njk`;
     }
 
+    get player_card_count(): number { return 0; }
+    get board_card_count(): number { return 0; }
+
     to_serializable=(): any => {
         return {
             type: this.type

@@ -12,6 +12,8 @@ export class DealBoardElement extends GameElement {
         return new DealBoardElement(data['card_count']);
     }
 
+    get board_card_count(): number { return this.card_count; }
+
     to_serializable=(): any => {
         return {
             type: this.type,

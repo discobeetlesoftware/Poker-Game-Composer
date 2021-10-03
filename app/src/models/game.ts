@@ -5,7 +5,7 @@ import { GameStructure } from "./game_structure";
 import { ForcedBet } from "./forced_bet";
 import { Evaluation } from "./evalulation";
 import { StringFactory } from "./string_factory";
-import { AcePosition } from "./ace_position";
+import { GameElement } from "./game_element";
 
 export class Game {
     file: string;
@@ -28,6 +28,25 @@ export class Game {
         return `Final Hand: ${this.evaluation.description}`;
     }
 
+    get is_split_pot(): boolean {
+        return this.evaluation.splits.length >= 2;
+    }
+
+    get deck_size(): number { return 52; }
+
+    get max_players(): number {
+        var player_card_count = 0;
+        var board_card_count = 0;
+        this.sections.forEach((section: GameSection) => {
+            section.elements.forEach((element: GameElement) => {
+                player_card_count += element.player_card_count;
+                board_card_count += element.board_card_count;
+            });
+        });
+        //console.log(`Math.floor((${this.deck_size} - ${board_card_count}) / ${player_card_count})`);
+        return Math.floor((this.deck_size - board_card_count) / player_card_count);
+    }
+
     get description(): string {
         var elements = [];
 
@@ -44,6 +63,17 @@ export class Game {
         }
 
         elements.push(StringFactory.forced_bet(this.forced_bet));
+
+        if (this.is_split_pot) {
+            elements.push('Split Pot');
+        }
+
+        const player_count = this.max_players;
+        if (player_count < 10) {
+            elements.push(player_count + ' Players Max');
+        } else {
+            console.log('Max players ' + player_count);
+        }
 
         return elements.join(' • ');
     }
