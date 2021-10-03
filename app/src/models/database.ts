@@ -117,7 +117,6 @@ export class Database {
         game.file = file;
         game.structure = this.hydrateStructure(data.structure);
         game.evaluation = this.hydrateEvaluation(data.evaluation);
-        console.log(game.evaluation);
         game.name = data['name'];
         game.abbreviation = data['abbreviation'];
         game.forced_bet = data['forced_bet'];

@@ -40,7 +40,6 @@ var SplitHandElement = /** @class */ (function (_super) {
                 split_sizes: _this.split_sizes
             };
         };
-        console.log(split_sizes);
         _this.split_sizes = split_sizes;
         if (_this.is_equal_split()) {
             _this.canvas_title = "Split";
