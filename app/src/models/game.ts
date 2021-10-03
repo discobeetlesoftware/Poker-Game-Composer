@@ -14,6 +14,7 @@ export class Game {
     forced_bet: ForcedBet;
     evaluation: Evaluation;
     abbreviation?: string;
+    custom_player_max: number;
     alternative_names?: string[];
     clarification?: string;
     sections: GameSection[];
@@ -91,6 +92,7 @@ export class Game {
             abbreviation: this.abbreviation,
             alternative_names: this.alternative_names,
             clarification: this.clarification,
+            custom_player_max: this.custom_player_max,
             sections: this.sections.map((section: GameSection): any => {
                 return section.to_serializable();
             })
