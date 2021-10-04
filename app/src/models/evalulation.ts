@@ -44,10 +44,12 @@ export enum Hand {
 
 export class Evaluation {
     type: EvaluationType;
+    formal_name?: string;
     splits: Evaluation[];
     qualifier: Qualifier;
     exclusivity: EvaluationExclusivity;
     ace_position: AcePosition = AcePosition.Both;
+    player_hand_size?: number; 
     invalidation_hands: Hand[];
     bug_completion_hands: Hand[];
 
@@ -78,6 +80,8 @@ export class Evaluation {
     to_serializable=(): any => {
         return {
             type: this.type,
+            formal_name: this.formal_name,
+            player_hand_size: this.player_hand_size,
             splits: this.splits.map((element: Evaluation) => {
                 return element.to_serializable()
             }),

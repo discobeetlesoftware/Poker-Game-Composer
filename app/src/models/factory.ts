@@ -56,6 +56,8 @@ export class Factory {
         let evaluation = new Evaluation();
         if (params != undefined) {
             evaluation.type = params.type;
+            evaluation.formal_name = params.formal_name;
+            evaluation.player_hand_size = params.player_hand_size;
             evaluation.ace_position = params.ace;
             evaluation.exclusivity = params.exclusivity;
             evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);

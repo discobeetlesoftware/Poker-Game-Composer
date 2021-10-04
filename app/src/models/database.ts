@@ -106,6 +106,8 @@ export class Database {
         evaluation.type = data.type;
         evaluation.ace_position = data.ace_position;
         evaluation.exclusivity = data.exclusivity;
+        evaluation.formal_name = data.formal_name;
+        evaluation.player_hand_size = data.player_hand_size;
         evaluation.qualifier = this.hydrateQualifier(data.qualifier);
         evaluation.splits = data.splits.map((splitData: any) => {
             return this.hydrateEvaluation(splitData);

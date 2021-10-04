@@ -30,10 +30,30 @@
                 <option value='seven'>Exactly seven player cards</option>
             </select>
         </div>
-
-        <div class='header'>Qualifier <input type='checkbox' id='evaluation_qualifier_enabled_{{evaluationKey}}' /></div>
+        <div>
+            <label for='evaluation_qualifier_{{evaluationKey}}_ace'>Ace Orientation</label>
+            <select name='evaluation{{evaluationContext}}[ace]' id='evaluation_qualifier_{{evaluationKey}}_ace'>
+                <option value='both'>Both</option>
+                <option value='low'>Low only</option>
+                <option value='high'>High only</option>
+            </select>
+        </div>
+        <div>
+            <label for='evaluation_formal_name{{evaluationKey}}'>Formal name</label>
+            <input placeholder='5-Card Draw' type='text' id='evaluation_formal_name{{evaluationKey}}' name='evaluation{{evaluationContext}}[formal_name]' />
+            (Optional: a game name or description for how to evaluate this hand)
+        </div>
+        <div>
+            <label for='evaluation_player_hand_size{{evaluationKey}}'>Player hand size</label>
+            <input placeholder='4' type='text' id='evaluation_player_hand_size{{evaluationKey}}' name='evaluation{{evaluationContext}}[player_hand_size]' />
+            (Optional: this evaluation context is associated with a player hand of this size)
+        </div>
+        <div>
+            <label for='evaluation_qualifier_enabled_{{evaluationKey}}'>Qualifier</label>
+            <input type='checkbox' id='evaluation_qualifier_enabled_{{evaluationKey}}' />
+        </div>
         <div id='evaluation_qualifier_container_{{evaluationKey}}'>
-            <label for='evaluation_qualifier_{{evaluationKey}}'>Type</label>
+            <label for='evaluation_qualifier_{{evaluationKey}}'>Qualifier type</label>
             <select name='evaluation{{evaluationContext}}[qualifier][type]' id='evaluation_qualifier_{{evaluationKey}}'>
                 <option value='none'>None</option>
                 <option value='lower_rank'>Lower or equal rank (≤)</option>
@@ -59,7 +79,6 @@
                     <option>K</option>
                 </select>
             </div>
-
             <div id='evaluation_qualifier_{{evaluationKey}}_hand_container'>
                 <div>
                     <label for='evaluation_qualifier_{{evaluationKey}}_hand'>Qualifying hand</label>
@@ -82,19 +101,11 @@
                     <span>(optional; Accepted characters: A23456789TJQK)</span>
                 </div>
             </div>
-
         </div>
-
-        <div class='header'>Ace Orientation</div>
-        <div id='evaluation_qualifier_{{evaluationKey}}_ace_container'>
-            <select name='evaluation{{evaluationContext}}[ace]' id='evaluation_qualifier_{{evaluationKey}}_ace'>
-                <option value='both'>Both</option>
-                <option value='low'>Low only</option>
-                <option value='high'>High only</option>
-            </select>
+        <div>
+            <label for='evaluation_invalidationhands_enabled_{{evaluationKey}}'>Invalidation Hands</label>
+            <input type='checkbox' id='evaluation_invalidationhands_enabled_{{evaluationKey}}' />
         </div>
-
-        <div class='header'>Invalidation Hands <input type='checkbox' id='evaluation_invalidationhands_enabled_{{evaluationKey}}' /></div>
         <div id='evaluation_invalidationhands_container_{{evaluationKey}}'>
             <ol id='evaluation{{evaluationKey}}_invalidation_list'></ol>
             <select id='evaluation_qualifier_{{evaluationKey}}_invalidation'>
@@ -112,8 +123,8 @@
             <a href='#' class='add button' onclick='appendInvalidationHand({{evaluationKey}});'>Append hand</a>
         </div>
 
-        <h4>Bug Completion Hands</h4>
         <div>
+            <label>Bug Completion Hands</label>
             <ol></ol>
         </div>
     </div>
