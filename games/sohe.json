@@ -12,22 +12,25 @@
     "splits": [
       {
         "type": "high",
+        "formal_name": "Hold 'em",
+        "player_hand_size": "2",
         "splits": [],
         "qualifier": {},
-        "exclusivity": "two",
+        "exclusivity": "any",
         "ace_position": "both"
       },
       {
         "type": "high",
+        "formal_name": "Omaha",
+        "player_hand_size": "4",
         "splits": [],
         "qualifier": {},
-        "exclusivity": "any",
+        "exclusivity": "two",
         "ace_position": "both"
       }
     ],
     "qualifier": {}
   },
-  "details": "Blinds",
   "abbreviation": "SOHE",
   "alternative_names": "",
   "sections": [

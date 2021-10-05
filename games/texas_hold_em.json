@@ -1,6 +1,21 @@
 {
-  "name": "Texas Hold em",
-  "structure": {},
+  "name": "Texas Hold 'em",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "high",
+    "formal_name": "",
+    "player_hand_size": "",
+    "splits": [],
+    "qualifier": {},
+    "exclusivity": "any",
+    "ace_position": "both"
+  },
   "abbreviation": "HE",
   "alternative_names": "Hold'em",
   "sections": [

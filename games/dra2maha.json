@@ -38,7 +38,7 @@
         {
           "type": "discard_card",
           "then_draw": true,
-          "range": [
+          "card_count_range": [
             0,
             2
           ]
