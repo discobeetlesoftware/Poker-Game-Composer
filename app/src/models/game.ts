@@ -15,7 +15,7 @@ export class Game {
     evaluation: Evaluation;
     abbreviation?: string;
     custom_player_max: number;
-    alternative_names?: string[];
+    alternative_names?: string;
     clarification?: string;
     sections: GameSection[];
 

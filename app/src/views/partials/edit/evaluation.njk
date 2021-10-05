@@ -1,65 +1,67 @@
+{% macro option(input, val, name) %}<option value='{{val}}'{% if input == val %} selected{% endif %}>{{name}}</option>{% endmacro %}
+
 <div class='evaluation_container' id='evaluation_container_{{evaluationContext}}'>
     <div>
         <label for='evaluation_type_{{evaluationKey}}'>Type</label>
         <select name='evaluation{{evaluationContext}}[type]' id='evaluation_type_{{evaluationKey}}'>
-            <option value='high'>High</option>
-            <option value='low'>Low</option>
-            <option value='point_low'>Point Low</option>
-            <option value='point-high'>Point High</option>
-            <option value='badugi'>Badugi</option>
-            <option value='split'>Split</option>
+            {{ option(evaluation.type, 'high', 'High') }}
+            {{ option(evaluation.type, 'low', 'Low') }}
+            {{ option(evaluation.type, 'point_low', 'Point Low') }}
+            {{ option(evaluation.type, 'point_high', 'Point High') }}
+            {{ option(evaluation.type, 'badugi', 'Badugi') }}
+            {{ option(evaluation.type, 'split', 'Split') }}
         </select>
     </div>
     <div id='evaluation_exclusivity_{{evaluationKey}}_split'>
         <ul>
+
         </ul>
     </div>
-
     <div id='evaluation_exclusivity_{{evaluationKey}}_scoring'>
         <div>
             <label for='evaluation_exclusivity_{{evaluationKey}}'>Exclusivity</label>
             <select name='evaluation{{evaluationContext}}[exclusivity]' id='evaluation_exclusivity_{{evaluationKey}}'>
-                <option value='any'>Any player cards</option>
-                <option value='all'>All player cards</option>
-                <option value='one'>Exactly one player card</option>
-                <option value='two'>Exactly two player cards</option>
-                <option value='three'>Exactly three player cards</option>
-                <option value='four'>Exactly four player cards</option>
-                <option value='five'>Exactly five player cards</option>
-                <option value='six'>Exactly six player cards</option>
-                <option value='seven'>Exactly seven player cards</option>
+                {{ option(evaluation.exclusivity, 'any', 'Any player cards') }}
+                {{ option(evaluation.exclusivity, 'all', 'All player cards') }}
+                {{ option(evaluation.exclusivity, 'one', 'Exactly one player card') }}
+                {{ option(evaluation.exclusivity, 'two', 'Exactly two player cards') }}
+                {{ option(evaluation.exclusivity, 'three', 'Exactly three player cards') }}
+                {{ option(evaluation.exclusivity, 'four', 'Exactly four player cards') }}
+                {{ option(evaluation.exclusivity, 'five', 'Exactly five player cards') }}
+                {{ option(evaluation.exclusivity, 'six', 'Exactly six player cards') }}
+                {{ option(evaluation.exclusivity, 'seven', 'Exactly seven player cards') }}
             </select>
         </div>
         <div>
             <label for='evaluation_qualifier_{{evaluationKey}}_ace'>Ace Orientation</label>
             <select name='evaluation{{evaluationContext}}[ace]' id='evaluation_qualifier_{{evaluationKey}}_ace'>
-                <option value='both'>Both</option>
-                <option value='low'>Low only</option>
-                <option value='high'>High only</option>
+                {{ option(evaluation.ace_position, 'both', 'Both') }}
+                {{ option(evaluation.ace_position, 'low', 'Low only') }}
+                {{ option(evaluation.ace_position, 'high', 'High only') }}
             </select>
         </div>
         <div>
             <label for='evaluation_formal_name{{evaluationKey}}'>Formal name</label>
-            <input placeholder='5-Card Draw' type='text' id='evaluation_formal_name{{evaluationKey}}' name='evaluation{{evaluationContext}}[formal_name]' />
+            <input value='{{evaluation.html.formal_name}}' placeholder='5-Card Draw' type='text' id='evaluation_formal_name{{evaluationKey}}' name='evaluation{{evaluationContext}}[formal_name]' />
             (Optional: a game name or description for how to evaluate this hand)
         </div>
         <div>
             <label for='evaluation_player_hand_size{{evaluationKey}}'>Player hand size</label>
-            <input placeholder='4' type='text' id='evaluation_player_hand_size{{evaluationKey}}' name='evaluation{{evaluationContext}}[player_hand_size]' />
+            <input value='{{evaluation.player_hand_size}}' pattern='[1-9]?' placeholder='4' type='text' id='evaluation_player_hand_size{{evaluationKey}}' name='evaluation{{evaluationContext}}[player_hand_size]' />
             (Optional: this evaluation context is associated with a player hand of this size)
         </div>
         <div>
             <label for='evaluation_qualifier_enabled_{{evaluationKey}}'>Qualifier</label>
-            <input type='checkbox' id='evaluation_qualifier_enabled_{{evaluationKey}}' />
+            <input type='checkbox' id='evaluation_qualifier_enabled_{{evaluationKey}}'{% if evaluation.has_qualifier %} checked{% endif %} />
         </div>
         <div id='evaluation_qualifier_container_{{evaluationKey}}'>
             <label for='evaluation_qualifier_{{evaluationKey}}'>Qualifier type</label>
             <select name='evaluation{{evaluationContext}}[qualifier][type]' id='evaluation_qualifier_{{evaluationKey}}'>
-                <option value='none'>None</option>
-                <option value='lower_rank'>Lower or equal rank (≤)</option>
-                <option value='higher_rank'>Higher or equal rank (≥)</option>
-                <option value='lower_hand'>Lower or equal hand (≤)</option>
-                <option value='higher_hand'>Higher or equal hand (≥)</option>
+                {{ option(evaluation.qualifier.type, 'none', 'Both') }}
+                {{ option(evaluation.qualifier.type, 'lower_rank', 'Lower or equal rank (≤)') }}
+                {{ option(evaluation.qualifier.type, 'higher_rank', 'Higher or equal rank (≥)') }}
+                {{ option(evaluation.qualifier.type, 'lower_hand', 'Lower or equal hand (≤)') }}
+                {{ option(evaluation.qualifier.type, 'higher_hand', 'Higher or equal hand (≥)') }}
             </select>
 
             <div id='evaluation_qualifier_{{evaluationKey}}_ranklist_container'>
@@ -130,11 +132,11 @@
     </div>
 </div>
 <script>
-    $('#evaluation_type_{{evaluationKey}}').change(function () { didChangeEvaluationType('{{evaluationKey}}'); });
+    $('#evaluation_type_{{evaluationKey}}').change(function () { didChangeEvaluationType('{{game.sanitized_name}}', '{{evaluationKey}}'); });
     $('#evaluation_qualifier_enabled_{{evaluationKey}}').change(function () { didChangeQualifierEnabled('{{evaluationKey}}'); });
     $('#evaluation_invalidationhands_enabled_{{evaluationKey}}').change(function () { didChangeValidationHandsEnabled('{{evaluationKey}}'); });
 
-    didChangeEvaluationTypeStateHandler('{{evaluationKey}}');
+    didChangeEvaluationType('{{game.sanitized_name}}', '{{evaluationKey}}');
     didChangeQualifierEnabled('{{evaluationKey}}');
     didChangeValidationHandsEnabled('{{evaluationKey}}');
 </script>

@@ -26,7 +26,7 @@ export class ExposeCardElement extends GameElement {
     }
 
     public static load(data: any): ExposeCardElement {
-        return new ExposeCardElement(data['card_count_range']);
+        return new ExposeCardElement(new NumberRange(data['card_count_range']));
     }
 
     to_serializable=(): any => {

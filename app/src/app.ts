@@ -9,6 +9,9 @@ import { GameSection } from "./models/game_section";
 import { GameElement } from "./models/game_element";
 import { GameElementType } from "./models/game_element_type";
 import { Factory } from "./models/factory";
+import { Evaluation } from "./models/evalulation";
+import { RenderableGame } from "./models/render/renderable_game";
+import { RenderableEvaluation } from "./models/render/renderable_evaluation";
 
 const app = express();
 const rootPath = path.join(__dirname, '..', '..');
@@ -55,10 +58,10 @@ app.get('/schema/:game.json', function(req: Request, res: Response, next) {
 app.get('/game/:game', function(req: Request, res: Response, next) {
   var gameName = req.params.game;
   database.loadGame(gameName).then(function(game: Game) {
-    console.log(game.description);
-    res.render('game', { game: game });
+    res.render('game', { game: new RenderableGame(game) });
   }).catch(function(reason: any) {
-    next(reason);
+    res.status(404);
+    res.send('404: ' + reason);
   });
 });
 
@@ -90,9 +93,9 @@ app.get("/component/edit/section/:section_index/element/:element_index/type/:ele
   });
 });
 
-app.get("/component/edit/game/evaluation/:evaluation_index", function(req: Request, res: Response, next) {
+app.get("/component/edit/game/:game/evaluation/:evaluation_index", function(req: Request, res: Response, next) {
+  var gameName = req.params.game;    
   var keys = req.params.evaluation_index.split('_');
-  console.log(keys);
   var id = keys.shift();
   var key = `[${id}]`;
   keys.forEach((element: string) => {
@@ -100,16 +103,38 @@ app.get("/component/edit/game/evaluation/:evaluation_index", function(req: Reque
     id += `_${element}`;
   });
 
-  res.render('partials/edit/evaluation', {
-    evaluationKey: id,
-    evaluationContext: key
-  });
+  var gameFoundHandler = (game: Game) => {
+    var keys = req.params.evaluation_index.split('_');
+    keys.shift();
+    var evaluation = game.evaluation;
+    
+    keys.forEach((index_str: string) => {
+      const index = parseInt(index_str);
+      evaluation = evaluation.splits[index];
+    });
+
+    res.render('partials/edit/evaluation', {
+      evaluation: new RenderableEvaluation(evaluation),
+      evaluationKey: id,
+      evaluationContext: key
+    });
+  };
+
+  var gameMissingHandler = () => {
+    res.render('partials/edit/evaluation', {
+      evaluation: new Evaluation(),
+      evaluationKey: id,
+      evaluationContext: key
+    });
+  };
+
+  database.loadGame(gameName).then(gameFoundHandler, gameMissingHandler);
 });
 
 app.get("/edit/:game", function(req: Request, res: Response, next) {
   var gameName = req.params.game;
   database.loadGame(gameName).then(function(game: Game) {
-    res.render("edit", { game: game, action: `/edit/${game.sanitized_name}` });
+    res.render("edit", { game: new RenderableGame(game), action: `/edit/${game.sanitized_name}` });
   });
 });
 
@@ -126,7 +151,7 @@ app.post("/edit/:game", function(req: Request, res: Response, next) {
   });
 });
 
-app.get("/newgame", function(req: Request, res: Response, next) {
+app.get("/create", function(req: Request, res: Response, next) {
 
 });
 

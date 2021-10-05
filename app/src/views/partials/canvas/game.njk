@@ -36,11 +36,11 @@ frame.on('ready', () => {
     var lastSection; var nextSection; var lastSectionBounds; var sectionXLocation = 0;
 
     var titleContainer = new Container(globals.size.width, defaultHeight(globals.heights.title)).addTo();
-    var title = gameTitle('{{game.name}}', window.config.game.title).center(titleContainer);
-    title.on('click', function() { zgo('/edit/{{game.sanitized_name}}'); });
+    var title = gameTitle('{{game.js.name}}', window.config.game.title).center(titleContainer);
+    title.on('click', function() { zgo('/edit/{{game.js.sanitized_name}}'); });
     var detailContainer = new Container(globals.size.width, defaultHeight(globals.heights.detail)).addTo();
     var detailsLabel = new Label({
-        text: '{{game.details}}',
+        text: '{{game.js.details}}',
         size: window.config.game.detail.size,
         font: window.config.game.detail.family,
         color: window.config.game.detail.color,
@@ -51,7 +51,7 @@ frame.on('ready', () => {
     var sectionTitlesContainer = new Container(globals.size.width, defaultHeight(globals.heights.sectionTitles)).addTo(sectionsContainer);
     var sectionTitles = [];
     var sectionBuilders = [
-        {% asyncEach section in game.sections %}
+        {% asyncEach section in game.js.sections %}
             {% set section_index = loop.index0 %}
             {% include 'partials/canvas/section.njk' %}
         {% endeach %}

@@ -1,5 +1,5 @@
 import { AcePosition } from "./ace_position";
-import { Qualifier } from "./qualifier";
+import { Qualifier, QualifierType } from "./qualifier";
 
 export enum EvaluationType {
     High = 'high',
@@ -45,11 +45,11 @@ export enum Hand {
 export class Evaluation {
     type: EvaluationType;
     formal_name?: string;
-    splits: Evaluation[];
-    qualifier: Qualifier;
+    splits?: Evaluation[];
+    qualifier?: Qualifier;
     exclusivity: EvaluationExclusivity;
     ace_position: AcePosition = AcePosition.Both;
-    player_hand_size?: number; 
+    player_hand_size?: number;
     invalidation_hands: Hand[];
     bug_completion_hands: Hand[];
 
@@ -75,6 +75,14 @@ export class Evaluation {
 
     get description(): string {
         return this.hand_description;
+    }
+
+    get has_qualifier(): boolean {
+        if (!this.qualifier) {
+            return false;
+        }
+        let type = this.qualifier.type;
+        return (type && type != QualifierType.None);
     }
 
     to_serializable=(): any => {

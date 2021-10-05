@@ -87,8 +87,10 @@ export class Database {
     }
 
     hydrateQualifier=(data: any): Qualifier => {
+        if (data.length == 0) {
+            return null;
+        }
         let qualifier = new Qualifier();
-        console.log(data);
         return qualifier;
     }
 

@@ -15,12 +15,12 @@
         });
     }
 
-    function appendEvaluationSplits(key) {
+    function appendEvaluationSplits(name, key) {
         var splitListToken = `#evaluation_exclusivity_${key}_split>ul`;
         var splitListElementCount = $(splitListToken + ' li').length;
         for (var j = splitListElementCount; j < 2; j++) {
             var splitKey = `${key}_${j}`;
-            var path = `/component/edit/game/evaluation/${splitKey}`;
+            var path = `/component/edit/game/${name}/evaluation/${splitKey}`;
             $.get(path, function(result) {
                 $(splitListToken).append(`<li>${result}</li>`);
             });
@@ -46,11 +46,11 @@
     }
 
 
-    function didChangeEvaluationType(key) {
+    function didChangeEvaluationType(name, key) {
         didChangeEvaluationTypeStateHandler(key);
         var type = $(`#evaluation_type_${key} option:selected`).val();
         if (type == 'split') {
-            appendEvaluationSplits(key);
+            appendEvaluationSplits(name, key);
         }
     }
 
@@ -103,17 +103,17 @@
         <h3>Details</h3>
         <div>
             <label for='name'>Name</label>
-            <input type='text' name='name', value='{{game.name}}' />
+            <input type='text' name='name', value='{{game.html.name}}' />
         </div>
 
         <div>
             <label for='abbreviation'>Abbreviation</label>
-            <input type='text' name='abbreviation' id='abbreviation' value='{{game.abbreviation}}' />    
+            <input type='text' name='abbreviation' id='abbreviation' value='{{game.html.abbreviation}}' />    
         </div>
 
         <div>
             <label for='alternative_names'>Alternative Names</label>
-            <input type='text' name='alternative_names' id='alternative_names' value='{{game.alternative_names}}' />
+            <input type='text' name='alternative_names' id='alternative_names' value='{{game.html.alternative_names}}' />
         </div>
     </div>
 
@@ -154,6 +154,7 @@
 
     <div class='gameDetails'>
         <h3>Evaluation</h3>
+        {% set evaluation = game.evaluation %}
         {% set evaluationKey = '0' %}
         {% set evaluationContext = '[0]' %}
         {% include 'partials/edit/evaluation.njk' %}
