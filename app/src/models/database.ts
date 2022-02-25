@@ -13,8 +13,8 @@ import { DrawCardElement } from "./elements/draw_card_element";
 import { ExposeCardElement } from "./elements/expose_card_element";
 import { SplitHandElement } from "./elements/split_hand_element";
 import { GameStructure } from "./game_structure";
-import { Evaluation } from "./evalulation";
-import { Qualifier } from "./qualifier";
+import { Evaluation, EvaluationType } from "./evalulation";
+import { Qualifier, QualifierType } from "./qualifier";
 
 export class Database {
     gamesDir: string;
@@ -91,14 +91,13 @@ export class Database {
             return null;
         }
         let qualifier = new Qualifier();
+        qualifier.type = data.type;
+        qualifier.rank = data.rank;
+        qualifier.hand = data.hand;
+        qualifier.specific_hand = data.specific_hand;
         return qualifier;
     }
 
-    /*
-    type: EvaluationType;
-    invalidation_hands: Hand[];
-    bug_completion_hands: Hand[];
-    */
     hydrateEvaluation=(data: any): Evaluation => {
         let evaluation = new Evaluation();
         evaluation.splits = [];
@@ -109,8 +108,10 @@ export class Database {
         evaluation.ace_position = data.ace_position;
         evaluation.exclusivity = data.exclusivity;
         evaluation.formal_name = data.formal_name;
+        evaluation.invalidation_hands = data.invalidation_hands;
         evaluation.player_hand_size = data.player_hand_size;
         evaluation.qualifier = this.hydrateQualifier(data.qualifier);
+        evaluation.qualifier_type = evaluation.qualifier.type ?? QualifierType.None;
         evaluation.splits = data.splits.map((splitData: any) => {
             return this.hydrateEvaluation(splitData);
         });
@@ -121,7 +122,8 @@ export class Database {
         var game = new Game();
         game.file = file;
         game.structure = this.hydrateStructure(data.structure);
-        game.evaluation = this.hydrateEvaluation(data.evaluation);
+        let evaluation = this.hydrateEvaluation(data.evaluation);
+        game.evaluation = evaluation;
         game.name = data['name'];
         game.abbreviation = data['abbreviation'];
         game.forced_bet = data['forced_bet'];
@@ -140,6 +142,7 @@ export class Database {
     saveGame=(game: Game): Promise<boolean> => {
         let data = game.to_json();
         let writeGameData = (resolve: any, reject: any) => {
+
             fs.writeFile(this.gamePath(game), data, (err) => {
                 let handler = err == null ? resolve : reject;
                 handler(err);
