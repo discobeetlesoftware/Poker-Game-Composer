@@ -50,14 +50,11 @@
             <input value='{{evaluation.player_hand_size}}' pattern='[1-9]?' placeholder='4' type='text' id='evaluation_player_hand_size{{evaluationKey}}' name='evaluation{{evaluationContext}}[player_hand_size]' />
             (Optional: this evaluation context is associated with a player hand of this size)
         </div>
-        <div>
-            <label for='evaluation_qualifier_enabled_{{evaluationKey}}'>Qualifier</label>
-            <input type='checkbox' id='evaluation_qualifier_enabled_{{evaluationKey}}'{% if evaluation.has_qualifier %} checked{% endif %} />
-        </div>
         <div id='evaluation_qualifier_container_{{evaluationKey}}'>
             <label for='evaluation_qualifier_{{evaluationKey}}'>Qualifier type</label>
             <select name='evaluation{{evaluationContext}}[qualifier][type]' id='evaluation_qualifier_{{evaluationKey}}'>
-                {{ option(evaluation.qualifier.type, 'none', 'Both') }}
+                {{ option(evaluation.qualifier.type, 'none', 'None') }}
+                {{ option(evaluation.qualifier.type, 'both', 'Both') }}
                 {{ option(evaluation.qualifier.type, 'lower_rank', 'Lower or equal rank (≤)') }}
                 {{ option(evaluation.qualifier.type, 'higher_rank', 'Higher or equal rank (≥)') }}
                 {{ option(evaluation.qualifier.type, 'lower_hand', 'Lower or equal hand (≤)') }}
@@ -67,39 +64,39 @@
             <div id='evaluation_qualifier_{{evaluationKey}}_ranklist_container'>
                 <label for='evaluation_qualifier_{{evaluationKey}}_rank'>Qualifying rank</label>
                 <select name='evaluation{{evaluationContext}}[qualifier][rank]' id='evaluation_qualifier_{{evaluationKey}}_rank'>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>T</option>
-                    <option>J</option>
-                    <option>Q</option>
-                    <option>K</option>
+                    {{ option(evaluation.qualifier.rank, '2', '2') }}
+                    {{ option(evaluation.qualifier.rank, '3', '3') }}
+                    {{ option(evaluation.qualifier.rank, '4', '4') }}
+                    {{ option(evaluation.qualifier.rank, '5', '5') }}
+                    {{ option(evaluation.qualifier.rank, '6', '6') }}
+                    {{ option(evaluation.qualifier.rank, '7', '7') }}
+                    {{ option(evaluation.qualifier.rank, '8', '8') }}
+                    {{ option(evaluation.qualifier.rank, '9', '9') }}
+                    {{ option(evaluation.qualifier.rank, 'T', 'T') }}
+                    {{ option(evaluation.qualifier.rank, 'J', 'J') }}
+                    {{ option(evaluation.qualifier.rank, 'Q', 'Q') }}
+                    {{ option(evaluation.qualifier.rank, 'K', 'K') }}
                 </select>
             </div>
             <div id='evaluation_qualifier_{{evaluationKey}}_hand_container'>
                 <div>
                     <label for='evaluation_qualifier_{{evaluationKey}}_hand'>Qualifying hand</label>
-                    <select name='evaluation{{evaluationContext}}[hand]' id='evaluation_qualifier_{{evaluationKey}}_hand'>
-                        <option value='high'>High</option>
-                        <option value='pair'>Pair</option>
-                        <option value='two_pair'>Two pair</option>
-                        <option value='three_of_a_kind'>Three of a kind</option>
-                        <option value='straight'>Straight</option>
-                        <option value='flush'>Flush</option>
-                        <option value='full_house'>Full house</option>
-                        <option value='four_of_a_kind'>Four of a kind</option>
-                        <option value='straight_flush'>Straight flush</option>
-                        <option value='royal_flush'>Royal flush</option>
+                    <select name='evaluation{{evaluationContext}}[qualifier][hand]' id='evaluation_qualifier_{{evaluationKey}}_hand'>
+                        {{ option(evaluation.qualifier.hand, 'high', 'High') }}
+                        {{ option(evaluation.qualifier.hand, 'pair', 'Pair') }}
+                        {{ option(evaluation.qualifier.hand, 'two_pair', 'Two pair') }}
+                        {{ option(evaluation.qualifier.hand, 'three_of_a_kind', 'Three of a kind') }}
+                        {{ option(evaluation.qualifier.hand, 'straight', 'Straight') }}
+                        {{ option(evaluation.qualifier.hand, 'flush', 'Flush') }}
+                        {{ option(evaluation.qualifier.hand, 'full_house', 'Full house') }}
+                        {{ option(evaluation.qualifier.hand, 'four_of_a_kind', 'Four of a kind') }}
+                        {{ option(evaluation.qualifier.hand, 'straight_flush', 'Straight flush') }}
+                        {{ option(evaluation.qualifier.hand, 'royal_flush', 'Royal flush') }}
                     </select>
                 </div>
                 <div>
                     <label for=''>Specific value</label>
-                    <input type='text' placeholder='99' pattern='[1-9|A|T|J|Q|K]{1,5}' />
+                    <input value='{{evaluation.qualifier.specific_hand}}' name='evaluation{{evaluationContext}}[qualifier][specific_hand]' type='text' placeholder='99' pattern='[1-9|A|T|J|Q|K]{1,5}' />
                     <span>(optional; Accepted characters: A23456789TJQK)</span>
                 </div>
             </div>
@@ -109,7 +106,16 @@
             <input type='checkbox' id='evaluation_invalidationhands_enabled_{{evaluationKey}}' />
         </div>
         <div id='evaluation_invalidationhands_container_{{evaluationKey}}'>
-            <ol id='evaluation{{evaluationKey}}_invalidation_list'></ol>
+            <ol id='evaluation{{evaluationKey}}_invalidation_list'>
+                {% asyncEach hand in evaluation.invalidation_hands %}
+                    {% set element_id = 'evaluation_qualifier_invalidation_hand_' + hand %}
+                    {% set hand_value = hand %}
+                    {% set element_key = 'evaluation' + evaluationKey + '[invalidation_hands][]' %}
+                    {% set text = '<script>$("#evaluation_qualifier_invalidation_hand_' + hand + ' span").html(nameForHand("' + hand + '"));</script>' %}
+                    {% set delete_call = "removeInvalidationHand('" + evaluationContext + "', '" + hand + "', 'evaluation_qualifier_invalidation_hand_" + hand + "');" %}
+                    {% include 'partials/edit/hand_element.njk' %}
+                {% endeach %}
+            </ol>
             <select id='evaluation_qualifier_{{evaluationKey}}_invalidation'>
                 <option value='high'>High</option>
                 <option value='pair'>Pair</option>
@@ -122,9 +128,8 @@
                 <option value='straight_flush'>Straight flush</option>
                 <option value='royal_flush'>Royal flush</option>
             </select>
-            <a href='#' class='add button' onclick='appendInvalidationHand({{evaluationKey}});'>Append hand</a>
+            <a href='#' class='add button' onclick="appendInvalidationHand('{{evaluationKey}}');">Append hand</a>
         </div>
-
         <div>
             <label>Bug Completion Hands</label>
             <ol></ol>
@@ -132,11 +137,16 @@
     </div>
 </div>
 <script>
+    if ($('#evaluation{{evaluationKey}}_invalidation_list li').length > 0) {
+        $('#evaluation_invalidationhands_enabled_{{evaluationKey}}').attr('checked', true);
+    }
+    {% for hand in evaluation.invalidation_hands %}
+        $('#evaluation_qualifier_{{evaluationKey}}_invalidation option[value="{{hand}}"]').attr('disabled', true);
+    {% endfor %}
     $('#evaluation_type_{{evaluationKey}}').change(function () { didChangeEvaluationType('{{game.sanitized_name}}', '{{evaluationKey}}'); });
-    $('#evaluation_qualifier_enabled_{{evaluationKey}}').change(function () { didChangeQualifierEnabled('{{evaluationKey}}'); });
     $('#evaluation_invalidationhands_enabled_{{evaluationKey}}').change(function () { didChangeValidationHandsEnabled('{{evaluationKey}}'); });
-
+    $('#evaluation_qualifier_{{evaluationKey}}').change(function() { didChangeQualifierType('{{evaluationKey}}'); });
     didChangeEvaluationType('{{game.sanitized_name}}', '{{evaluationKey}}');
-    didChangeQualifierEnabled('{{evaluationKey}}');
     didChangeValidationHandsEnabled('{{evaluationKey}}');
+    didChangeQualifierType('{{evaluationKey}}');
 </script>

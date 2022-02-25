@@ -54,17 +54,23 @@
         }
     }
 
-    function didChangeQualifierEnabled(key) {
-        var checked = $(`#evaluation_qualifier_enabled_${key}`).prop('checked');
-        var containerToken = `#evaluation_qualifier_container_${key}`;
-        var selectToken = containerToken + ' select';
-        var inputToken = containerToken + ' input';
-        $(selectToken).attr('disabled', !checked);
-        $(inputToken).attr('disabled', !checked);
-        if (checked) {
-            $(containerToken).show();
+    function didChangeQualifierType(key) {
+        var type = $(`#evaluation_qualifier_${key} option:selected`).val();
+        var handContainerToken = `#evaluation_qualifier_${key}_hand_container`;
+        var rankContainerToken = `#evaluation_qualifier_${key}_ranklist_container`;
+        var isRankQualifierEnabled = type == 'both' || type == 'lower_rank' || type == 'higher_rank';
+        var isHandQualifierEnabled = type == 'both' || type == 'lower_hand' || type == 'higher_hand';
+        
+        if (isRankQualifierEnabled) {
+            $(rankContainerToken).show();
         } else {
-            $(containerToken).hide();
+            $(rankContainerToken).hide();
+        }
+
+        if (isHandQualifierEnabled) {
+            $(handContainerToken).show();
+        } else {
+            $(handContainerToken).hide();
         }
     }
 
@@ -92,13 +98,44 @@
         }
     }
 
-    function appendInvalidationHand(context) {
-
+    function nameForHand(value) {
+        return {
+            high: 'High',
+            pair: 'Pair',
+            two_pair: 'Two pair',
+            three_of_a_kind: 'Three of a kind',
+            straight: 'Straight',
+            flush: 'Flush',
+            full_house: 'Full house',
+            four_of_a_kind: 'Four of a kind',
+            straight_flush: 'Straight flush',
+            royal_flush: 'Royal flush',
+            five_of_a_kind: 'Five of a kind'
+        }[value];
     }
+    
+    function removeInvalidationHand(context, hand, elementToken) {
+        $(`#evaluation_qualifier_${context}_invalidation option[value="${hand}"]`).attr('disabled', false);
+        $(`#${elementToken}`).remove();
+    }
+
+    function appendInvalidationHand(context) {
+        var optionToken = `#evaluation_qualifier_${context}_invalidation option:selected`;
+        var listToken = `#evaluation${context}_invalidation_list`;
+        var hand = $(optionToken).val();
+
+        $(optionToken).attr('disabled', true);
+        
+        var path = `/component/edit/evaluation/${context}/invalidation_hand/${hand}`;
+        $.get(path, function(result) {
+            $(listToken).append(result);
+        });
+    }
+
 </script>
 {% endblock %}
 {% block body %}
-<form action='{{action}}' method='post'>
+<form action='/update' method='post'>
     <div class='gameDetails'>
         <h3>Details</h3>
         <div>

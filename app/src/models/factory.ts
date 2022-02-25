@@ -14,7 +14,7 @@ import { GameElementType } from "./game_element_type";
 import { GameSection } from "./game_section";
 import { GameStructure } from "./game_structure";
 import { NumberRange } from "./number_range";
-import { Qualifier } from "./qualifier";
+import { Qualifier, QualifierType } from "./qualifier";
 
 export class Factory {
     public static create_element(type: GameElementType): GameElement {
@@ -31,6 +31,9 @@ export class Factory {
     }
 
     public static hydrate_game=(params: any): Game => {
+        if (!params.name || params.name == '') {
+            return null;
+        }
         let game = new Game();
         game.name = params.name;
         game.abbreviation = params.abbreviation;
@@ -38,7 +41,7 @@ export class Factory {
         game.evaluation = Factory.hydrate_evaluation(params.evaluation.shift());
         game.forced_bet = params.forced_bet;
         game.alternative_names = params.alternative_names;
-        game.sections = params.section.map((data: any): GameSection => {
+        game.sections = (params.section ?? []).map((data: any): GameSection => {
             return Factory.hydrate_section(data);
         });
         return game;
@@ -46,9 +49,13 @@ export class Factory {
 
     public static hydrate_qualifier=(params: any) : Qualifier => {
         let qualifier = new Qualifier();
-        if (params != undefined) {
-            qualifier.type = params.type;
+        if (!params) {
+            return qualifier;
         }
+        qualifier.type = params.type;
+        qualifier.rank = params.rank;
+        qualifier.hand = params.hand;
+        qualifier.specific_hand = params.specific_hand;
         return qualifier;
     }
 
@@ -61,6 +68,8 @@ export class Factory {
             evaluation.ace_position = params.ace;
             evaluation.exclusivity = params.exclusivity;
             evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);
+            evaluation.invalidation_hands = params.invalidation_hands;
+            evaluation.qualifier_type = evaluation.qualifier.type ?? QualifierType.None;
             let splits = params.split ?? [];
             evaluation.splits = splits.map((splitData: any) => {
                 return Factory.hydrate_evaluation(splitData);
