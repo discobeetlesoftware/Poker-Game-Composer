@@ -43,6 +43,7 @@ export enum Hand {
 }
 
 export class Evaluation {
+    index: number;
     type: EvaluationType;
     formal_name?: string;
     splits?: Evaluation[];
@@ -52,6 +53,7 @@ export class Evaluation {
     player_hand_size?: number;
     invalidation_hands: Hand[];
     bug_completion_hands: Hand[];
+    qualifier_type: QualifierType;
 
     get hand_description(): string {
         var individual_count = 0;
