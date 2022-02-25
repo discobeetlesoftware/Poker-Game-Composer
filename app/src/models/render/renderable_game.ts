@@ -38,7 +38,7 @@ export class RenderableGame {
     get sanitized_name(): string { return this.fx(this.game.sanitized_name); }
     get final_hand_description(): string { return this.fx(this.game.final_hand_description); }
     get is_split_pot(): boolean { return this.game.is_split_pot; }
-    get max_players(): number { return this.game.max_players; }
     get description(): string { return this.fx(this.game.description); }
     get details(): string { return this.fx(this.game.details); }
+    max_players=(use_burn_cards: boolean = true): number => { return this.game.max_players(use_burn_cards); }
 }

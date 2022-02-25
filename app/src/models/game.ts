@@ -35,17 +35,22 @@ export class Game {
 
     get deck_size(): number { return 52; }
 
-    get max_players(): number {
+    max_players=(use_burn_cards: boolean = true): number => {
         var player_card_count = 0;
         var board_card_count = 0;
+        var burn_cards_count = 0;
         this.sections.forEach((section: GameSection) => {
             section.elements.forEach((element: GameElement) => {
                 player_card_count += element.player_card_count;
-                board_card_count += element.board_card_count;
+                let board_cards = element.board_card_count;
+                board_card_count += board_cards;
+                if (use_burn_cards && board_cards > 0) {
+                    burn_cards_count += 1;
+                }
             });
         });
         //console.log(`Math.floor((${this.deck_size} - ${board_card_count}) / ${player_card_count})`);
-        return Math.floor((this.deck_size - board_card_count) / player_card_count);
+        return Math.floor(((this.deck_size - board_card_count) - burn_cards_count) / player_card_count);
     }
 
     get description(): string {
@@ -69,7 +74,7 @@ export class Game {
             elements.push('Split Pot');
         }
 
-        const player_count = this.max_players;
+        const player_count = this.max_players();
         if (player_count < 10) {
             elements.push(player_count + ' Players Max');
         } else {
