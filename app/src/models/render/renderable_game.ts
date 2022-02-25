@@ -20,8 +20,18 @@ export class RenderableGame {
 
         if (fx == null) {
             this.fx = (input: string): string => { return input; }
-            this.js = new RenderableGame(game, (input: string): string => { return input.replace(/[\\$'"]/g, "\\$&"); })
-            this.html = new RenderableGame(game, (input: string): string => { return escape(input); })
+            this.js = new RenderableGame(game, (input: string): string => { 
+                if (!input) {
+                    return '';
+                }
+                return input.replace(/[\\$'"]/g, "\\$&"); 
+            });
+            this.html = new RenderableGame(game, (input: string): string => {
+                if (!input) {
+                    return '';
+                }
+                return escape(input); 
+            });
         }
     }
 

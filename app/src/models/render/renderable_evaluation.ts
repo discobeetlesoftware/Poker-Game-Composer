@@ -18,8 +18,18 @@ export class RenderableEvaluation {
 
         if (fx == null) {
             this.fx = (input: string): string => { return input; }
-            this.js = new RenderableEvaluation(evaluation, (input: string): string => { return input.replace(/[\\$'"]/g, "\\$&"); })
-            this.html = new RenderableEvaluation(evaluation, (input: string): string => { return escape(input); })
+            this.js = new RenderableEvaluation(evaluation, (input: string): string => { 
+                if (!input) {
+                    return '';
+                }
+                return input.replace(/[\\$'"]/g, "\\$&"); 
+            });
+            this.html = new RenderableEvaluation(evaluation, (input: string): string => {
+                if (!input) {
+                    return '';
+                }
+                return escape(input); 
+            });
         }
     }
 
