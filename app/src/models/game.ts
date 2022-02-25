@@ -8,15 +8,15 @@ import { StringFactory } from "./string_factory";
 import { GameElement } from "./game_element";
 
 export class Game {
-    file: string;
-    name: string;
-    structure: GameStructure;
+    file: string = '';
+    name: string = '';;
+    structure: GameStructure = new GameStructure();
     forced_bet: ForcedBet;
-    evaluation: Evaluation;
-    abbreviation?: string;
+    evaluation: Evaluation = new Evaluation();
+    abbreviation?: string = '';
     custom_player_max: number;
-    alternative_names?: string;
-    clarification?: string;
+    alternative_names?: string = '';
+    clarification?: string = '';
     sections: GameSection[];
 
     get sanitized_name(): string {

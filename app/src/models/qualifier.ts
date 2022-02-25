@@ -10,7 +10,7 @@ export enum QualifierType {
 }
 
 export class Qualifier {
-    type: QualifierType;
+    type: QualifierType = QualifierType.None;
     rank: Rank[];
     hand: Hand;
 
