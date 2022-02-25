@@ -98,7 +98,15 @@ function textElement(section, x, y, type) {
         paddingVertical: config.padding.vertical
     });
     text.center(rect);
-    return rect;
+
+    var containerConfig = window.config.element.card;
+    var container = new Container({
+        width: containerConfig.width,
+        height: containerConfig.height
+    });
+
+    rect.addTo(container).center();
+    return container;
 }
 
 function cardPile(isFaceUp, count, text, caption) {
