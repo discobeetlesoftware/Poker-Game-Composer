@@ -15,7 +15,9 @@
         <a href='#' class='delete' onclick="$('#{{key}}').remove();">⊗</a>
     </span>
     <div class='options'>
-    {% include element.edit_option_partial_name %}
+    {% if not element.is_proto %}
+        {% include element.edit_option_partial_name %}
+    {% endif %}
     </div>
 
     <script>
