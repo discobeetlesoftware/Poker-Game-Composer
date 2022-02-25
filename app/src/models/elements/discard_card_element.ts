@@ -10,10 +10,11 @@ export class DiscardCardElement extends GameElement {
         super('discard_card');
         this.card_count_range = card_count_range;
         this.then_draw = then_draw;
+        let verb = then_draw ? 'Draw' : 'Discard';
         if (this.card_count_range.magnitude == 0) {
-            this.canvas_title = "Draw exactly " + this.card_count_range.min + " card" + (this.card_count_range.max > 1 ? "s" : "");
+            this.canvas_title = `${verb} exactly ${this.card_count_range.min} card ${this.card_count_range.max > 1 ? "s" : ""}`;
         } else {
-            this.canvas_title = "Draw " + this.card_count_range.min + "-" + this.card_count_range.max + " cards";            
+            this.canvas_title = `${verb} ${this.card_count_range.min} - ${this.card_count_range.max} cards`;
         }
     }
 
