@@ -1,7 +1,7 @@
 {% macro option(element, type, name) %}<option value='{{type}}' {% if type == element.type %}selected{% endif %}>{{name}}</option>{% endmacro %}
 
 <div id='{{key}}' class='element'>
-    <select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][type]' id='{{key}}_type'>
+    <select name='[section][{{section_index}}][elements][{{element_index}}][type]' id='{{key}}_type'>
         {{ option(element, 'deal_player', 'Deal player') }}
         {{ option(element, 'deal_board', 'Deal board') }}
         {{ option(element, 'betting_round', 'Betting round') }}
@@ -21,7 +21,7 @@
     <script>
         function {{key}}_update_options() {
             var type = $('#{{key}}_type option:selected').val();
-            $('#{{key}} .options').load('/component/edit/section/{{sectionIndex}}/element/{{elementIndex}}/type/' + type);
+            $('#{{key}} .options').load('/component/edit/section/{{section_index}}/element/{{element_index}}/type/' + type);
         }
         $('#{{key}}_type').change(function() {
             {{key}}_update_options();

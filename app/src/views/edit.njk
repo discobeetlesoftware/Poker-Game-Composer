@@ -82,13 +82,13 @@
         }
     }
 
-    function didChangeHandSize(key, sectionIndex, elementIndex) {
+    function didChangeHandSize(key, section_index, element_index) {
         var target = $(`#${key}_value option:selected`).val();
         for (var j = $(`#${key}_value_option_container li`).length; j >= target; j--) {
             $(`#${key}_value_option_container li`).last().remove();
         }
         for (var i = $(`#${key}_value_option_container li`).length; i < target; i++) {
-            $(`#${key}_value_option_container ul`).append(`<li><select name='section[${sectionIndex}][elements][${elementIndex}][hand_size][${i}]'><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select> cards</li>`);
+            $(`#${key}_value_option_container ul`).append(`<li><select name='section[${section_index}][elements][${element_index}][hand_size][${i}]'><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select> cards</li>`);
         }
     }
 
@@ -164,7 +164,7 @@
         <h3>Sections</h3>
         <ol>
             {% asyncEach section in game.sections %}
-                {% set sectionIndex = loop.index0 %}
+                {% set section_index = loop.index0 %}
                 {% set key = 'section_' + loop.index0 %}
                 {% include 'partials/edit/section.njk' %}
             {% endeach %}

@@ -1,5 +1,5 @@
 <label for='{{key}}_value' class='title'>Split into</label>
-<select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][value]' id='{{key}}_value'>
+<select name='[section][{{section_index}}][elements][{{element_index}}][value]' id='{{key}}_value'>
     {% for index in range(1, 9) %}
     <option{% if element.split_sizes.length == index %} selected{% endif %}>{{index}}</option>
     {% endfor %}
@@ -10,7 +10,7 @@ hands
     <ul>
         {% for size in element.split_sizes %}
         <li>
-            <select name='[section][{{sectionIndex}}][elements][{{elementIndex}}][hand_size][{{loop.index0}}]'>
+            <select name='[section][{{section_index}}][elements][{{element_index}}][hand_size][{{loop.index0}}]'>
                 {% for index in range(1, 9) %}
                 <option{% if size == index %} selected{% endif %}>{{index}}</option>
                 {% endfor %}
@@ -21,9 +21,9 @@ hands
 </div>
 <script>
 $('#{{key}}_value').change(function () {
-    didChangeHandSize('{{key}}', {{sectionIndex}}, {{elementIndex}});
+    didChangeHandSize('{{key}}', {{section_index}}, {{element_index}});
 });
 {% if element.split_sizes.length == 0 %}
-didChangeHandSize('{{key}}', {{sectionIndex}}, {{elementIndex}});
+didChangeHandSize('{{key}}', {{section_index}}, {{element_index}});
 {% endif %}
 </script>
