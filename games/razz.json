@@ -1,0 +1,99 @@
+{
+  "name": "Razz",
+  "structure": {
+    "ante": true,
+    "fixed_limit": false,
+    "pot_limit": false,
+    "no_limit": false
+  },
+  "forced_bet": "high_bring_in",
+  "evaluation": {
+    "type": "low",
+    "formal_name": "",
+    "player_hand_size": "",
+    "splits": [],
+    "qualifier": {
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    },
+    "exclusivity": "five",
+    "ace_position": "low"
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "Deal",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 2,
+          "is_face_up": false
+        },
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "1st Street",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "2nd Street",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "3rd Street",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Last",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": false
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
+}

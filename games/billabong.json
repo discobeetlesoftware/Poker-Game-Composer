@@ -1,0 +1,108 @@
+{
+  "name": "Billabong",
+  "structure": {
+    "ante": true,
+    "fixed_limit": false,
+    "pot_limit": false,
+    "no_limit": false
+  },
+  "forced_bet": "ante",
+  "evaluation": {
+    "type": "split",
+    "splits": [
+      {
+        "type": "low",
+        "formal_name": "",
+        "player_hand_size": "",
+        "splits": [],
+        "qualifier": {
+          "type": "lower_rank",
+          "rank": "8",
+          "hand": "high",
+          "specific_hand": ""
+        },
+        "exclusivity": "any",
+        "ace_position": "low",
+        "invalidation_hands": [
+          "pair"
+        ]
+      },
+      {
+        "type": "high",
+        "formal_name": "",
+        "player_hand_size": "",
+        "splits": [],
+        "qualifier": {
+          "type": "none",
+          "rank": "2",
+          "hand": "high",
+          "specific_hand": ""
+        },
+        "exclusivity": "any",
+        "ace_position": "both"
+      }
+    ],
+    "qualifier": {
+      "type": "none"
+    }
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "Deal",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 2,
+          "is_face_up": false
+        },
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "1st Street",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 2
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "2nd Street",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "3rd Street",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
+}
