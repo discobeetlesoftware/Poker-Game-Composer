@@ -79,14 +79,6 @@ export class Evaluation {
         return this.hand_description;
     }
 
-    get has_qualifier(): boolean {
-        if (!this.qualifier) {
-            return false;
-        }
-        let type = this.qualifier.type;
-        return (type && type != QualifierType.None);
-    }
-
     to_serializable=(): any => {
         return {
             type: this.type,
