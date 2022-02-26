@@ -186,7 +186,7 @@ app.get('/create', function(req: Request, res: Response, next) {
 });
 
 app.post('/update', function(req: Request, res: Response, next) {
-  console.dir(JSON.stringify(req.body, null, 4));
+  //console.dir(JSON.stringify(req.body, null, 4));
   let game = Factory.hydrate_game(req.body);
   if (game == null) {
     return next('Could not save game');
