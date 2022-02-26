@@ -13,5 +13,10 @@ These are basic steps to get the app up and running.
 5. `npm run-script server`
 6. In a browser, navigate to [http://localhost:3385](http://localhost:3385)
 
+### Game Data
+The game data is stored as JSON files, 1 per game. Each file contains a representation of the structural elements of the game, as well as metadata with some supporting info. 
+
+**The structure of these JSON files is subject to change.** The existing structure lacks necessary components to describe some lesser known, more complicated poker game variants (e.g. Banco), so it's probably better to say it's guarenteed to change.
+
 ### Notice
 This is prototype software. It provides only a basic user experience, contains potentially catastrophic bugs, and has missing functionality. Do not rely on it.
