@@ -14,7 +14,7 @@ import { RenderableGame } from "./models/render/renderable_game";
 import { RenderableEvaluation } from "./models/render/renderable_evaluation";
 
 const app = express();
-const rootPath = path.join(__dirname, '..', '..');
+const rootPath = path.join(__dirname, '..');
 const database = new Database(rootPath, 'games');
 
 app.use(express.static('src/public'));

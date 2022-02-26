@@ -29,11 +29,11 @@ export class Database {
     }
 
     schemaPath=(gameName: string): string => {
-        return path.join(__dirname, "..", "..", "..", "games", `${gameName}.json`);
+        return path.join(__dirname, "..", "..", "games", `${gameName}.json`);
     }
     
     gamePath=(game: Game): string => {
-        return path.join(__dirname, "..", "..", "..", "games", `${game.sanitized_name}.json`);
+        return path.join(__dirname, "..", "..", "games", `${game.sanitized_name}.json`);
     }
 
     loadSchema=(gameName: string): Promise<object> => {
