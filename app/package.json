@@ -4,7 +4,8 @@
     "description": "Builder app for poker games",
     "main": "app.js",
     "scripts": {
-        "build": "tsc",
+        "build": "./node_modules/typescript/bin/tsc",
+        "server": "node build/app.js",
         "test": "test"
     },
     "repository": {
