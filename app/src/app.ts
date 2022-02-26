@@ -199,5 +199,5 @@ app.post('/update', function(req: Request, res: Response, next) {
 });
 
 app.listen(3385 || process.env.PORT, () => {
-  console.log("Server started listening");
+  console.log("Server started listening: http://localhost:3385");
 });
