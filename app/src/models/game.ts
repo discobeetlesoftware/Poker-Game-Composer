@@ -49,7 +49,6 @@ export class Game {
                 }
             });
         });
-        //console.log(`Math.floor((${this.deck_size} - ${board_card_count}) / ${player_card_count})`);
         return Math.floor(((this.deck_size - board_card_count) - burn_cards_count) / player_card_count);
     }
 
@@ -77,8 +76,6 @@ export class Game {
         const player_count = this.max_players();
         if (player_count < 10) {
             elements.push(player_count + ' Players Max');
-        } else {
-            console.log('Max players ' + player_count);
         }
 
         return elements.join(' • ');
