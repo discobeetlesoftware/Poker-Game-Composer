@@ -1,0 +1,94 @@
+{
+  "name": "Ludicrous Pineapple",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "high",
+    "formal_name": "",
+    "player_hand_size": "",
+    "splits": [],
+    "qualifier": {
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    },
+    "exclusivity": "any",
+    "ace_position": "both"
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "Pre-Flop",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 4,
+          "is_face_up": false
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Flop",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 3
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Turn",
+      "elements": [
+        {
+          "type": "discard_card",
+          "card_count_range": [
+            1,
+            1
+          ],
+          "then_draw": false
+        },
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "River",
+      "elements": [
+        {
+          "type": "discard_card",
+          "card_count_range": [
+            1,
+            1
+          ],
+          "then_draw": false
+        },
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
+}
