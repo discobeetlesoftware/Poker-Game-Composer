@@ -1,4 +1,4 @@
-# Poker Game Metadata
+# Poker Game Composer
 
 ### Overview
 This repository contains a node application which is capable of managing the structural information for various poker games. This application is also useful to render the games in a 'card' which can visually describe how to play the game.

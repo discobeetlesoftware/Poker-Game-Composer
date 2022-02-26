@@ -1,5 +1,5 @@
 {
-    "name": "Poker-Game-Metadata",
+    "name": "poker-game-composer",
     "version": "1.0.0",
     "description": "Builder app for poker games",
     "main": "app.js",
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/discobeetlesoftware/Poker-Game-Metadata.git"
+        "url": "git+https://github.com/discobeetlesoftware/Poker-Game-Composer.git"
     },
     "keywords": [
         "poker"
@@ -17,9 +17,9 @@
     "author": "Discobeetle Software",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/discobeetlesoftware/Poker-Game-Metadata/issues"
+        "url": "https://github.com/discobeetlesoftware/Poker-Game-Composer/issues"
     },
-    "homepage": "https://github.com/discobeetlesoftware/Poker-Game-Metadata#readme",
+    "homepage": "https://github.com/discobeetlesoftware/Poker-Game-Composer#readme",
     "private": true,
     "devDependencies": {
         "@types/escape-html": "^1.0.1",
