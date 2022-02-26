@@ -28,6 +28,14 @@ export class Database {
         });
     }
 
+    appendGame=(game: Game) => {
+        var name = game.sanitized_name;
+        if (!this.games.includes(name)) {
+            this.games.push(name);
+            this.games.sort();
+        }
+    }
+
     schemaPath=(gameName: string): string => {
         return path.join(__dirname, "..", "..", "games", `${gameName}.json`);
     }
@@ -142,10 +150,13 @@ export class Database {
     saveGame=(game: Game): Promise<boolean> => {
         let data = game.to_json();
         let writeGameData = (resolve: any, reject: any) => {
-
             fs.writeFile(this.gamePath(game), data, (err) => {
-                let handler = err == null ? resolve : reject;
-                handler(err);
+                if (err == null) {
+                    this.appendGame(game);
+                    resolve(null);
+                } else {
+                    reject(err);
+                }
             });
         };
         return new Promise(writeGameData);
