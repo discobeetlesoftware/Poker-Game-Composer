@@ -199,8 +199,8 @@ app.post('/update', function(req: Request, res: Response, next) {
 });
 
 function boot(port: number) {
-  app.listen(port || process.env.PORT, () => {
-    console.log(`Server started listening: http://localhost:${port}`);
+  app.listen(process.env.PORT || port, () => {
+    console.log(`Server started listening: maybe http://localhost:${port}`);
   });
 }
 boot(3385);
