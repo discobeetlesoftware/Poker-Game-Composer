@@ -1,0 +1,111 @@
+{
+  "name": "Cincinnati 8",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "ante",
+  "evaluation": {
+    "type": "split",
+    "splits": [
+      {
+        "type": "high",
+        "formal_name": "",
+        "player_hand_size": "",
+        "splits": [],
+        "qualifier": {
+          "type": "none",
+          "rank": "2",
+          "hand": "high",
+          "specific_hand": ""
+        },
+        "exclusivity": "any",
+        "ace_position": "both"
+      },
+      {
+        "type": "low",
+        "formal_name": "",
+        "player_hand_size": "",
+        "splits": [],
+        "qualifier": {
+          "type": "lower_rank",
+          "rank": "8",
+          "hand": "high",
+          "specific_hand": ""
+        },
+        "exclusivity": "any",
+        "ace_position": "low",
+        "invalidation_hands": [
+          "pair",
+          "two_pair",
+          "three_of_a_kind",
+          "full_house",
+          "four_of_a_kind"
+        ]
+      }
+    ],
+    "qualifier": {
+      "type": "none"
+    }
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "Pre-flop",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 4,
+          "is_face_up": false
+        },
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "1st Street",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "2nd Street",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "3rd Street",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
+}
