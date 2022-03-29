@@ -1,5 +1,5 @@
 {
-  "name": "Dramaha",
+  "name": "Lazy SOHE",
   "structure": {
     "ante": false,
     "fixed_limit": true,
@@ -12,47 +12,34 @@
     "splits": [
       {
         "type": "high",
-        "formal_name": "Omaha",
-        "player_hand_size": "",
+        "formal_name": "Hold 'em",
+        "player_hand_size": "2",
         "splits": [],
-        "qualifier": {
-          "type": "none",
-          "rank": "2",
-          "hand": "high",
-          "specific_hand": ""
-        },
-        "exclusivity": "two",
+        "qualifier": {},
+        "exclusivity": "any",
         "ace_position": "both"
       },
       {
         "type": "high",
-        "formal_name": "Draw",
-        "player_hand_size": "",
+        "formal_name": "Omaha",
+        "player_hand_size": "4",
         "splits": [],
-        "qualifier": {
-          "type": "none",
-          "rank": "2",
-          "hand": "high",
-          "specific_hand": ""
-        },
-        "exclusivity": "all",
+        "qualifier": {},
+        "exclusivity": "two",
         "ace_position": "both"
       }
     ],
-    "qualifier": {
-      "type": "none"
-    }
+    "qualifier": {}
   },
-  "abbreviation": "",
-  "alternative_names": "Drawmaha",
-  "clarification": "",
+  "abbreviation": "SOHE",
+  "alternative_names": "",
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
           "type": "deal_player",
-          "card_count": 5,
+          "card_count": 6,
           "is_face_up": false
         },
         {
@@ -76,14 +63,6 @@
       "name": "Turn",
       "elements": [
         {
-          "type": "discard_card",
-          "card_count_range": [
-            0,
-            5
-          ],
-          "then_draw": true
-        },
-        {
           "type": "deal_board",
           "card_count": 1
         },
@@ -101,6 +80,13 @@
         },
         {
           "type": "betting_round"
+        },
+        {
+          "type": "split_hand",
+          "split_sizes": [
+            2,
+            4
+          ]
         }
       ]
     }

@@ -1,5 +1,5 @@
 {
-  "name": "Dramaha",
+  "name": "Courchevel",
   "structure": {
     "ante": false,
     "fixed_limit": true,
@@ -8,43 +8,21 @@
   },
   "forced_bet": "blinds",
   "evaluation": {
-    "type": "split",
-    "splits": [
-      {
-        "type": "high",
-        "formal_name": "Omaha",
-        "player_hand_size": "",
-        "splits": [],
-        "qualifier": {
-          "type": "none",
-          "rank": "2",
-          "hand": "high",
-          "specific_hand": ""
-        },
-        "exclusivity": "two",
-        "ace_position": "both"
-      },
-      {
-        "type": "high",
-        "formal_name": "Draw",
-        "player_hand_size": "",
-        "splits": [],
-        "qualifier": {
-          "type": "none",
-          "rank": "2",
-          "hand": "high",
-          "specific_hand": ""
-        },
-        "exclusivity": "all",
-        "ace_position": "both"
-      }
-    ],
+    "type": "high",
+    "formal_name": "",
+    "player_hand_size": "",
+    "splits": [],
     "qualifier": {
-      "type": "none"
-    }
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    },
+    "exclusivity": "two",
+    "ace_position": "both"
   },
   "abbreviation": "",
-  "alternative_names": "Drawmaha",
+  "alternative_names": "",
   "clarification": "",
   "sections": [
     {
@@ -56,6 +34,10 @@
           "is_face_up": false
         },
         {
+          "type": "deal_board",
+          "card_count": 1
+        },
+        {
           "type": "betting_round"
         }
       ]
@@ -65,7 +47,7 @@
       "elements": [
         {
           "type": "deal_board",
-          "card_count": 3
+          "card_count": 2
         },
         {
           "type": "betting_round"
@@ -75,14 +57,6 @@
     {
       "name": "Turn",
       "elements": [
-        {
-          "type": "discard_card",
-          "card_count_range": [
-            0,
-            5
-          ],
-          "then_draw": true
-        },
         {
           "type": "deal_board",
           "card_count": 1

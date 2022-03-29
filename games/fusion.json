@@ -1,5 +1,5 @@
 {
-  "name": "Dramaha",
+  "name": "Fusion",
   "structure": {
     "ante": false,
     "fixed_limit": true,
@@ -8,51 +8,23 @@
   },
   "forced_bet": "blinds",
   "evaluation": {
-    "type": "split",
-    "splits": [
-      {
-        "type": "high",
-        "formal_name": "Omaha",
-        "player_hand_size": "",
-        "splits": [],
-        "qualifier": {
-          "type": "none",
-          "rank": "2",
-          "hand": "high",
-          "specific_hand": ""
-        },
-        "exclusivity": "two",
-        "ace_position": "both"
-      },
-      {
-        "type": "high",
-        "formal_name": "Draw",
-        "player_hand_size": "",
-        "splits": [],
-        "qualifier": {
-          "type": "none",
-          "rank": "2",
-          "hand": "high",
-          "specific_hand": ""
-        },
-        "exclusivity": "all",
-        "ace_position": "both"
-      }
-    ],
-    "qualifier": {
-      "type": "none"
-    }
+    "type": "high",
+    "formal_name": "",
+    "player_hand_size": "",
+    "splits": [],
+    "qualifier": {},
+    "exclusivity": "two",
+    "ace_position": "both"
   },
   "abbreviation": "",
-  "alternative_names": "Drawmaha",
-  "clarification": "",
+  "alternative_names": "",
   "sections": [
     {
       "name": "Pre-flop",
       "elements": [
         {
           "type": "deal_player",
-          "card_count": 5,
+          "card_count": 2,
           "is_face_up": false
         },
         {
@@ -76,12 +48,9 @@
       "name": "Turn",
       "elements": [
         {
-          "type": "discard_card",
-          "card_count_range": [
-            0,
-            5
-          ],
-          "then_draw": true
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": false
         },
         {
           "type": "deal_board",
@@ -95,6 +64,11 @@
     {
       "name": "River",
       "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 1,
+          "is_face_up": false
+        },
         {
           "type": "deal_board",
           "card_count": 1
