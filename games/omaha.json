@@ -9,13 +9,21 @@
   "forced_bet": "blinds",
   "evaluation": {
     "type": "high",
+    "formal_name": "",
+    "player_hand_size": "",
     "splits": [],
-    "qualifier": {},
+    "qualifier": {
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    },
     "exclusivity": "two",
     "ace_position": "both"
   },
   "abbreviation": "",
   "alternative_names": "",
+  "clarification": "",
   "sections": [
     {
       "name": "Pre-flop",
