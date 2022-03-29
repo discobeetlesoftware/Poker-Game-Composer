@@ -25,7 +25,7 @@
       "elements": [
         {
           "type": "deal_player",
-          "card_count": 2,
+          "card_count": 3,
           "is_face_up": false
         },
         {
