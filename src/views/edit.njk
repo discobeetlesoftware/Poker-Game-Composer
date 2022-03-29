@@ -16,6 +16,9 @@
     }
 
     function appendEvaluationSplits(name, key) {
+        if (name == null || name == '') {
+            name = '_';
+        }
         var splitListToken = `#evaluation_exclusivity_${key}_split>ul`;
         var splitListElementCount = $(splitListToken + ' li').length;
         for (var j = splitListElementCount; j < 2; j++) {
