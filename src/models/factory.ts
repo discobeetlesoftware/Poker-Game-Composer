@@ -92,7 +92,7 @@ export class Factory {
     public static hydrate_section=(params: any): GameSection => {
         let section = new GameSection();
         section.name = params.name;
-        section.elements = params.elements.map((data: any): GameElement => {
+        section.elements = (params.elements ?? []).map((data: any): GameElement => {
             return Factory.hydrate_element(data);
         });
         return section;
