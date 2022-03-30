@@ -74,14 +74,20 @@ function bet() {
     return container;
 }
 
-function textElement(section, x, y, type) {
+function textElement(type) {
+    var containerConfig = window.config.element.card.size;
+    var container = new Container({
+        width: containerConfig.width,
+        height: containerConfig.height
+    });
+
     var config = window.config.element.text;
     var rect = new Rectangle({
         borderColor: config.border.color,
         borderWidth: config.border.width,
         corner: config.corner,
         color: config.backgroundColor
-    }).centerReg();
+    });
 
     var text = new Label({
         text: type,
@@ -95,13 +101,7 @@ function textElement(section, x, y, type) {
     });
     text.center(rect);
 
-    var containerConfig = window.config.element.card;
-    var container = new Container({
-        width: containerConfig.width,
-        height: containerConfig.height
-    });
-
-    rect.addTo(container).center();
+    rect.pos(0, 0, config.align, config.valign, container);
     return container;
 }
 

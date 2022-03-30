@@ -1,5 +1,5 @@
 () => {
-  var element = textElement(elementContainer, 0, 0, '{{element.canvas_title}}');
+  var element = textElement('{{element.canvas_title}}');
   var yLoc = ((window.config.element.card.size.height - element.height) / 2.0);
   element.pos(lastElementMaxX, yLoc, LEFT, TOP, elementContainer);
   return element;
