@@ -29,19 +29,15 @@ function card(isFaceUp, type, x, y) {
     if (isFaceUp) {
         var newPip = function() {
             var pip = new Label({
-                text: '⋆',
+                text: configFace.pip.character,
                 size: configFace.pip.size,
                 font: configFace.pip.family,
                 color: configFace.pip.color
             });
-            return pip.centerReg().addTo(rect);
+            return pip.center(rect);
         }
-        newPip().pos(0, -7, LEFT, TOP, rect);
-        newPip().pos(5, -7, RIGHT, BOTTOM, rect);
-
-        //drawPip(rect.width - config.border.width - configFace.pip.offset.x - 3, rect.height - config.border.width - configFace.pip.offset.y - 6);
-        // drawPip(config.border.width + configFace.pip.offset.x, config.border.width + configFace.pip.offset.y);
-        //drawPip(config.size.width - config.border.width - configFace.pip.offset.x, config.size.height - config.border.width - configFace.pip.offset.y); 
+        newPip().pos(configFace.pip.offset.x, configFace.pip.offset.y, RIGHT, BOTTOM, rect);
+        newPip().pos(configFace.pip.offset.x, configFace.pip.offset.y, LEFT, TOP, rect);
     }
     return rect;
 }

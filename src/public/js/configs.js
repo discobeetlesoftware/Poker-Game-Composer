@@ -113,11 +113,13 @@ debugConfig = {
                     corner: 10
                 },
                 pip: {
+                    character: '⭑',
+                    family: 'Verdana, sans-serif',
                     color: '#fff',
-                    size: 50,
+                    size: 18,
                     offset: {
-                        x: 7,
-                        y: 8
+                        x: 4,
+                        y: 4
                     }
                 }
             }
