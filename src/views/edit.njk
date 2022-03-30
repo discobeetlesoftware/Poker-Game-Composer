@@ -37,9 +37,9 @@
         var selectToken = evaluationScoreContainerToken + ' select';
         var inputToken = evaluationScoreContainerToken + ' input';
 
-        $(selectToken).attr('disabled', type == 'split' || type == 'exclusive');
-        $(inputToken).attr('disabled', type == 'split' || type == 'exclusive');
-        if (type == 'split' || type == 'exclusive') {
+        $(selectToken).attr('disabled', type == 'split' || type == 'exclusive' || type == 'cascade');
+        $(inputToken).attr('disabled', type == 'split' || type == 'exclusive' || type == 'cascade');
+        if (type == 'split' || type == 'exclusive' || type == 'cascade') {
             $(evaluationScoreContainerToken).hide();
             $(evaluationSplitContainerToken).show();
         } else {
@@ -52,7 +52,7 @@
     function didChangeEvaluationType(name, key) {
         didChangeEvaluationTypeStateHandler(key);
         var type = $(`#evaluation_type_${key} option:selected`).val();
-        if (type == 'split' || type == 'exclusive') {
+        if (type == 'split' || type == 'exclusive' || type == 'cascade') {
             appendEvaluationSplits(name, key);
         }
     }

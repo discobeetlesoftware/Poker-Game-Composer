@@ -8,7 +8,8 @@ export enum EvaluationType {
     PointHigh = 'point_high',
     Badugi = 'badugi',
     Split = 'split',
-    Exclusive = 'exclusive'
+    Exclusive = 'exclusive',
+    Cascade = 'cascade'
 }
 
 export namespace EvaluationType {
