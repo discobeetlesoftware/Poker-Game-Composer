@@ -28,6 +28,14 @@ var frame = new Frame({
 });
 
 var showBackground = false;
+function attachBackground(parent, color) {
+    if (showBackground) {
+        const background = new Rectangle(parent.width, parent.height, color).addTo(parent);
+        background.type = "Region";
+        background.parent.setChildIndex(background, 0);
+        return background;
+    }
+}
 
 var layout;
 
@@ -40,19 +48,12 @@ frame.on('ready', () => {
     var lastSection; var nextSection; var lastSectionBounds; var sectionXLocation = 0;
 
     var titleContainer = new Container(globals.size.width, defaultHeight(globals.heights.title)).addTo();
-
-    if (showBackground) {
-        const titleContainerBackground = new Rectangle(titleContainer.width, titleContainer.height, green).addTo(titleContainer);
-        titleContainerBackground.type = "Region";
-    }
+    attachBackground(titleContainer, green);
 
     var title = gameTitle('{{game.js.name}}', window.config.game.title).center(titleContainer);
     title.on('click', function() { zgo('/edit/{{game.js.sanitized_name}}'); });
     var detailContainer = new Container(globals.size.width, defaultHeight(globals.heights.detail)).addTo();
-    if (showBackground) {
-        const detailContainerBackground = new Rectangle(detailContainer.width, detailContainer.height, yellow).addTo(detailContainer);
-        detailContainerBackground.type = "Region";
-    }
+    attachBackground(detailContainer, yellow);
 
     var detailsLabel = new Label({
         text: '{{game.js.details}}',
@@ -62,17 +63,11 @@ frame.on('ready', () => {
         labelWidth: stageW * 0.75
     }).center(detailContainer);
 
-    var sectionsContainer = new Container(globals.size.width, defaultHeight(globals.heights.sections));
-    if (showBackground) {
-        const sectionContainerBackground = new Rectangle(sectionsContainer.width, sectionsContainer.height, purple).addTo(sectionsContainer);
-        sectionContainerBackground.type = "Region";
-    }
+    var sectionsContainer = new Container(0, defaultHeight(globals.heights.sections));
 
-    var sectionTitlesContainer = new Container(globals.size.width, defaultHeight(globals.heights.sectionTitles)).addTo(sectionsContainer);
-    if (showBackground) {
-        const sectionTitlesContainerBackground = new Rectangle(sectionTitlesContainer.width, sectionTitlesContainer.height, blue).addTo(sectionTitlesContainer);
-        sectionTitlesContainerBackground.type = "Region";
-    }
+    var sectionTitlesContainer = new Container(globals.size.width, defaultHeight(globals.heights.sectionTitles)).addTo(sectionsContainer).pos(0, 0);
+    attachBackground(sectionTitlesContainer, blue);
+
     var sectionTitles = [];
     var sectionBuilders = [
         {% asyncEach section in game.js.sections %}
@@ -103,12 +98,13 @@ frame.on('ready', () => {
 
     sectionsContainer.width = sectionXLocation;
     var sectionsWrapper = new Container(globals.size.width, sectionsContainer.height).addTo();
-    sectionsWrapper.backgroundColor = yellow;
     sectionsContainer.addTo(sectionsWrapper).pos(
     ((sectionsWrapper.width - sectionXLocation) / 2), 0, LEFT, TOP);
     sectionTitlesContainer.pos(0, 0);
+    attachBackground(sectionsWrapper, purple);
 
     var descriptionContainer = new Container(globals.size.width, defaultHeight(globals.heights.description)).addTo();
+    attachBackground(descriptionContainer, red);
 
 // Layout(holder, regions, lastMargin, lastMarginMin, backgroundColor, vertical, showRegions, scalingObject, hideKey, style, group, inherit)
     layout = new Layout(
