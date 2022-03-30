@@ -27,6 +27,8 @@ var frame = new Frame({
     outerColor: dark
 });
 
+var showBackground = false;
+
 frame.on('ready', () => {
     var stage = frame.stage;
     var stageW = frame.width;
@@ -36,9 +38,20 @@ frame.on('ready', () => {
     var lastSection; var nextSection; var lastSectionBounds; var sectionXLocation = 0;
 
     var titleContainer = new Container(globals.size.width, defaultHeight(globals.heights.title)).addTo();
+
+    if (showBackground) {
+        const titleContainerBackground = new Rectangle(titleContainer.width, titleContainer.height, green).addTo(titleContainer);
+        titleContainerBackground.type = "Region";
+    }
+
     var title = gameTitle('{{game.js.name}}', window.config.game.title).center(titleContainer);
     title.on('click', function() { zgo('/edit/{{game.js.sanitized_name}}'); });
     var detailContainer = new Container(globals.size.width, defaultHeight(globals.heights.detail)).addTo();
+    if (showBackground) {
+        const detailContainerBackground = new Rectangle(detailContainer.width, detailContainer.height, yellow).addTo(detailContainer);
+        detailContainerBackground.type = "Region";
+    }
+
     var detailsLabel = new Label({
         text: '{{game.js.details}}',
         size: window.config.game.detail.size,
@@ -48,7 +61,16 @@ frame.on('ready', () => {
     }).center(detailContainer);
 
     var sectionsContainer = new Container(globals.size.width, defaultHeight(globals.heights.sections));
+    if (showBackground) {
+        const sectionContainerBackground = new Rectangle(sectionsContainer.width, sectionsContainer.height, purple).addTo(sectionsContainer);
+        sectionContainerBackground.type = "Region";
+    }
+
     var sectionTitlesContainer = new Container(globals.size.width, defaultHeight(globals.heights.sectionTitles)).addTo(sectionsContainer);
+    if (showBackground) {
+        const sectionTitlesContainerBackground = new Rectangle(sectionTitlesContainer.width, sectionTitlesContainer.height, blue).addTo(sectionTitlesContainer);
+        sectionTitlesContainerBackground.type = "Region";
+    }
     var sectionTitles = [];
     var sectionBuilders = [
         {% asyncEach section in game.js.sections %}
