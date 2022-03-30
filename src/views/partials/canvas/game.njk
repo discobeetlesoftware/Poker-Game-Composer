@@ -30,7 +30,7 @@ var frame = new Frame({
 var showBackground = false;
 function attachBackground(parent, color) {
     if (showBackground) {
-        const background = new Rectangle(parent.width, parent.height, color).addTo(parent);
+        const background = new Rectangle(parent.width, parent.height, color).addTo(parent).pos(0,0);
         background.type = "Region";
         background.parent.setChildIndex(background, 0);
         return background;
