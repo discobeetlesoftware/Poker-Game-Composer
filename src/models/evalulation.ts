@@ -7,7 +7,8 @@ export enum EvaluationType {
     PointLow = 'point_low', // A=1, 2=2, 3=3, … 9=9, T-K=10
     PointHigh = 'point_high',
     Badugi = 'badugi',
-    Split = 'split'
+    Split = 'split',
+    Exclusive = 'exclusive'
 }
 
 export namespace EvaluationType {
