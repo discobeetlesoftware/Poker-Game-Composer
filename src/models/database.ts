@@ -178,7 +178,7 @@ export class Database {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(files);
+                        resolve(files.filter(fileName => fileName.includes(".json")));
                     }
                 });
             };
