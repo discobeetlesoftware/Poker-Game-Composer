@@ -98,6 +98,9 @@ frame.on('ready', () => {
         lastSection = nextSection;
     }
 
+    lastSectionBounds = lastSection.getBounds(); 
+    sectionXLocation += lastSectionBounds.width;
+
     sectionsContainer.width = sectionXLocation;
     var sectionsWrapper = new Container(globals.size.width, sectionsContainer.height).addTo();
     sectionsWrapper.backgroundColor = yellow;
