@@ -2,6 +2,7 @@ import { AcePosition } from "./ace_position";
 import { Qualifier, QualifierType } from "./qualifier";
 
 export enum EvaluationType {
+    Distribute = 'distribute',
     High = 'high',
     Low = 'low',
     PointLow = 'point_low', // A=1, 2=2, 3=3, … 9=9, T-K=10

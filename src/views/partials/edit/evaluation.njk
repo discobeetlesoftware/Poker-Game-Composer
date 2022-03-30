@@ -4,6 +4,7 @@
     <div>
         <label for='evaluation_type_{{evaluationKey}}'>Type</label>
         <select name='evaluation{{evaluationContext}}[type]' id='evaluation_type_{{evaluationKey}}'>
+            {{ option(evaluation.type, 'distribute', 'Distribute') }}
             {{ option(evaluation.type, 'high', 'High') }}
             {{ option(evaluation.type, 'low', 'Low') }}
             {{ option(evaluation.type, 'point_low', 'Point Low') }}
