@@ -8,7 +8,7 @@ var globals = {
         detail: 0.1,
         sections: 0.5,
         description: 0.2,
-        sectionTitles: 0.1
+        sectionTitles: 0.05 // inside of sections
     }
 };
 
@@ -97,20 +97,19 @@ frame.on('ready', () => {
     sectionXLocation += lastSectionBounds.width;
 
     sectionsContainer.width = sectionXLocation;
+  
     var sectionsWrapper = new Container(globals.size.width, sectionsContainer.height).addTo();
-    sectionsContainer.addTo(sectionsWrapper).pos(
-    ((sectionsWrapper.width - sectionXLocation) / 2), 0, LEFT, TOP);
-    sectionTitlesContainer.pos(0, 0);
     attachBackground(sectionsWrapper, purple);
+    sectionsContainer.pos(-(sectionXLocation / 2), 0, CENTER, CENTER, sectionsWrapper);
 
     var descriptionContainer = new Container(globals.size.width, defaultHeight(globals.heights.description)).addTo();
     attachBackground(descriptionContainer, red);
 
-// Layout(holder, regions, lastMargin, lastMarginMin, backgroundColor, vertical, showRegions, scalingObject, hideKey, style, group, inherit)
+    // Layout(holder, regions, lastMargin, lastMarginMin, backgroundColor, vertical, showRegions, scalingObject, hideKey, style, group, inherit)
     layout = new Layout(
         stage, [
             { object: titleContainer, maxHeight: defaultHeight(globals.heights.title) * 100, valign: CENTER },
-            { object: detailContainer, maxHeight: defaultHeight(globals.heights.detail) * 100, valign: CENTER },
+            { object: detailContainer, maxHeight: defaultHeight(globals.heights.detail) * 100, valign: BOTTOM },
             { object: sectionsWrapper, maxHeight: defaultHeight(globals.heights.sections) * 100, valign: CENTER },
             { object: descriptionContainer, maxHeight: defaultHeight(globals.heights.description) * 100, valign: CENTER },
         ],
