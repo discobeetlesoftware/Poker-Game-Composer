@@ -65,10 +65,8 @@ frame.on('ready', () => {
 
     var sectionsContainer = new Container(0, defaultHeight(globals.heights.sections));
 
-    var sectionTitlesContainer = new Container(globals.size.width, defaultHeight(globals.heights.sectionTitles)).addTo(sectionsContainer).pos(0, 0);
-    attachBackground(sectionTitlesContainer, blue);
-
     var sectionTitles = [];
+    var sectionTitlePositions = [];
     var sectionBuilders = [
         {% asyncEach section in game.js.sections %}
             {% set section_index = loop.index0 %}
@@ -88,15 +86,23 @@ frame.on('ready', () => {
         }
         sectionsSize.width = sectionXLocation - config.section.horizontalSpacing;
         sectionsSize.height = Math.max(sectionsSize.height, lastSectionBounds.height);
-        var title = gameTitle(sectionTitles[section_index], window.config.section.title.font).addTo(sectionTitlesContainer).pos(sectionXLocation, 0, LEFT, BOTTOM);
+        sectionTitlePositions[section_index] = [sectionXLocation, nextSection.width];
         nextSection.pos(sectionXLocation, 0, LEFT, CENTER);
         lastSection = nextSection;
     }
 
     lastSectionBounds = lastSection.getBounds(); 
     sectionXLocation += lastSectionBounds.width;
-
     sectionsContainer.width = sectionXLocation;
+
+    const sectionTitleConfig = window.config.section.title;
+    var titleHeight = ((sectionsSize.height - sectionsContainer.height) / 2) + sectionTitleConfig.margins.bottom;
+    var sectionTitlesContainer = new Container(sectionsContainer.width, titleHeight).addTo(sectionsContainer).pos(0, 0);
+    for (var title_index = 0; title_index < sectionTitlePositions.length; title_index++) {
+        var container = new Container(sectionTitlePositions[title_index][1], titleHeight).addTo(sectionsContainer).pos(sectionTitlePositions[title_index][0], 0);
+        gameTitle(sectionTitles[title_index], sectionTitleConfig.font).addTo(container).pos(sectionTitleConfig.padding.horizontal, sectionTitleConfig.padding.vertical, sectionTitleConfig.align, sectionTitleConfig.valign);
+        attachBackground(container, pink);
+    }
   
     var sectionsWrapper = new Container(globals.size.width, sectionsContainer.height).addTo();
     attachBackground(sectionsWrapper, purple);

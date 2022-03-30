@@ -33,8 +33,10 @@ debugConfig = {
                 family: 'Verdana, sans-serif',
                 color: '#161616',
             },
-            margins: { top: 0, bottom: 5, left: 5, right: 5 },
+            margins: { bottom: 5 },
+            padding: { vertical: 0, horizontal: 5 },
             align: 'left',
+            valign: 'bottom'
         },
         horizontalSpacing: 30,
     },
