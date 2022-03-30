@@ -34,7 +34,7 @@ debugConfig = {
                 color: '#161616',
             },
             margins: { bottom: 5 },
-            padding: { vertical: 0, horizontal: 5 },
+            padding: { vertical: 0, horizontal: 3 },
             align: 'left',
             valign: 'bottom'
         },
