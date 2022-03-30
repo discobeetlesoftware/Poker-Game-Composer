@@ -29,6 +29,8 @@ var frame = new Frame({
 
 var showBackground = false;
 
+var layout;
+
 frame.on('ready', () => {
     var stage = frame.stage;
     var stageW = frame.width;
@@ -105,7 +107,8 @@ frame.on('ready', () => {
 
     var descriptionContainer = new Container(globals.size.width, defaultHeight(globals.heights.description)).addTo();
 
-    var layout = new Layout(
+// Layout(holder, regions, lastMargin, lastMarginMin, backgroundColor, vertical, showRegions, scalingObject, hideKey, style, group, inherit)
+    layout = new Layout(
         stage, [
             { object: titleContainer, maxHeight: defaultHeight(globals.heights.title) * 100, valign: CENTER },
             { object: detailContainer, maxHeight: defaultHeight(globals.heights.detail) * 100, valign: CENTER },
@@ -119,5 +122,5 @@ frame.on('ready', () => {
 });
 
 frame.on('resize', () => {
-
+    layout.resize();
 });
