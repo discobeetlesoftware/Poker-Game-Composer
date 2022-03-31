@@ -16,6 +16,14 @@ export enum EvaluationType {
 }
 
 export namespace EvaluationType {
+    export function IsSuitType(type: EvaluationType): boolean {
+        return type == EvaluationType.SuitHigh || type == EvaluationType.SuitLow;
+    }
+
+    export function IsSplitType(type: EvaluationType): boolean {
+        return type == EvaluationType.Split || type == EvaluationType.Cascade || type == EvaluationType.Exclusive;
+    }
+
     export function All(): EvaluationType[] {
         return Object.keys(EvaluationType) as EvaluationType[];
     }
@@ -94,19 +102,24 @@ export class Evaluation {
     }
 
     to_serializable=(): any => {
-        return {
+        var result = {
             type: this.type,
             formal_name: this.formal_name,
             player_hand_size: this.player_hand_size,
             splits: this.splits.map((element: Evaluation) => {
                 return element.to_serializable()
             }),
-            qualifier: this.qualifier.to_serializable(),
             exclusivity: this.exclusivity,
             ace_position: this.ace_position,
             invalidation_hands: this.invalidation_hands,
-            bug_completion_hands: this.bug_completion_hands,
-            suit: this.suit
+            bug_completion_hands: this.bug_completion_hands
         };
+        if (EvaluationType.IsSuitType(this.type)) {
+            result['suit'] = this.suit;
+        }
+        if (!EvaluationType.IsSplitType(this.type)) {
+            result['qualifier'] = this.qualifier.to_serializable();
+        }
+        return result
     }
 }
