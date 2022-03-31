@@ -14,6 +14,7 @@ import { RenderableGame } from "./models/render/renderable_game";
 import { RenderableEvaluation } from "./models/render/renderable_evaluation";
 
 const app = express();
+const editRouter = express.Router();
 const rootPath = path.join(__dirname, '..');
 const database = new Database(rootPath, 'games');
 
@@ -65,13 +66,12 @@ app.get('/game/:game', function(req: Request, res: Response, next) {
   });
 });
 
-//
-app.get("/component/edit/section/:section_index", function(req: Request, res: Response, next) {
+editRouter.get('/section/:section_index', function(req: Request, res: Response, next) {
   let section_index = req.params.section_index;
   res.render('partials/edit/section', { layout: false, section_index: section_index, key: `section_${section_index}`, section: new GameSection() });
 });
 
-app.get("/component/edit/section/:section_index/element/:element_index", function(req: Request, res: Response, next) {
+editRouter.get('/section/:section_index/element/:element_index', function(req: Request, res: Response, next) {
   let section_index = req.params.section_index;
   let element_index = req.params.element_index;
   res.render('partials/edit/element', { 
@@ -83,7 +83,7 @@ app.get("/component/edit/section/:section_index/element/:element_index", functio
   });
 });
 
-app.get("/component/edit/section/:section_index/element/:element_index/type/:element_type", function(req: Request, res: Response, next) {
+editRouter.get('/section/:section_index/element/:element_index/type/:element_type', function(req: Request, res: Response, next) {
   let section_index = req.params.section_index;
   let element_index = req.params.element_index;
   let time = Math.floor(Date.now() / 1000);
@@ -97,7 +97,7 @@ app.get("/component/edit/section/:section_index/element/:element_index/type/:ele
   });
 });
 
-app.get("/component/edit/game/:game/evaluation/:evaluation_index", function(req: Request, res: Response, next) {
+editRouter.get('/game/:game/evaluation/:evaluation_index', function(req: Request, res: Response, next) {
   var gameName = req.params.game;    
   var keys = req.params.evaluation_index.split('_');
   var id = keys.shift();
@@ -156,7 +156,7 @@ function nameForHand(value) {
   }[value];
 }
 
-app.get('/component/edit/evaluation/:evaluation_key/invalidation_hand/:hand', function(req: Request, res: Response, next) {
+editRouter.get('/evaluation/:evaluation_key/invalidation_hand/:hand', function(req: Request, res: Response, next) {
   let context = req.params.evaluation_key;
   var splits = context.split('_');
   var key = `[${splits.shift()}]`;
@@ -174,15 +174,15 @@ app.get('/component/edit/evaluation/:evaluation_key/invalidation_hand/:hand', fu
   });
 });
 
-app.get("/edit/:game", function(req: Request, res: Response, next) {
+app.get('/edit/:game', function(req: Request, res: Response, next) {
   var gameName = req.params.game;
   database.loadGame(gameName).then(function(game: Game) {
-    res.render("edit", { game: new RenderableGame(game) });
+    res.render('edit', { game: new RenderableGame(game) });
   });
 });
 
 app.get('/create', function(req: Request, res: Response, next) {
-  res.render("edit", { game: new RenderableGame(new Game()) });
+  res.render('edit', { game: new RenderableGame(new Game()) });
 });
 
 app.post('/update', function(req: Request, res: Response, next) {
@@ -197,6 +197,8 @@ app.post('/update', function(req: Request, res: Response, next) {
     next(reason);
   });
 });
+
+app.use('/component/edit', editRouter);
 
 function boot(port: number) {
   app.listen(process.env.PORT || port, () => {
