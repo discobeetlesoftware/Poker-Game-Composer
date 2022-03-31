@@ -7,6 +7,8 @@
             {{ option(evaluation.type, 'distribute', 'Distribute') }}
             {{ option(evaluation.type, 'high', 'High') }}
             {{ option(evaluation.type, 'low', 'Low') }}
+            {{ option(evaluation.type, 'suit_high', 'High Suit') }}
+            {{ option(evaluation.type, 'suit_low', 'Low Suit') }}
             {{ option(evaluation.type, 'point_low', 'Point Low') }}
             {{ option(evaluation.type, 'point_high', 'Point High') }}
             {{ option(evaluation.type, 'badugi', 'Badugi') }}
@@ -21,6 +23,16 @@
         </ul>
     </div>
     <div id='evaluation_exclusivity_{{evaluationKey}}_scoring'>
+        <div id='evaluation_suit_{{evaluationKey}}_container'>
+            <label for='evaluation_suit_{{evaluationKey}}'>Suit</label>
+            <select name='evaluation{{evaluationContext}}[suit]' id='evaluation_suit_{{evaluationKey}}'>
+                {{ option(evaluation.suit, 'spade', 'Spades') }}
+                {{ option(evaluation.suit, 'heart', 'Hearts') }}
+                {{ option(evaluation.suit, 'diamond', 'Diamonds') }}
+                {{ option(evaluation.suit, 'club', 'Clubs') }}
+                {{ option(evaluation.suit, 'last_community', 'Matching River') }}
+            </select>
+        </div>
         <div>
             <label for='evaluation_exclusivity_{{evaluationKey}}'>Exclusivity</label>
             <select name='evaluation{{evaluationContext}}[exclusivity]' id='evaluation_exclusivity_{{evaluationKey}}'>

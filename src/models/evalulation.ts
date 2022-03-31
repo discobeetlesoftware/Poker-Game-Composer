@@ -5,6 +5,8 @@ export enum EvaluationType {
     Distribute = 'distribute',
     High = 'high',
     Low = 'low',
+    SuitHigh = 'suit_high',
+    SuitLow = 'suit_low',
     PointLow = 'point_low', // A=1, 2=2, 3=3, … 9=9, T-K=10
     PointHigh = 'point_high',
     Badugi = 'badugi',
@@ -45,6 +47,14 @@ export enum Hand {
     FiveOfAKind = 'five_of_a_kind'
 }
 
+export enum EvaluationSuitType {
+    Spade = 'spade',
+    Heart = 'heart',
+    Diamond = 'diamond',
+    Club = 'club',
+    LastCommunity = 'last_community'
+}
+
 export class Evaluation {
     index: number;
     type: EvaluationType;
@@ -57,6 +67,7 @@ export class Evaluation {
     invalidation_hands: Hand[];
     bug_completion_hands: Hand[];
     qualifier_type: QualifierType;
+    suit?: EvaluationSuitType;
 
     get hand_description(): string {
         var individual_count = 0;
@@ -94,7 +105,8 @@ export class Evaluation {
             exclusivity: this.exclusivity,
             ace_position: this.ace_position,
             invalidation_hands: this.invalidation_hands,
-            bug_completion_hands: this.bug_completion_hands
+            bug_completion_hands: this.bug_completion_hands,
+            suit: this.suit
         };
     }
 }

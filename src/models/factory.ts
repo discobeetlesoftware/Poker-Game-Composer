@@ -70,6 +70,7 @@ export class Factory {
             evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);
             evaluation.invalidation_hands = params.invalidation_hands;
             evaluation.qualifier_type = evaluation.qualifier.type ?? QualifierType.None;
+            evaluation.suit = params.suit;
             let splits = params.split ?? [];
             evaluation.splits = splits.map((splitData: any) => {
                 return Factory.hydrate_evaluation(splitData);

@@ -1,6 +1,6 @@
 import escape = require('escape-html');
 import { AcePosition } from "../ace_position";
-import { Evaluation, EvaluationExclusivity, EvaluationType, Hand } from "../evalulation";
+import { Evaluation, EvaluationExclusivity, EvaluationSuitType, EvaluationType, Hand } from "../evalulation";
 import { Qualifier } from "../qualifier";
 
 type RenderHelper = (input: string) => string;
@@ -42,6 +42,7 @@ export class RenderableEvaluation {
     get player_hand_size(): number { return this.evaluation.player_hand_size; }
     get invalidation_hands(): Hand[] { return this.evaluation.invalidation_hands; }
     get bug_completion_hand(): Hand[] { return this.evaluation.bug_completion_hands; }
+    get suit(): EvaluationSuitType { return this.evaluation.suit; }
     get hand_description(): string { return this.fx(this.evaluation.hand_description); }
     get description(): string { return this.fx(this.evaluation.description); }
 }

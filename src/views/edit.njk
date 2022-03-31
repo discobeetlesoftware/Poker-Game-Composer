@@ -48,12 +48,16 @@
         }
     }
 
-
     function didChangeEvaluationType(name, key) {
         didChangeEvaluationTypeStateHandler(key);
         var type = $(`#evaluation_type_${key} option:selected`).val();
         if (type == 'split' || type == 'exclusive' || type == 'cascade') {
             appendEvaluationSplits(name, key);
+        }
+        if (type == 'suit_high' || type == 'suit_low') {
+            $(`#evaluation_suit_${key}_container`).show();
+        } else {
+            $(`#evaluation_suit_${key}_container`).hide();
         }
     }
 

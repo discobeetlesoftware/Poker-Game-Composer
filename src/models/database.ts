@@ -120,6 +120,7 @@ export class Database {
         evaluation.player_hand_size = data.player_hand_size;
         evaluation.qualifier = this.hydrateQualifier(data.qualifier);
         evaluation.qualifier_type = evaluation.qualifier.type ?? QualifierType.None;
+        evaluation.suit = data.suit;
         evaluation.splits = data.splits.map((splitData: any) => {
             return this.hydrateEvaluation(splitData);
         });
