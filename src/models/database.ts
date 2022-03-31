@@ -95,10 +95,11 @@ export class Database {
     }
 
     hydrateQualifier=(data: any): Qualifier => {
-        if (data.length == 0) {
-            return null;
-        }
         let qualifier = new Qualifier();
+        qualifier.type = QualifierType.None;
+        if (data == undefined || data.length == 0) {
+            return qualifier;
+        }
         qualifier.type = data.type;
         qualifier.rank = data.rank;
         qualifier.hand = data.hand;
@@ -119,7 +120,7 @@ export class Database {
         evaluation.invalidation_hands = data.invalidation_hands;
         evaluation.player_hand_size = data.player_hand_size;
         evaluation.qualifier = this.hydrateQualifier(data.qualifier);
-        evaluation.qualifier_type = evaluation.qualifier.type ?? QualifierType.None;
+        evaluation.qualifier_type = evaluation.qualifier.type;
         evaluation.suit = data.suit;
         evaluation.splits = data.splits.map((splitData: any) => {
             return this.hydrateEvaluation(splitData);
