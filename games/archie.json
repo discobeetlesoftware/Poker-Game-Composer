@@ -1,0 +1,141 @@
+{
+  "name": "Archie",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "cascade",
+    "splits": [
+      {
+        "type": "split",
+        "splits": [
+          {
+            "type": "high",
+            "formal_name": "",
+            "player_hand_size": "",
+            "splits": [],
+            "qualifier": {
+              "type": "higher_hand",
+              "rank": "2",
+              "hand": "pair",
+              "specific_hand": "99"
+            },
+            "exclusivity": "all",
+            "ace_position": "both"
+          },
+          {
+            "type": "low",
+            "formal_name": "",
+            "player_hand_size": "",
+            "splits": [],
+            "qualifier": {
+              "type": "lower_rank",
+              "rank": "8",
+              "hand": "high",
+              "specific_hand": ""
+            },
+            "exclusivity": "all",
+            "ace_position": "low",
+            "invalidation_hands": [
+              "pair",
+              "two_pair",
+              "three_of_a_kind",
+              "full_house",
+              "four_of_a_kind"
+            ]
+          }
+        ],
+        "qualifier": {
+          "type": "none"
+        }
+      },
+      {
+        "type": "distribute",
+        "formal_name": "",
+        "player_hand_size": "",
+        "splits": [],
+        "qualifier": {
+          "type": "none",
+          "rank": "2",
+          "hand": "high",
+          "specific_hand": ""
+        },
+        "exclusivity": "any",
+        "ace_position": "both"
+      }
+    ],
+    "qualifier": {
+      "type": "none"
+    }
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "Deal",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 5,
+          "is_face_up": false
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "1st Street",
+      "elements": [
+        {
+          "type": "discard_card",
+          "card_count_range": [
+            0,
+            5
+          ],
+          "then_draw": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "2nd Street",
+      "elements": [
+        {
+          "type": "discard_card",
+          "card_count_range": [
+            0,
+            5
+          ],
+          "then_draw": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "3rd Street",
+      "elements": [
+        {
+          "type": "discard_card",
+          "card_count_range": [
+            0,
+            5
+          ],
+          "then_draw": true
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
+}

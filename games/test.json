@@ -7,12 +7,30 @@
     "formal_name": "",
     "player_hand_size": "",
     "splits": [],
-    "qualifier": {},
+    "qualifier": {
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    },
     "exclusivity": "any",
     "ace_position": "both"
   },
   "abbreviation": "T",
   "alternative_names": "",
   "clarification": "",
-  "sections": []
+  "sections": [
+    {
+      "name": "Title",
+      "elements": [
+        {
+          "type": "deal_board",
+          "card_count": 3
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    }
+  ]
 }
