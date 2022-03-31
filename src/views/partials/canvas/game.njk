@@ -94,6 +94,8 @@ frame.on('ready', () => {
     lastSectionBounds = lastSection.getBounds(); 
     sectionXLocation += lastSectionBounds.width;
     sectionsContainer.width = sectionXLocation;
+    sectionsSize.width = sectionXLocation - config.section.horizontalSpacing;
+    sectionsSize.height = Math.max(sectionsSize.height, lastSectionBounds.height);
 
     const sectionTitleConfig = window.config.section.title;
     var titleHeight = ((sectionsSize.height - sectionsContainer.height) / 2) + sectionTitleConfig.margins.bottom;
