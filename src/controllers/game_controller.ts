@@ -31,10 +31,10 @@ export class GameController extends Controller<PokerGameComposer> {
     show=(req: Request, res: Response) => {
         var gameName = req.params.game;
         this.app.database.loadGame(gameName).then(function(game: Game) {
-          res.render('game', { game: new RenderableGame(game) });
+            res.render('game', { game: new RenderableGame(game) });
         }).catch(function(reason: any) {
-          res.status(404);
-          res.send('404: ' + reason);
+            res.status(404);
+            res.send('404: ' + reason);
         });
     }
 
@@ -45,28 +45,28 @@ export class GameController extends Controller<PokerGameComposer> {
     edit=(req: Request, res: Response) => {
         var gameName = req.params.game;
         this.app.database.loadGame(gameName).then(function(game: Game) {
-          res.render('edit', { game: new RenderableGame(game) });
+            res.render('edit', { game: new RenderableGame(game) });
         });
     }
 
     update=(req: Request, res: Response, next) => {
         let game = Factory.hydrate_game(req.body);
         if (game == null) {
-          return next('Could not save game');
+            return next('Could not save game');
         }
         this.app.database.saveGame(game).then(() => {
-          res.redirect(`/game/${game.sanitized_name}`);
+            res.redirect(`/game/${game.sanitized_name}`);
         }).catch((reason: any) => {
-          next(reason);
+            next(reason);
         });
     }
 
     schema=(req: Request, res: Response, next) => {
         var gameName = req.params.game;
         this.app.database.loadSchema(gameName).then(function(result: object) {
-          res.json(result);
+            res.json(result);
         }).catch(function(reason: any) {
-          next(reason);
+            next(reason);
         });
     }
 }
