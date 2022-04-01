@@ -1,7 +1,6 @@
 debugConfig = {
     global: {
-        isDebug: false,
-        isReadonly: true
+        isDebug: false
     },
     canvas: {
         color: '#cccccc',
