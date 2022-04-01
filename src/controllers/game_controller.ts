@@ -5,8 +5,17 @@ import { PokerGameComposer } from "./poker_game_composer";
 import { Game } from "../models/game";
 import { RenderableGame } from "../models/render/renderable_game";
 import { Factory } from "../models/factory";
+import { GameCache } from "../models/game_cache";
 
 export class GameController extends Controller<PokerGameComposer> {
+    cache: GameCache;
+
+    constructor(app: PokerGameComposer) {
+        super(app);
+        this.cache = new GameCache(app.database);
+        this.cache.load();
+    }
+    
     registerRoutes=(router: express.Router) => {
         router.get('/', this.list);
         router.get('/game/:game', this.show);
@@ -20,12 +29,7 @@ export class GameController extends Controller<PokerGameComposer> {
     }
 
     list=(req: Request, res: Response) => {
-        this.app.database.loadGames().then(function(games: string[]) {
-            function stripJSON(input: string): string {
-                return input.replace('.json', '');
-            }
-            res.render('index', {links: games.map(stripJSON)});
-        });
+        res.render('index', {entries: this.cache.entries});
     }
 
     show=(req: Request, res: Response) => {

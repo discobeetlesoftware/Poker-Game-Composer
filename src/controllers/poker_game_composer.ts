@@ -16,6 +16,7 @@ export class PokerGameComposer extends App {
         .description('Web app for managing a database of poker game variant definitions')
         .version('1.0.0');
         program.option('--readonly', 'Disable creating or editing variants');
+        program.option('--buildCache', 'Builds the game cache and exits');
         program.addOption(new Option('-p, --port <number>', 'port number').env('PORT').default(3385));
         program.parse();
         const options = program.opts();

@@ -1,7 +1,6 @@
 import express = require("express");
 import * as nunjucks from "nunjucks";
 import { OptionValues } from 'commander';
-import path = require("path");
 import { Controller } from "./controller";
 
 export abstract class App {
@@ -25,15 +24,10 @@ export abstract class App {
         this.express.use(express.static('src/public'));
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: true }));
-        const self = this;
+        let app = this;
         this.express.use(function(req: { path: string; }, res: any, next: () => any) {
-            self.log("Received: " + req.path);
+            app.log("Received: " + req.path);
             return next();
-        });
-
-        this.controllers = this.makeControllers();
-        this.controllers.forEach(controller => {
-           controller.registerRoutes(this.express);
         });
     }
 
@@ -44,6 +38,11 @@ export abstract class App {
     }
 
     boot=() => {
+        this.controllers = this.makeControllers();
+        this.controllers.forEach(controller => {
+           controller.registerRoutes(this.express);
+        });
+
         const port = this.options.port;
         this.express.listen(port, () => {
             console.log(`Server started listening: maybe http://localhost:${port}`);

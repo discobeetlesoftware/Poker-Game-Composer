@@ -6,7 +6,7 @@
     "scripts": {
         "build": "./node_modules/typescript/bin/tsc",
         "server": "node build/app.js --readonly",
-        "serverfull": "node build/app.js"
+        "serverfull": "node build/app.js --buildCache && node build/app.js"
     },
     "repository": {
         "type": "git",

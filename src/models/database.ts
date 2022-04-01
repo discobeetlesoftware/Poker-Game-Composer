@@ -37,7 +37,8 @@ export class Database {
     }
 
     schemaPath=(gameName: string): string => {
-        return path.join(__dirname, "..", "..", "games", `${gameName}.json`);
+        let fileName = gameName.indexOf('json') == -1 ? `${gameName}.json` : gameName;
+        return path.join(__dirname, "..", "..", "games", fileName);
     }
     
     gamePath=(game: Game): string => {
