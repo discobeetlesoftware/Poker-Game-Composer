@@ -1,19 +1,8 @@
-var globals = {
-    size: {
-        height: 768,
-        width: 1024
-    },
-    heights: {
-        title: 0.2,
-        detail: 0.1,
-        sections: 0.5,
-        description: 0.2,
-        sectionTitles: 0.05 // inside of sections
-    }
-};
+const canvas = window.config.canvas;
+const ratio = canvas.ratio;
 
 function defaultHeight(ratio) {
-    return globals.size.height * ratio;
+    return window.config.canvas.size.height * ratio;
 }
 
 // scaling, width, height, color, outerColor, assets, path, progress, rollover, touch, 
@@ -21,13 +10,13 @@ function defaultHeight(ratio) {
 //nextFrame, nextStage, allowDefault, loadFailObj, sensors, retina, mouseMoveOutside, captureMouse, shim, maxConnections
 var frame = new Frame({
     scaling: 'fit',
-    width: globals.size.width,
-    height: globals.size.height,
-    color: light,
-    outerColor: dark
+    width: canvas.size.width,
+    height: canvas.size.height,
+    color: canvas.color,
+    outerColor: canvas.outerColor
 });
 
-var showBackground = false;
+var showBackground = window.config.global.isDebug;
 function attachBackground(parent, color) {
     if (showBackground) {
         const background = new Rectangle(parent.width, parent.height, color).addTo(parent).pos(0,0);
@@ -47,12 +36,12 @@ frame.on('ready', () => {
     var sectionsSize = {width: 0, height:0};
     var lastSection; var nextSection; var lastSectionBounds; var sectionXLocation = 0;
 
-    var titleContainer = new Container(globals.size.width, defaultHeight(globals.heights.title)).addTo();
+    var titleContainer = new Container(canvas.size.width, defaultHeight(ratio.title)).addTo();
     attachBackground(titleContainer, green);
 
     var title = gameTitle('{{game.js.name}}', window.config.game.title).center(titleContainer);
     title.on('click', function() { zgo('/edit/{{game.js.sanitized_name}}'); });
-    var detailContainer = new Container(globals.size.width, defaultHeight(globals.heights.detail)).addTo();
+    var detailContainer = new Container(canvas.size.width, defaultHeight(ratio.detail)).addTo();
     attachBackground(detailContainer, yellow);
 
     var detailsLabel = new Label({
@@ -63,7 +52,7 @@ frame.on('ready', () => {
         labelWidth: stageW * 0.75
     }).center(detailContainer);
 
-    var sectionsContainer = new Container(0, defaultHeight(globals.heights.sections));
+    var sectionsContainer = new Container(0, defaultHeight(ratio.sections));
 
     var sectionTitles = [];
     var sectionTitlePositions = [];
@@ -106,20 +95,20 @@ frame.on('ready', () => {
         attachBackground(container, pink);
     }
   
-    var sectionsWrapper = new Container(globals.size.width, sectionsContainer.height).addTo();
+    var sectionsWrapper = new Container(canvas.size.width, sectionsContainer.height).addTo();
     attachBackground(sectionsWrapper, purple);
     sectionsContainer.pos(-(sectionXLocation / 2), 0, CENTER, CENTER, sectionsWrapper);
 
-    var descriptionContainer = new Container(globals.size.width, defaultHeight(globals.heights.description)).addTo();
+    var descriptionContainer = new Container(canvas.size.width, defaultHeight(ratio.description)).addTo();
     attachBackground(descriptionContainer, red);
 
     // Layout(holder, regions, lastMargin, lastMarginMin, backgroundColor, vertical, showRegions, scalingObject, hideKey, style, group, inherit)
     layout = new Layout(
         stage, [
-            { object: titleContainer, maxHeight: defaultHeight(globals.heights.title) * 100, valign: CENTER },
-            { object: detailContainer, maxHeight: defaultHeight(globals.heights.detail) * 100, valign: BOTTOM },
-            { object: sectionsWrapper, maxHeight: defaultHeight(globals.heights.sections) * 100, valign: CENTER },
-            { object: descriptionContainer, maxHeight: defaultHeight(globals.heights.description) * 100, valign: CENTER },
+            { object: titleContainer, maxHeight: defaultHeight(ratio.title) * 100, valign: CENTER },
+            { object: detailContainer, maxHeight: defaultHeight(ratio.detail) * 100, valign: BOTTOM },
+            { object: sectionsWrapper, maxHeight: defaultHeight(ratio.sections) * 100, valign: CENTER },
+            { object: descriptionContainer, maxHeight: defaultHeight(ratio.description) * 100, valign: CENTER },
         ],
         0, null, true, null
     );

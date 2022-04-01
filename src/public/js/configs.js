@@ -1,5 +1,23 @@
 debugConfig = {
-    isDebug: true,
+    global: {
+        isDebug: false,
+        isReadonly: true
+    },
+    canvas: {
+        color: '#cccccc',
+        outerColor: '#333333',
+        size: {
+            height: 768,
+            width: 1024
+        },
+        ratio: {
+            title: 0.2,
+            detail: 0.1,
+            sections: 0.5,
+            description: 0.2,
+            sectionTitles: 0.05 // inside of sections
+        }
+    },
     game: {
         title: {
             size: 60,
