@@ -5,7 +5,8 @@
     "main": "app.js",
     "scripts": {
         "build": "./node_modules/typescript/bin/tsc",
-        "server": "node build/app.js"
+        "server": "node build/app.js --readonly",
+        "serverfull": "node build/app.js"
     },
     "repository": {
         "type": "git",
@@ -33,6 +34,7 @@
         "typescript": "^4.5.5"
     },
     "dependencies": {
+        "commander": "^9.1.0",
         "escape-html": "^1.0.3",
         "express": "^4.17.1",
         "express-handlebars": "^5.3.3",

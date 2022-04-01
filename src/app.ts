@@ -12,6 +12,17 @@ import { Factory } from "./models/factory";
 import { Evaluation, Hand } from "./models/evalulation";
 import { RenderableGame } from "./models/render/renderable_game";
 import { RenderableEvaluation } from "./models/render/renderable_evaluation";
+import { Command, Option } from 'commander';
+
+const program = new Command();
+program
+  .name('Poker Game Composer')
+  .description('Web app for managing a database of poker game variant definitions')
+  .version('1.0.0');
+program.option('--readonly', 'Disable creating or editing variants');
+program.addOption(new Option('-p, --port <number>', 'port number').env('PORT').default(3385));
+program.parse();
+const options = program.opts();
 
 const app = express();
 const editRouter = express.Router();
@@ -174,35 +185,37 @@ editRouter.get('/evaluation/:evaluation_key/invalidation_hand/:hand', function(r
   });
 });
 
-app.get('/edit/:game', function(req: Request, res: Response, next) {
-  var gameName = req.params.game;
-  database.loadGame(gameName).then(function(game: Game) {
-    res.render('edit', { game: new RenderableGame(game) });
+if (!options.readonly) {
+  app.get('/edit/:game', function(req: Request, res: Response, next) {
+    var gameName = req.params.game;
+    database.loadGame(gameName).then(function(game: Game) {
+      res.render('edit', { game: new RenderableGame(game) });
+    });
+  });  
+
+  app.get('/create', function(req: Request, res: Response, next) {
+    res.render('edit', { game: new RenderableGame(new Game()) });
   });
-});
-
-app.get('/create', function(req: Request, res: Response, next) {
-  res.render('edit', { game: new RenderableGame(new Game()) });
-});
-
-app.post('/update', function(req: Request, res: Response, next) {
-  //console.dir(JSON.stringify(req.body, null, 4));
-  let game = Factory.hydrate_game(req.body);
-  if (game == null) {
-    return next('Could not save game');
-  }
-  database.saveGame(game).then(() => {
-    res.redirect(`/game/${game.sanitized_name}`);
-  }).catch((reason: any) => {
-    next(reason);
+  
+  app.post('/update', function(req: Request, res: Response, next) {
+    //console.dir(JSON.stringify(req.body, null, 4));
+    let game = Factory.hydrate_game(req.body);
+    if (game == null) {
+      return next('Could not save game');
+    }
+    database.saveGame(game).then(() => {
+      res.redirect(`/game/${game.sanitized_name}`);
+    }).catch((reason: any) => {
+      next(reason);
+    });
   });
-});
-
-app.use('/component/edit', editRouter);
+  
+  app.use('/component/edit', editRouter);
+}
 
 function boot(port: number) {
-  app.listen(process.env.PORT || port, () => {
-    console.log(`Server started listening: maybe http://localhost:${port}`);
+  app.listen(options.port, () => {
+    console.log(`Server started listening: maybe http://localhost:${options.port}`);
   });
 }
 boot(3385);
