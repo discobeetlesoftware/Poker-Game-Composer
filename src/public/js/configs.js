@@ -3,8 +3,8 @@ debugConfig = {
         isDebug: false
     },
     canvas: {
-        color: '#cccccc',
-        outerColor: '#333333',
+        color: '#F0F4F8',
+        outerColor: '#F0F4F8',
         size: {
             height: 768,
             width: 1024

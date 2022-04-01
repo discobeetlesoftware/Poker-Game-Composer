@@ -15,14 +15,8 @@
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <div class="logo">
-                    <h1>Poker Game Composer</h1>
-                </div>
-                <p>
-                    <a href="/">View all</a>
-                </p>
-            </div>
+            {% block header %}
+            {% endblock %}
             <div class="content">
                 {% block body %}
                 {% endblock %}

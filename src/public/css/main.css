@@ -1,3 +1,48 @@
+body {
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	background-color: #F0F4F8;
+}
+
+a {
+	color: #102A43;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #627D98;
+	font-size: 102%;
+}
+
+a.action {
+  background-color: #E0FCFF;
+  color: #243B53;
+  font-variant: small-caps;
+  border: 1px ridge #044E54;
+}
+
+a.action:hover {
+  background-color: #BEF8FD;
+  color: #102A43;
+  border: 1px solid #000;
+}
+
+#games {
+    padding-left: 0;
+	text-decoration: none;
+}
+
+#games li {
+	list-style: none;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+h1, h2 {
+	color: #0A6C74;
+	border-bottom: 1px solid #D9E2EC;
+	font-weight: bold;
+}
+
 .quickReference .name {
   font-size: 36px;
   font-weight: bold;
@@ -41,8 +86,11 @@ div.header {
   display: inline-block;
   font-weight: bold;
   border: 2px ridge #888888;
-  font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
   margin: 1px;
+}
+
+.button:hover {
+  font-size: 100%;
 }
 
 .gameDetails label {

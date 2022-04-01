@@ -1,9 +1,19 @@
 {% extends 'layouts/main.njk' %}
+{% block header %}
+<div class="logo">
+    <h1>Poker Game Composer</h1>
+</div>
+<p>
+    <a class='button action' href='/create'>New game</a>
+</p>
+{% endblock %}
 {% block body %}
-<a href='/create'>New Game</a>
-<ol>
-{% for entry in entries %}
-    <li><a href='{{entry.link}}'>{{entry.name}}</a></li>
-{% endfor %}
-</ol>
+<div>
+    <h2>Games</h2>
+    <ol id='games'>
+    {% for entry in entries %}
+        <li><a href='{{entry.link}}'>{{entry.name}}</a></li>
+    {% endfor %}
+    </ol>
+</div>
 {% endblock %}

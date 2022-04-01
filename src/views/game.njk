@@ -1,7 +1,8 @@
 {% extends 'layouts/main.njk' %}
+{% block header %}
+<span class='light'><a href='/edit/{{game.sanitized_name}}'>Edit</a></span>
+{% endblock %}
 {% block body %}
-<span><a href='/edit/{{game.sanitized_name}}'>Edit</a></span>
-<span>Loaded from file: {{game.file}}</span>
 <script type='text/javascript'>
 {% include 'partials/canvas/game.njk' %}
 </script>
