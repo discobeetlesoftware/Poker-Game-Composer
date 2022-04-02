@@ -1,86 +1,81 @@
 {
-  "name": "5-Card Stud",
-  "structure": {
-    "ante": true,
-    "fixed_limit": false,
-    "pot_limit": false,
-    "no_limit": false
-  },
-  "forced_bet": "low_bring_in",
-  "evaluation": {
-    "type": "high",
-    "formal_name": "",
-    "player_hand_size": "",
-    "splits": [],
-    "qualifier": {
-      "type": "none",
-      "rank": "2",
-      "hand": "high",
-      "specific_hand": ""
+    "name": "5-Card Stud",
+    "structure": {
+        "ante": true,
+        "fixed_limit": false,
+        "pot_limit": false,
+        "no_limit": false
     },
-    "exclusivity": "all",
-    "ace_position": "both"
-  },
-  "abbreviation": "",
-  "alternative_names": "",
-  "clarification": "",
-  "sections": [
-    {
-      "name": "Deal",
-      "elements": [
-        {
-          "type": "deal_player",
-          "card_count": 1,
-          "is_face_up": false
+    "forced_bet": "low_bring_in",
+    "evaluation": {
+        "type": "high",
+        "formal_name": "",
+        "player_hand_size": "",
+        "splits": [],
+        "qualifier": {
+            "type": "none",
+            "rank": "2",
+            "hand": "high",
+            "specific_hand": ""
         },
-        {
-          "type": "deal_player",
-          "card_count": 1,
-          "is_face_up": true
-        },
-        {
-          "type": "betting_round"
-        }
-      ]
+        "exclusivity": "all",
+        "ace_position": "both"
     },
-    {
-      "name": "1st Street",
-      "elements": [
-        {
-          "type": "deal_player",
-          "card_count": 1,
-          "is_face_up": true
+    "abbreviation": "",
+    "alternative_names": "",
+    "clarification": "",
+    "sections": [{
+            "name": "Deal",
+            "elements": [{
+                    "type": "deal_player",
+                    "card_count": 1,
+                    "is_face_up": false
+                },
+                {
+                    "type": "deal_player",
+                    "card_count": 1,
+                    "is_face_up": true
+                },
+                {
+                    "type": "betting_round"
+                }
+            ]
         },
         {
-          "type": "betting_round"
-        }
-      ]
-    },
-    {
-      "name": "2nd Street",
-      "elements": [
-        {
-          "type": "deal_player",
-          "card_count": 1,
-          "is_face_up": true
+            "name": "1st St",
+            "elements": [{
+                    "type": "deal_player",
+                    "card_count": 1,
+                    "is_face_up": true
+                },
+                {
+                    "type": "betting_round"
+                }
+            ]
         },
         {
-          "type": "betting_round"
-        }
-      ]
-    },
-    {
-      "name": "3rd Street",
-      "elements": [
-        {
-          "type": "deal_player",
-          "card_count": 1,
-          "is_face_up": true
+            "name": "2nd St",
+            "elements": [{
+                    "type": "deal_player",
+                    "card_count": 1,
+                    "is_face_up": true
+                },
+                {
+                    "type": "betting_round"
+                }
+            ]
         },
         {
-          "type": "betting_round"
+            "name": "3rd St",
+            "elements": [{
+                    "type": "deal_player",
+                    "card_count": 1,
+                    "is_face_up": true
+                },
+                {
+                    "type": "betting_round"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
