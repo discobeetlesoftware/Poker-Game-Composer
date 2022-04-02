@@ -95,9 +95,14 @@ frame.on('ready', () => {
         attachBackground(container, pink);
     }
   
-    var sectionsWrapper = new Container(canvas.size.width, sectionsContainer.height).addTo();
+    sectionsContainer.setBounds(null);
+    attachBackground(sectionsContainer, orange);
+
+    var sectionsWrapper = new Container(canvas.size.width, defaultHeight(ratio.sections)).addTo();
     attachBackground(sectionsWrapper, purple);
-    sectionsContainer.pos(-(sectionXLocation / 2), 0, CENTER, CENTER, sectionsWrapper);
+
+    sectionsContainer.scaleTo(sectionsWrapper, 99, 99, 'fill');
+    sectionsContainer.pos(0, 0, CENTER, CENTER, sectionsWrapper);
 
     var descriptionContainer = new Container(canvas.size.width, defaultHeight(ratio.description)).addTo();
     attachBackground(descriptionContainer, red);
