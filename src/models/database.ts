@@ -1,20 +1,6 @@
 import path = require("path");
 import fs = require("fs");
-
 import { Game } from "./game";
-import { GameElement } from "./game_element";
-import { GameSection } from "./game_section";
-import { BettingRoundElement } from "./elements/betting_round_element";
-import { DealBoardElement } from "./elements/deal_board_element";
-import { DealPlayerElement } from "./elements/deal_player_element";
-import { DiscardCardElement } from "./elements/discard_card_element";
-import { DiscardHandElement } from "./elements/discard_hand_element";
-import { DrawCardElement } from "./elements/draw_card_element";
-import { ExposeCardElement } from "./elements/expose_card_element";
-import { SplitHandElement } from "./elements/split_hand_element";
-import { GameStructure } from "./game_structure";
-import { Evaluation, EvaluationType } from "./evalulation";
-import { Qualifier, QualifierType } from "./qualifier";
 
 export class Database {
     gamesDir: string;
@@ -60,93 +46,10 @@ export class Database {
         return new Promise(resolveSchema);
     }
 
-    hydrateElement=(data: any): GameElement => {
-        switch (data['type']) {
-            case 'betting_round': return BettingRoundElement.load(data);
-            case 'deal_player': return DealPlayerElement.load(data);
-            case 'deal_board': return DealBoardElement.load(data);
-            case 'split_hand': return SplitHandElement.load(data);
-            case 'discard_hand': return DiscardHandElement.load(data);
-            case 'discard_card': return DiscardCardElement.load(data);
-            case 'draw_card': return DrawCardElement.load(data);
-            case 'expose_card': return ExposeCardElement.load(data);
-        }
-    }
-
-    hydrateSection=(data: any): GameSection => {
-        var section = new GameSection();
-        section.name = data['name'];
-        var db = this;
-        section.elements = data['elements'].map(function(elementData: any) {
-            return db.hydrateElement(elementData);
-        });
-        return section;
-    }
-
-    hydrateStructure=(data: any): GameStructure => {
-        let structure = new GameStructure();
-        if (data == undefined) {
-            return structure;
-        }
-        structure.ante = data.ante;
-        structure.fixed_limit = data.fixed_limit;
-        structure.pot_limit = data.pot_limit;
-        structure.no_limit = data.no_limit;
-        return structure;
-    }
-
-    hydrateQualifier=(data: any): Qualifier => {
-        let qualifier = new Qualifier();
-        qualifier.type = QualifierType.None;
-        if (data == undefined || data.length == 0) {
-            return qualifier;
-        }
-        qualifier.type = data.type;
-        qualifier.rank = data.rank;
-        qualifier.hand = data.hand;
-        qualifier.specific_hand = data.specific_hand;
-        return qualifier;
-    }
-
-    hydrateEvaluation=(data: any): Evaluation => {
-        let evaluation = new Evaluation();
-        evaluation.splits = [];
-        if (data == undefined) {
-            return evaluation;
-        }
-        evaluation.type = data.type;
-        evaluation.ace_position = data.ace_position;
-        evaluation.exclusivity = data.exclusivity;
-        evaluation.formal_name = data.formal_name;
-        evaluation.invalidation_hands = data.invalidation_hands;
-        evaluation.player_hand_size = data.player_hand_size;
-        evaluation.qualifier = this.hydrateQualifier(data.qualifier);
-        evaluation.qualifier_type = evaluation.qualifier.type;
-        evaluation.suit = data.suit;
-        evaluation.splits = data.splits.map((splitData: any) => {
-            return this.hydrateEvaluation(splitData);
-        });
-        return evaluation;
-    }
-
-    hydrateGame=(data: any, file: string): Game => {
-        var game = new Game();
-        game.file = file;
-        game.structure = this.hydrateStructure(data.structure);
-        let evaluation = this.hydrateEvaluation(data.evaluation);
-        game.evaluation = evaluation;
-        game.name = data['name'];
-        game.abbreviation = data['abbreviation'];
-        game.forced_bet = data['forced_bet'];
-        game.alternative_names = data['alternative_names'];
-        game.sections = data['sections'].map(this.hydrateSection);
-        return game;
-    }
-
     loadGame=(gameName: string): Promise<Game> => {
         var db = this;
         return this.loadSchema(gameName).then(function(result: object) {
-            return db.hydrateGame(result, db.schemaPath(gameName));
+            return Game.hydrate(result, db.schemaPath(gameName));
         });
     }
 

@@ -4,6 +4,10 @@ export class SplitHandElement extends GameElement {
     split_sizes: number[];
     canvas_title: string;
 
+    public static hydrate(data: any): SplitHandElement {
+        return new SplitHandElement(data['split_sizes']);
+    }
+
     constructor(split_sizes: number[] = []) {
         super('split_hand');
         this.split_sizes = split_sizes;
@@ -15,7 +19,7 @@ export class SplitHandElement extends GameElement {
             this.canvas_title = `Separate into ${handString}card hands, cap cards`;
         }
     }
-
+    
     is_equal_split=(): boolean => {
         if (this.split_sizes.length == 0) {
             return false;
@@ -27,10 +31,6 @@ export class SplitHandElement extends GameElement {
             }
         }
         return true;
-    }
-
-    public static load(data: any): SplitHandElement {
-        return new SplitHandElement(data['split_sizes']);
     }
 
     to_serializable=(): any => {

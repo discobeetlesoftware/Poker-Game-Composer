@@ -6,6 +6,10 @@ export class DiscardCardElement extends GameElement {
     then_draw: boolean;
     canvas_title: string;
 
+    public static hydrate(data: any): DiscardCardElement {
+        return new DiscardCardElement(new NumberRange(data['card_count_range']), data['then_draw']);
+    }
+
     constructor(card_count_range: NumberRange = new NumberRange([]), then_draw: boolean = false) {
         super('discard_card');
         this.card_count_range = card_count_range;
@@ -19,10 +23,6 @@ export class DiscardCardElement extends GameElement {
     }
 
     get player_card_count(): number { return this.then_draw ? this.card_count_range.max : 0 }
-
-    public static load(data: any): DiscardCardElement {
-        return new DiscardCardElement(new NumberRange(data['card_count_range']), data['then_draw']);
-    }
 
     to_serializable=(): any => {
         return {

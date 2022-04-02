@@ -4,6 +4,18 @@ export class GameStructure {
     pot_limit: boolean;
     no_limit: boolean;
     
+    static hydrate=(data: any): GameStructure => {
+        let structure = new GameStructure();
+        if (data == undefined) {
+            return structure;
+        }
+        structure.ante = data.ante;
+        structure.fixed_limit = data.fixed_limit;
+        structure.pot_limit = data.pot_limit;
+        structure.no_limit = data.no_limit;
+        return structure;
+    }
+    
     to_serializable=(): any => {
         return {
             ante: this.ante,

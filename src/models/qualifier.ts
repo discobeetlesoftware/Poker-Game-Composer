@@ -16,6 +16,19 @@ export class Qualifier {
     hand: Hand;
     specific_hand: string;
 
+    static hydrate=(data: any): Qualifier => {
+        let qualifier = new Qualifier();
+        qualifier.type = QualifierType.None;
+        if (data == undefined || data.length == 0) {
+            return qualifier;
+        }
+        qualifier.type = data.type;
+        qualifier.rank = data.rank;
+        qualifier.hand = data.hand;
+        qualifier.specific_hand = data.specific_hand;
+        return qualifier;
+    }
+
     to_serializable=(): any => {
         return {
             type: this.type,

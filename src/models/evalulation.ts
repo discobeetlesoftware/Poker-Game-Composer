@@ -101,6 +101,27 @@ export class Evaluation {
         return this.hand_description;
     }
 
+    static hydrate=(data: any): Evaluation => {
+        let evaluation = new Evaluation();
+        evaluation.splits = [];
+        if (data == undefined) {
+            return evaluation;
+        }
+        evaluation.type = data.type;
+        evaluation.ace_position = data.ace_position;
+        evaluation.exclusivity = data.exclusivity;
+        evaluation.formal_name = data.formal_name;
+        evaluation.invalidation_hands = data.invalidation_hands;
+        evaluation.player_hand_size = data.player_hand_size;
+        evaluation.qualifier = Qualifier.hydrate(data.qualifier);
+        evaluation.qualifier_type = evaluation.qualifier.type;
+        evaluation.suit = data.suit;
+        evaluation.splits = data.splits.map((splitData: any) => {
+            return Evaluation.hydrate(splitData);
+        });
+        return evaluation;
+    }
+
     to_serializable=(): any => {
         var result = {
             type: this.type,

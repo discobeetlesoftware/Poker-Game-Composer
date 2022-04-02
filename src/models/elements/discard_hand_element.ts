@@ -4,6 +4,10 @@ import { NumberRange } from "../number_range";
 export class DiscardHandElement extends GameElement {
     hand_count_range: NumberRange;
     canvas_title: string;
+    
+    public static hydrate(data: any): DiscardHandElement {
+        return new DiscardHandElement(new NumberRange(data['hand_count_range']));
+    }
 
     constructor(hand_count_range: NumberRange = new NumberRange([])) {
         super('discard_hand');
@@ -13,10 +17,6 @@ export class DiscardHandElement extends GameElement {
         } else {
             this.canvas_title = "Discard\\n" + this.hand_count_range.min + "-" + this.hand_count_range.max + " hands";            
         }
-    }
-
-    public static load(data: any): DiscardHandElement {
-        return new DiscardHandElement(new NumberRange(data['hand_count_range']));
     }
 
     to_serializable=(): any => {

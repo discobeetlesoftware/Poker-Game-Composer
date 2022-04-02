@@ -4,6 +4,10 @@ import { NumberRange } from "../number_range";
 export class ExposeCardElement extends GameElement {
     card_count_range: NumberRange;
 
+    public static hydrate(data: any): ExposeCardElement {
+        return new ExposeCardElement(new NumberRange(data['card_count_range']));
+    }
+
     constructor(card_count_range: NumberRange = new NumberRange([])) {
         super('expose_card');
         this.card_count_range = NumberRange.From(card_count_range);
@@ -23,10 +27,6 @@ export class ExposeCardElement extends GameElement {
         } else {
             return "Expose " + range.min + "-" + range.max + " cards";            
         }
-    }
-
-    public static load(data: any): ExposeCardElement {
-        return new ExposeCardElement(new NumberRange(data['card_count_range']));
     }
 
     to_serializable=(): any => {
