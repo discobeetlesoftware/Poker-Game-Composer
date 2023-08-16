@@ -4,7 +4,7 @@
         <input id='{{key}}_name' name='[section][{{section_index}}][name]' type='text' value='{{section.name}}'>
 
         <span>
-            <a href='#' class='delete' onclick="$('#{{key}}').remove();">⊗</a>
+            <a href='#' class='delete' onclick="$('#{{key}}').remove();return false;">⊗</a>
         </span>
     </div>
 
@@ -16,6 +16,6 @@
         {% endeach %}
     </div>
     <div>
-        <a href='#' class='add button' onclick="appendSectionElement('{{section_index}}');">Add element</a>
+        <a href='#' class='add button' onclick="appendSectionElement('{{section_index}}');return false;">Add element</a>
     </div>
 </li>

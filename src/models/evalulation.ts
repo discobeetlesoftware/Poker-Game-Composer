@@ -1,67 +1,8 @@
+import { isNullOrUndefined } from "../architecture/global";
 import { AcePosition } from "./ace_position";
+import { BoardEvaluation } from "./board_evaluation";
+import { EvaluationExclusivity, EvaluationSuitType, EvaluationType, Hand } from "./evaluation_enum";
 import { Qualifier, QualifierType } from "./qualifier";
-
-export enum EvaluationType {
-    Distribute = 'distribute',
-    High = 'high',
-    Low = 'low',
-    SuitHigh = 'suit_high',
-    SuitLow = 'suit_low',
-    PointLow = 'point_low', // A=1, 2=2, 3=3, … 9=9, T-K=10
-    PointHigh = 'point_high',
-    Badugi = 'badugi',
-    Split = 'split',
-    Exclusive = 'exclusive',
-    Cascade = 'cascade'
-}
-
-export namespace EvaluationType {
-    export function IsSuitType(type: EvaluationType): boolean {
-        return type == EvaluationType.SuitHigh || type == EvaluationType.SuitLow;
-    }
-
-    export function IsSplitType(type: EvaluationType): boolean {
-        return type == EvaluationType.Split || type == EvaluationType.Cascade || type == EvaluationType.Exclusive;
-    }
-
-    export function All(): EvaluationType[] {
-        return Object.keys(EvaluationType) as EvaluationType[];
-    }
-}
-
-export enum EvaluationExclusivity {
-    Any = 'any',
-    All = 'all',
-    ExactlyOne = 'one',
-    ExactlyTwo = 'two',
-    ExactlyThree = 'three',
-    ExactlyFour = 'four',
-    ExactlyFive = 'five',
-    ExactlySix = 'six',
-    ExactlySeven = 'seven'
-}
-
-export enum Hand {
-    High = 'high',
-    Pair = 'pair',
-    TwoPair = 'two_pair',
-    ThreeOfAKind = 'three_of_a_kind',
-    Straight = 'straight',
-    Flush = 'flush',
-    FullHouse = 'full_house',
-    FourOfAKind = 'four_of_a_kind',
-    StraightFlush = 'straight_flush',
-    RoyalFlush = 'royal_flush',
-    FiveOfAKind = 'five_of_a_kind'
-}
-
-export enum EvaluationSuitType {
-    Spade = 'spade',
-    Heart = 'heart',
-    Diamond = 'diamond',
-    Club = 'club',
-    LastCommunity = 'last_community'
-}
 
 export class Evaluation {
     index: number;
@@ -71,6 +12,7 @@ export class Evaluation {
     qualifier?: Qualifier;
     exclusivity: EvaluationExclusivity;
     ace_position: AcePosition = AcePosition.Both;
+    board?: BoardEvaluation;
     player_hand_size?: number;
     invalidation_hands: Hand[];
     bug_completion_hands: Hand[];
@@ -113,12 +55,15 @@ export class Evaluation {
         evaluation.formal_name = data.formal_name;
         evaluation.invalidation_hands = data.invalidation_hands;
         evaluation.player_hand_size = data.player_hand_size;
+        evaluation.board = BoardEvaluation.hydrate(data.board);
         evaluation.qualifier = Qualifier.hydrate(data.qualifier);
         evaluation.qualifier_type = evaluation.qualifier.type;
         evaluation.suit = data.suit;
-        evaluation.splits = data.splits.map((splitData: any) => {
-            return Evaluation.hydrate(splitData);
-        });
+        if (data.splits) {
+            evaluation.splits = data.splits.map((splitData: any) => {
+                return Evaluation.hydrate(splitData);
+            });
+        }
         return evaluation;
     }
 
@@ -127,14 +72,17 @@ export class Evaluation {
             type: this.type,
             formal_name: this.formal_name,
             player_hand_size: this.player_hand_size,
-            splits: this.splits.map((element: Evaluation) => {
-                return element.to_serializable()
-            }),
             exclusivity: this.exclusivity,
             ace_position: this.ace_position,
             invalidation_hands: this.invalidation_hands,
             bug_completion_hands: this.bug_completion_hands
         };
+        result['board'] = this.board.to_serializable();
+        if ((this.splits ?? []).length > 0) {
+            result['splits'] = this.splits.map((split: Evaluation) => {
+                return split.to_serializable()
+            });
+        }
         if (EvaluationType.IsSuitType(this.type)) {
             result['suit'] = this.suit;
         }

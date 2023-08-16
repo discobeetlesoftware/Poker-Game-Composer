@@ -25,8 +25,8 @@ export abstract class App {
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: true }));
         let app = this;
-        this.express.use(function(req: { path: string; }, res: any, next: () => any) {
-            app.log("Received: " + req.path);
+        this.express.use(function(req: any, res: any, next: () => any) {
+            app.log(`Received: ${req.originalUrl}`);
             return next();
         });
     }

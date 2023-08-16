@@ -1,4 +1,4 @@
-import { Hand } from "./evalulation";
+import { Hand } from "./evaluation_enum";
 import { Rank } from "./rank";
 
 export enum QualifierType {

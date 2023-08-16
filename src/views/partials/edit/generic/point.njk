@@ -1,0 +1,16 @@
+<li id='{{point_id}}'>
+    <label for='{{point_id}}_x'>x</label>
+    <select name='{{point_name}}[x]' id='{{point_id}}_x'>
+        {% for i in range(0, 9) %}
+        <option{% if i == selected_x %} selected{% endif %}>{{i}}</option>
+        {% endfor %}
+    </select>
+
+    <label for='{{point_id}}_y'>y</label>
+    <select name='{{point_name}}[y]' id='{{point_id}}_y'>
+        {% for i in range(0, 9) %}
+        <option{% if i == selected_y %} selected{% endif %}>{{i}}</option>
+        {% endfor %}
+    </select>
+    <a href='#' class='delete' onclick="$('#{{point_id}}').remove();return false;">⊗</a>
+</li>

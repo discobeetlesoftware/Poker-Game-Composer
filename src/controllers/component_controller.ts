@@ -34,10 +34,56 @@ export class ComponentController extends Controller<PokerGameComposer> {
         editRouter.get('/section/:section_index/element/:element_index/type/:element_type', this.elementType);
         editRouter.get('/game/:game/evaluation/:evaluation_index', this.evaluation);
         editRouter.get('/evaluation/:evaluation_key/invalidation_hand/:hand', this.hand);
+        editRouter.get('/evaluation/:evaluation_key/board_segment/:type/:index', this.boardSegment);
 
         router.use('/component/edit', editRouter);
     }
 
+    hand=(req: Request, res: Response) => {
+        let context = req.params.evaluation_key;
+        var splits = context.split('_');
+        var key = `[${splits.shift()}]`;
+        splits.forEach((element: string) => {
+            key += `[split][${element}]`;
+        });
+        let hand = req.params.hand;
+        let element_id = `evaluation_qualifier_invalidation_hand_${hand}`;
+        res.render('partials/edit/hand_element', {
+            element_id: element_id,
+            hand_value: hand,
+            element_key: `evaluation${key}[invalidation_hands][]`,
+            text: this.nameForHand(hand),
+            delete_call: `removeInvalidationHand('${context}', '${hand}', '${element_id}');`
+        });
+    }
+
+    boardSegment=(req: Request, res: Response) => {    
+        let index = req.params.index;    
+        let context = req.params.evaluation_key;
+        var splits = context.split('_');
+        var key = `[${splits.shift()}]`;
+        splits.forEach((element: string) => {
+            key += `[split][${element}]`;
+        });
+        let type = req.params.type;
+        let element_id = `evaluation_board_segment_${index}`;
+        let element_name = `evaluation[${context}][board][geometry][${index}]`;
+        res.render('partials/edit/board_segment', {
+            evaluation: new Evaluation(),
+            layout: false,
+            type: type,
+            element_id: element_id,
+            element_name: element_name,
+            evaluation_id: context,
+            delete_call: `removeBoardSegment('${element_id}');`
+        });
+    }
+/*element_id the li 
+element_name the form name
+key the element value idbase
+delete_call the onclick delete call
+
+*/
     section=(req: Request, res: Response) => {
         let section_index = req.params.section_index;
         res.render('partials/edit/section', { 
@@ -115,23 +161,5 @@ export class ComponentController extends Controller<PokerGameComposer> {
         };
       
         this.app.database.loadGame(gameName).then(gameFoundHandler, gameMissingHandler);
-    }
-
-    hand=(req: Request, res: Response) => {
-        let context = req.params.evaluation_key;
-        var splits = context.split('_');
-        var key = `[${splits.shift()}]`;
-        splits.forEach((element: string) => {
-            key += `[split][${element}]`;
-        });
-        let hand = req.params.hand;
-        let element_id = `evaluation_qualifier_invalidation_hand_${hand}`;
-        res.render('partials/edit/hand_element', {
-            element_id: element_id,
-            hand_value: hand,
-            element_key: `evaluation${key}[invalidation_hands][]`,
-            text: this.nameForHand(hand),
-            delete_call: `removeInvalidationHand('${context}', '${hand}', '${element_id}');`
-        });
     }
 }

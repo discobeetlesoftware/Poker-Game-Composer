@@ -1,0 +1,4 @@
+{% from 'macros.njk' import load_point %}
+<ol id='{{list_id}}'>
+</ol>
+<a href='#' class='add button' onclick="{{load_point('nodes', ['section_index', 'element_id'], [section_index, element_index], ['nodes'], list_id)}};return false;">{{add_name}}</a>

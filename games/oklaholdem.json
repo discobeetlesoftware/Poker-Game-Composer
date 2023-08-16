@@ -1,0 +1,76 @@
+{
+  "name": "Oklahold'em",
+  "structure": {
+    "ante": false,
+    "fixed_limit": true,
+    "pot_limit": true,
+    "no_limit": true
+  },
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "high",
+    "formal_name": "Omaha",
+    "player_hand_size": "",
+    "exclusivity": "two",
+    "ace_position": "both",
+    "board": {
+      "type": "anyX",
+      "name": ""
+    },
+    "qualifier": {
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    }
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "Pre-flop",
+      "elements": [
+        {
+          "type": "deal_player",
+          "card_count": 4,
+          "is_face_up": false
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Flop",
+      "elements": [
+        {
+          "type": "deal_board"
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "Turn",
+      "elements": [
+        {
+          "type": "deal_board"
+        },
+        {
+          "type": "betting_round"
+        }
+      ]
+    },
+    {
+      "name": "River",
+      "elements": [
+        {
+          "type": "deal_board"
+        },
+        {}
+      ]
+    }
+  ]
+}

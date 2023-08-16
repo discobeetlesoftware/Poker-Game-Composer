@@ -1,4 +1,5 @@
-import { join } from "path/posix";
+import { isNullOrUndefined } from "../architecture/global";
+import { BoardEvaluation, BoardEvaluationType } from "./board_evaluation";
 import { BettingRoundElement } from "./elements/betting_round_element";
 import { DealBoardElement } from "./elements/deal_board_element";
 import { DealPlayerElement } from "./elements/deal_player_element";
@@ -6,6 +7,8 @@ import { DiscardCardElement } from "./elements/discard_card_element";
 import { DiscardHandElement } from "./elements/discard_hand_element";
 import { DrawCardElement } from "./elements/draw_card_element";
 import { ExposeCardElement } from "./elements/expose_card_element";
+import { RemoveBoardElement } from "./elements/remove_board_element";
+import { RevealBoardElement } from "./elements/reveal_board_element";
 import { SplitHandElement } from "./elements/split_hand_element";
 import { Evaluation } from "./evalulation";
 import { Game } from "./game";
@@ -13,6 +16,7 @@ import { GameElement } from "./game_element";
 import { GameElementType } from "./game_element_type";
 import { GameSection } from "./game_section";
 import { GameStructure } from "./game_structure";
+import { Line, Point } from "./geometry";
 import { NumberRange } from "./number_range";
 import { Qualifier, QualifierType } from "./qualifier";
 
@@ -27,6 +31,8 @@ export class Factory {
             case GameElementType.DrawCard:      return new DrawCardElement();
             case GameElementType.ExposeCard:    return new ExposeCardElement();
             case GameElementType.SplitHand:     return new SplitHandElement();
+            case GameElementType.RemoveBoardSegment: return new RemoveBoardElement();
+            case GameElementType.RevealBoardSegment: return new RevealBoardElement();
         }
     }
 
@@ -59,6 +65,33 @@ export class Factory {
         return qualifier;
     }
 
+    public static hydrate_geometry=(type: BoardEvaluationType, params: any): [Line] | [Point] | null => {
+        if (!params) { 
+            return null;
+        }
+        
+        if (type == BoardEvaluationType.Chain) {
+            return params.map((data: any) => {
+                return new Line(data.x);
+            });
+        } else if (type == BoardEvaluationType.Pool) {
+            return params.map((data: any) => {
+                return new Point(data.x, data.y);
+            });
+
+        } else {
+            return null;
+        }
+    }
+
+    public static hydrate_board=(params: any): BoardEvaluation => {
+        let board = new BoardEvaluation();
+        board.type = params.type;
+        board.name = params.name;
+        board.geometry = Factory.hydrate_geometry(board.type, params.geometry);
+        return board;
+    }
+
     public static hydrate_evaluation=(params: any): Evaluation => {
         let evaluation = new Evaluation();
         if (params != undefined) {
@@ -70,6 +103,7 @@ export class Factory {
             evaluation.qualifier = Factory.hydrate_qualifier(params.qualifier);
             evaluation.invalidation_hands = params.invalidation_hands;
             evaluation.qualifier_type = evaluation.qualifier.type ?? QualifierType.None;
+            evaluation.board = Factory.hydrate_board(params.board);
             evaluation.suit = params.suit;
             let splits = params.split ?? [];
             evaluation.splits = splits.map((splitData: any) => {
@@ -104,7 +138,7 @@ export class Factory {
             case GameElementType.BettingRound:  
                 return new BettingRoundElement();
             case GameElementType.DealBoard:     
-                return new DealBoardElement(parseInt(params.card_count));
+                return DealBoardElement.hydrate({ card_count: parseInt(params.card_count)});
             case GameElementType.DealPlayer:   
                 return new DealPlayerElement(parseInt(params.card_count), params.is_face_up == 'on');
             case GameElementType.DiscardCard:
@@ -119,6 +153,12 @@ export class Factory {
                 return new ExposeCardElement(new NumberRange([parseInt(params.card_count), parseInt(params.card_count)]));
             case GameElementType.SplitHand:
                 return new SplitHandElement(params.hand_size.map((size: any): number => { return parseInt(size); }));
+            case GameElementType.RemoveBoardSegment:
+                console.log(params);
+                return null;
+            case GameElementType.RevealBoardSegment:
+                console.log(params);
+                return null;
         }
     }
 }

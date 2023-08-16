@@ -1,0 +1,26 @@
+{% macro load_point(name, elements, params, values, list_id) %}
+var elements = [{% for i in elements %}
+    '{{ i }}',
+{% endfor %}];
+var params = [{% for i in params %}
+    '{{ i }}',
+{% endfor %}];
+var values = [{% for i in values %}
+    '{{ i }}',
+{% endfor %}];
+var list_size = function () { return $('#{{list_id}} li').length; };
+var parameterize = function () {
+    var output = ['list_id={{list_id}}', 'name={{name}}'];
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var param = params[i];
+        output.push(`elements=${element}`);
+        output.push(`params=${param}`);
+    }
+    for (var i = 0; i < values.length; i++) {
+        output.push(`values=${values[i]}`);
+    }
+    return output.join('&');
+ };
+$.get(`/generic/partials/edit/point/${list_size()}?${parameterize()}`, function(result) { $('#{{list_id}}').append(result); });
+{% endmacro %}

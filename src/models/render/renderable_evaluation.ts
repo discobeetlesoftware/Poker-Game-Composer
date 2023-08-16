@@ -1,6 +1,8 @@
 import escape = require('escape-html');
 import { AcePosition } from "../ace_position";
-import { Evaluation, EvaluationExclusivity, EvaluationSuitType, EvaluationType, Hand } from "../evalulation";
+import { BoardEvaluation } from '../board_evaluation';
+import { EvaluationType, EvaluationExclusivity, Hand, EvaluationSuitType } from '../evaluation_enum';
+import { Evaluation } from '../evalulation';
 import { Qualifier } from "../qualifier";
 
 type RenderHelper = (input: string) => string;
@@ -38,6 +40,7 @@ export class RenderableEvaluation {
     get splits(): RenderableEvaluation[] { return this.evaluation.splits.map((evaluation: Evaluation): RenderableEvaluation => { return new RenderableEvaluation(evaluation); }); }
     get qualifier(): Qualifier { return this.evaluation.qualifier; }
     get exclusivity(): EvaluationExclusivity { return this.evaluation.exclusivity; }
+    get board(): BoardEvaluation { return this.evaluation.board; }
     get ace_position(): AcePosition { return this.evaluation.ace_position; }
     get player_hand_size(): number { return this.evaluation.player_hand_size; }
     get invalidation_hands(): Hand[] { return this.evaluation.invalidation_hands; }

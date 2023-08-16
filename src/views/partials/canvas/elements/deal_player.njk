@@ -1,4 +1,5 @@
 () => {
     var titleString = '{{element.card_count}} {% if element.is_face_up %}UP{% else %}DOWN{% endif %}';
-    return cardPile({{element.is_face_up}}, {{element.card_count}}, 'I', titleString).pos(0, 0, LEFT, TOP, elementContainer);
+    var element = cardPile({{element.is_face_up}}, {{element.card_count}}, 'I', titleString);
+    return element.pos(lastElementMaxX, 0, LEFT, TOP, elementContainer);
 },

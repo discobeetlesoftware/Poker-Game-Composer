@@ -105,6 +105,32 @@
         }
     }
 
+    function didChangeBoardType(key, isDefault = false) {
+        var type = $(`#evaluation_board_type_${key} option:selected`).val();
+        var board_segment_container = $(`#evaluation_board_evaluation_${key}_container`);
+        if (type == 'pool' || type == 'chain') {
+            board_segment_container.show();
+            if (!isDefault) {
+                $(`#evaluation_board_evaluation_${key}_container ol`).html('');
+            }
+        } else {
+            board_segment_container.hide();
+        }
+    }
+
+    function appendBoardSegment(context) {
+        var type = $(`#evaluation_board_type_${context}`).val();
+        if (name == null || name == '') {
+            name = '_';
+        }
+        var listToken = `#evaluation_board_evaluation_${context}_container ol`;
+        var listElementCount = $(listToken + ' li').length;
+        var path = `/component/edit/evaluation/${context}/board_segment/${type}/${listElementCount}`;
+        $.get(path, function(result) {
+            $(listToken).append(result);
+        });
+    }
+
     function nameForHand(value) {
         return {
             high: 'High',
@@ -124,6 +150,10 @@
     function removeInvalidationHand(context, hand, elementToken) {
         $(`#evaluation_qualifier_${context}_invalidation option[value="${hand}"]`).attr('disabled', false);
         $(`#${elementToken}`).remove();
+    }
+
+    function removeBoardSegment(container_id) {
+        $(`#${container_id}`).remove();
     }
 
     function appendInvalidationHand(context) {
@@ -213,7 +243,7 @@
                 {% include 'partials/edit/section.njk' %}
             {% endeach %}
         </ol>
-        <a href='#' class='add button' onclick='appendSection();'>Add section</a>
+        <a href='#' class='add button' onclick='appendSection();return false;'>Add section</a>
     </div>
     <input type='submit' class='save button' value='Save' />
 </form>

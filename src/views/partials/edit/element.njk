@@ -10,9 +10,12 @@
         {{ option(element, 'discard_card', 'Discard card') }}
         {{ option(element, 'expose_card', 'Expose card') }}
         {{ option(element, 'draw_card', 'Draw card') }}
+        {{ option(element, 'remove_board', 'Remove board') }}
+        {{ option(element, 'reveal_board', 'Reveal board') }}
+    
     </select>
     <span class='delete'>
-        <a href='#' class='delete' onclick="$('#{{key}}').remove();">⊗</a>
+        <a href='#' class='delete' onclick="$('#{{key}}').remove();return false;">⊗</a>
     </span>
     <div class='options'>
     {% if not element.is_proto %}

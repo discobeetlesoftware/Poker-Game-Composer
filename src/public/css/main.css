@@ -65,13 +65,11 @@ h1, h2 {
 	display: inline-block;
 }
 
-#evaluation ol {
+.gameDetails label.small {
 	margin: 0;
 	padding: 0;
-}
-
-.plainList {
-	list-style: none;
+	min-width: 0px;
+	display: inline;
 }
 
 div.header {
@@ -90,7 +88,6 @@ div.header {
 }
 
 .button:hover {
-  font-size: 100%;
 }
 
 .gameDetails label {

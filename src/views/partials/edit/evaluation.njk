@@ -62,9 +62,43 @@
         </div>
         <div>
             <label for='evaluation_player_hand_size{{evaluationKey}}'>Player hand size</label>
-            <input value='{{evaluation.player_hand_size}}' pattern='[1-9]?' placeholder='4' type='text' id='evaluation_player_hand_size{{evaluationKey}}' name='evaluation{{evaluationContext}}[player_hand_size]' />
+            <input value='{{evaluation.js.player_hand_size}}' pattern='[1-9]?' placeholder='4' type='text' id='evaluation_player_hand_size{{evaluationKey}}' name='evaluation{{evaluationContext}}[player_hand_size]' />
             (Optional: this evaluation context is associated with a player hand of this size)
         </div>
+        <div>
+            <div>
+                <label for='evaluation_board_evaluation_{{evaluationKey}}'>Board evaluation</label>
+                <select name='evaluation{{evaluationContext}}[board][type]' id='evaluation_board_type_{{evaluationKey}}'>
+                    {{ option(evaluation.js.board.type, 'none', 'No community cards') }}
+                    {{ option(evaluation.js.board.type, 'anyX', 'AnyX') }}
+                    {{ option(evaluation.js.board.type, 'anyY', 'AnyY') }}
+                    {{ option(evaluation.js.board.type, 'chain', 'Chain') }}
+                    {{ option(evaluation.js.board.type, 'pool', 'Pool') }}
+                </select>
+            </div>
+            <div>
+                <label for='evaluation_board_name_{{evaluationKey}}'>Board name</label>
+                <input type='text' id='evaluation_board_name_{{evaluationKey}}' name='evaluation{{evaluationContext}}[board][name]' value='{{evaluation.js.board.name}}' />
+                (super optional)
+            </div>
+            <div id='evaluation_board_evaluation_{{evaluationKey}}_container'>
+                <label>Board geometry</label>
+                <ol>
+                    {% asyncEach segment in evaluation.board.geometry %}
+                        {% set geometry = segment %}
+                        {% set index = loop.index0 %}
+                        {% set type = evaluation.board.type %}
+                        {% set evaluation_id = "evaluation_board_segment_" + evaluationKey %}
+                        {% set element_id = "evaluation_board_segment_" + loop.index0 %}
+                        {% set element_name = "evaluation["+evaluationKey+"][board][geometry]["+loop.index0+"]" %}
+                        {% set delete_call = "removeBoardSegment('" + evaluationKey + "');" %}
+                        {% include 'partials/edit/board_segment.njk' %}
+                    {% endeach %}
+                </ol>
+                <a href='#' class='add button' onclick="appendBoardSegment('{{evaluationKey}}');return false;">Add board segment</a>
+            </div>
+        </div>
+
         <div id='evaluation_qualifier_container_{{evaluationKey}}'>
             <label for='evaluation_qualifier_{{evaluationKey}}'>Qualifier type</label>
             <select name='evaluation{{evaluationContext}}[qualifier][type]' id='evaluation_qualifier_{{evaluationKey}}'>
@@ -143,7 +177,7 @@
                 <option value='straight_flush'>Straight flush</option>
                 <option value='royal_flush'>Royal flush</option>
             </select>
-            <a href='#' class='add button' onclick="appendInvalidationHand('{{evaluationKey}}');">Append hand</a>
+            <a href='#' class='add button' onclick="appendInvalidationHand('{{evaluationKey}}');return false;">Append hand</a>
         </div>
         <div>
             <label>Bug Completion Hands</label>
@@ -161,7 +195,10 @@
     $('#evaluation_type_{{evaluationKey}}').change(function () { didChangeEvaluationType('{{game.sanitized_name}}', '{{evaluationKey}}'); });
     $('#evaluation_invalidationhands_enabled_{{evaluationKey}}').change(function () { didChangeValidationHandsEnabled('{{evaluationKey}}'); });
     $('#evaluation_qualifier_{{evaluationKey}}').change(function() { didChangeQualifierType('{{evaluationKey}}'); });
+    $('#evaluation_board_type_{{evaluationKey}}').change(function() { didChangeBoardType('{{evaluationKey}}'); });
+
     didChangeEvaluationType('{{game.sanitized_name}}', '{{evaluationKey}}');
     didChangeValidationHandsEnabled('{{evaluationKey}}');
     didChangeQualifierType('{{evaluationKey}}');
+    didChangeBoardType('{{evaluationKey}}', true);
 </script>

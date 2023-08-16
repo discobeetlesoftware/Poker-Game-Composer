@@ -13,7 +13,8 @@ var frame = new Frame({
     width: canvas.size.width,
     height: canvas.size.height,
     color: canvas.color,
-    outerColor: canvas.outerColor
+    outerColor: canvas.outerColor,
+    canvasID: 'gameCanvas'
 });
 
 var showBackground = window.config.global.isDebug;
@@ -106,6 +107,7 @@ frame.on('ready', () => {
 
     var descriptionContainer = new Container(canvas.size.width, defaultHeight(ratio.description)).addTo();
     attachBackground(descriptionContainer, red);
+    var title = gameTitle('{{game.js.description}}', window.config.game.description).center(descriptionContainer);
 
     // Layout(holder, regions, lastMargin, lastMarginMin, backgroundColor, vertical, showRegions, scalingObject, hideKey, style, group, inherit)
     layout = new Layout(
@@ -123,4 +125,11 @@ frame.on('ready', () => {
 
 frame.on('resize', () => {
     layout.resize();
+});
+
+frame.on('complete', () => {
+        alert('bet');
+    zid('gameCanvas').addEventListener('click', function() { 
+        zgo('/'); 
+    });
 });

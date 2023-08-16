@@ -5,6 +5,7 @@ import { Command, Option } from 'commander';
 import path = require("path");
 import { GameController } from "./game_controller";
 import { ComponentController } from "./component_controller";
+import { GenericController } from "./generic_controller";
 
 export class PokerGameComposer extends App {
     database: Database;
@@ -28,7 +29,8 @@ export class PokerGameComposer extends App {
     makeControllers(): Controller<PokerGameComposer>[] {
         return [
             new GameController(this),
-            new ComponentController(this)
+            new ComponentController(this),
+            new GenericController(this)
         ];
     }
 

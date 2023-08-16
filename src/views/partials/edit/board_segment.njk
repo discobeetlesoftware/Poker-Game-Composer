@@ -1,0 +1,18 @@
+<li id='{{element_id}}'>
+    <label class='small' for='{{evaluation_id}}_xvalue'>x</label>
+    <select name='{{element_name}}[x]' id='{{evaluation_id}}_xvalue'>
+        {% for i in range(0, 9) %}
+        <option{% if i == geometry.x %} selected{% endif %}>{{i}}</option>
+        {% endfor %}
+    </select>
+
+    {% if type == 'pool' %}
+    <label class='small' for='{{evaluation_id}}_yvalue'>y</label>
+    <select name='{{element_name}}[y]' id='{{evaluation_id}}_yvalue'>
+        {% for i in range(0, 9) %}
+        <option{% if i == geometry.y %} selected{% endif %}>{{i}}</option>
+        {% endfor %}
+    </select>
+    {% endif %}
+    <a href='#' class='delete' onclick="{{delete_call}}return false;">⊗</a>
+</li>

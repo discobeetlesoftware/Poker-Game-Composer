@@ -1,0 +1,37 @@
+{
+  "name": "Test3",
+  "structure": {},
+  "forced_bet": "blinds",
+  "evaluation": {
+    "type": "distribute",
+    "formal_name": "",
+    "player_hand_size": "",
+    "exclusivity": "any",
+    "ace_position": "both",
+    "board": {
+      "type": "pool",
+      "geometry": [
+        {
+          "x": "7",
+          "y": "0"
+        }
+      ],
+      "name": "test again"
+    },
+    "qualifier": {
+      "type": "none",
+      "rank": "2",
+      "hand": "high",
+      "specific_hand": ""
+    }
+  },
+  "abbreviation": "",
+  "alternative_names": "",
+  "clarification": "",
+  "sections": [
+    {
+      "name": "",
+      "elements": []
+    }
+  ]
+}
